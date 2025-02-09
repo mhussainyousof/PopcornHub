@@ -1,72 +1,73 @@
-class MovieModel {
-  String? backdropPath;
-  int? id;
-  String? title;
-  String? originalTitle;
-  String? overview;
-  String? posterPath;
-  String? mediaType;
-  bool? adult;
-  String? originalLanguage;
-  List<int>? genreIds;
-  double? popularity;
-  String? releaseDate;
-  bool? video;
-  double? voteAverage;
-  int? voteCount;
+import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 
-  MovieModel(
-      {this.backdropPath,
-      this.id,
-      this.title,
-      this.originalTitle,
-      this.overview,
-      this.posterPath,
-      this.mediaType,
-      this.adult,
-      this.originalLanguage,
-      this.genreIds,
-      this.popularity,
-      this.releaseDate,
-      this.video,
-      this.voteAverage,
-      this.voteCount});
+class MovieModel extends MovieEntity {
+  final String? backdropPath;
+  final String? originalTitle;
+  final String? mediaType;
+  final bool? adult;
+  final String? originalLanguage;
+  final List<int>? genreIds;
+  final num? popularity;
+  final bool? video;
+  final int? voteCount;
 
-  MovieModel.fromJson(Map<String, dynamic> json) {
-    backdropPath = json['backdrop_path'];
-    id = json['id'];
-    title = json['title'];
-    originalTitle = json['original_title'];
-    overview = json['overview'];
-    posterPath = json['poster_path'];
-    mediaType = json['media_type'];
-    adult = json['adult'];
-    originalLanguage = json['original_language'];
-    genreIds = json['genre_ids'].cast<int>();
-    popularity = json['popularity'];
-    releaseDate = json['release_date'];
-    video = json['video'];
-    voteAverage = json['vote_average'];
-    voteCount = json['vote_count'];
+  const MovieModel({
+    required super.posterPath,
+    required super.id,
+    required super.title,
+    required super.voteAverage,
+    required super.releaseDate,
+    super.overview,
+    this.backdropPath,
+    this.originalTitle,
+    this.mediaType,
+    this.adult,
+    this.originalLanguage,
+    this.genreIds,
+    this.popularity,
+    this.video,
+    this.voteCount,
+  });
+
+
+
+  factory MovieModel.fromJson(Map<String, dynamic> json) {
+    return MovieModel(
+      posterPath: json['poster_path'] ?? "",
+      id: json['id'] ?? 0,
+      title: json['title'] ?? "Unknown",
+      voteAverage: (json['vote_average'] as num?) ?? 0.0,
+      releaseDate: json['release_date'] ?? "Unknown",
+      overview: json['overview'],
+      backdropPath: json['backdrop_path'],
+      originalTitle: json['original_title'],
+      mediaType: json['media_type'],
+      adult: json['adult'],
+      originalLanguage: json['original_language'],
+      genreIds: (json['genre_ids'] as List?)?.map((e) => e as int).toList() ?? [],
+      popularity: (json['popularity'] as num?) ?? 0.0,
+      video: json['video'],
+      voteCount: json['vote_count'],
+    );
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['backdrop_path'] = backdropPath;
-    data['id'] = id;
-    data['title'] = title;
-    data['original_title'] = originalTitle;
-    data['overview'] = overview;
-    data['poster_path'] = posterPath;
-    data['media_type'] = mediaType;
-    data['adult'] = adult;
-    data['original_language'] = originalLanguage;
-    data['genre_ids'] = genreIds;
-    data['popularity'] = popularity;
-    data['release_date'] = releaseDate;
-    data['video'] = video;
-    data['vote_average'] = voteAverage;
-    data['vote_count'] = voteCount;
-    return data;
+    return {
+      'poster_path': posterPath,
+      'id': id,
+      'title': title,
+      'original_title': originalTitle,
+      'overview': overview,
+      'backdrop_path': backdropPath,
+      'media_type': mediaType,
+      'adult': adult,
+      'original_language': originalLanguage,
+      'genre_ids': genreIds?.isNotEmpty == true ? genreIds : null, // جلوگیری از مقدار `[]`
+      'popularity': popularity,
+      'release_date': releaseDate,
+      'video': video,
+      'vote_average': voteAverage,
+      'vote_count': voteCount,
+    }..removeWhere((key, value) => value == null); // حذف مقادیر `null`
   }
 }

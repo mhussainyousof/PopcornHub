@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:popcornhub/data/data_source/movie_remote_datasource.dart';
 
 void main() {
+   Client apiClient = Client();
+   MovieRemoteDatasource datasource = MovieRemoteDatasourceImpl(apiClient);
+   datasource.getTrending();
   runApp(const MyApp());
 }
 

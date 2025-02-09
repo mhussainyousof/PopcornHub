@@ -2,23 +2,23 @@ import 'package:popcornhub/data/model/movie_model.dart';
 
 class MovieResultModel {
   // int? page;
-  List<MovieModel>? results;
+  List<MovieModel>? movies;
   // int? totalPages;
   // int? totalResults;
 
   MovieResultModel(
       {
         // this.page,
-         this.results,
+         this.movies,
           // this.totalPages,
           //  this.totalResults
            });
   MovieResultModel.fromJson(Map<String, dynamic> json) {
     // page = json['page'];
     if (json['results'] != null) {
-      results = <MovieModel>[];
+      movies = <MovieModel>[];
       json['results'].forEach((v) {
-        results!.add(MovieModel.fromJson(v));
+        movies!.add(MovieModel.fromJson(v));
       });
     }
     // totalPages = json['total_pages'];
@@ -28,8 +28,8 @@ class MovieResultModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     // data['page'] = page;
-    if (results != null) {
-      data['results'] = results!.map((v) => v.toJson()).toList();
+    if (movies != null) {
+      data['results'] = movies!.map((v) => v.toJson()).toList();
     }
     // data['total_pages'] = totalPages;
     // data['total_results'] = totalResults;
