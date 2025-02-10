@@ -16,7 +16,6 @@ class MovieRepositoryImpl extends MovieRepository{
     } catch(e){
       print('faied to getTrending$e');
     return  left(AppError('Something went wrong'));
-
     }
   }
 
