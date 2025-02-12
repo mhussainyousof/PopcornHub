@@ -62,12 +62,12 @@ class MovieModel extends MovieEntity {
       'media_type': mediaType,
       'adult': adult,
       'original_language': originalLanguage,
-      'genre_ids': genreIds?.isNotEmpty == true ? genreIds : null, // جلوگیری از مقدار `[]`
+      'genre_ids': genreIds?.isNotEmpty == true ? genreIds : null,
       'popularity': popularity,
       'release_date': releaseDate,
       'video': video,
       'vote_average': voteAverage,
       'vote_count': voteCount,
-    }..removeWhere((key, value) => value == null); // حذف مقادیر `null`
+    }..removeWhere((key, value) => value == null); 
   }
 }
