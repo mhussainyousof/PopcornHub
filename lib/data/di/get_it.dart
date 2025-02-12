@@ -8,6 +8,7 @@ import 'package:popcornhub/data/domain/usecase/get_playingnow.dart';
 import 'package:popcornhub/data/domain/usecase/get_popular.dart';
 import 'package:popcornhub/data/domain/usecase/get_trending.dart';
 import 'package:popcornhub/data/repository/movie_repo_impl.dart';
+import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 
 final getItInstance = GetIt.I;
 
@@ -20,5 +21,6 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<GetPopular>(() => GetPopular(getItInstance<MovieRepository>()));
   getItInstance.registerLazySingleton<GetCommingSoon>(() => GetCommingSoon(getItInstance<MovieRepository>()));
   getItInstance.registerLazySingleton<GetPlayingNow>(() => GetPlayingNow(getItInstance<MovieRepository>()));
+  getItInstance.registerFactory<MovieCarouselBloc>(()=> MovieCarouselBloc(getTrending: getItInstance()));
 }
 

@@ -1,34 +1,16 @@
-import 'package:dartz/dartz.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:popcornhub/data/di/get_it.dart';
-import 'package:popcornhub/data/domain/entity/app_erro.dart';
-import 'package:popcornhub/data/domain/entity/movie_entity.dart';
-import 'package:popcornhub/data/domain/entity/no_params.dart';
-import 'package:popcornhub/data/domain/usecase/get_trending.dart';
+import 'package:popcornhub/presentation/movie_app.dart';
 
-void main() async {
+void main()async{
+WidgetsFlutterBinding.ensureInitialized();
+unawaited(
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]));
   await init();
-  GetTrending getTrending = getItInstance<GetTrending>();
-  final Either<AppError, List<MovieEntity>> eitherResponse =
-      await getTrending(NoParams());
-  eitherResponse.fold(
-    (failure) => print('Error: ${failure.message}'),
-    (movies) => print('${movies.length}'),
-  );
-  runApp(const MyApp());
+
+
+  runApp(MovieApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: Container(),
-    );
-  }
-}
