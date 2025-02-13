@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:http/http.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/data/domain/entity/no_params.dart';
 import 'package:popcornhub/data/domain/usecase/get_trending.dart';

@@ -9,7 +9,7 @@ sealed class MovieCarouselEvent extends Equatable {
 
 final class MovieCarouselLoadedEvent extends MovieCarouselEvent {
   final int defaultIndex;
-  const MovieCarouselLoadedEvent({this.defaultIndex = 0});
+  const MovieCarouselLoadedEvent({this.defaultIndex = 0}) : assert(defaultIndex >= 0);
 
   @override
   List<Object> get props => [defaultIndex];

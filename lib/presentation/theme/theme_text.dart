@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:popcornhub/common/extensions/size_extension.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
 
-import '../../common/constants/size_constants.dart';
+
 
 
 class ThemeText {
@@ -13,29 +13,29 @@ class ThemeText {
 
   static TextStyle? get _whiteHeadline6 =>
       _poppinsTextTheme.titleLarge?.copyWith(
-        fontSize: Sizes.dimen_20.sp,
+        fontSize: 20.sp,
         color: Colors.white,
       );
 
   static TextStyle? get _whiteHeadline5 =>
       _poppinsTextTheme.headlineSmall?.copyWith(
-        fontSize: Sizes.dimen_24.sp,
+        fontSize: 24.sp,
         color: Colors.white,
       );
 
   static TextStyle? get whiteSubtitle1 => _poppinsTextTheme.titleMedium?.copyWith(
-        fontSize: Sizes.dimen_16.sp,
+        fontSize: 16.sp,
         color: Colors.white,
       );
 
   static TextStyle? get _whiteButton => _poppinsTextTheme.labelLarge?.copyWith(
-        fontSize: Sizes.dimen_14.sp,
+        fontSize: 14.sp,
         color: Colors.white,
       );
 
   static TextStyle? get whiteBodyText2 => _poppinsTextTheme.bodyMedium?.copyWith(
         color: Colors.white,
-        fontSize: Sizes.dimen_14.sp,
+        fontSize: 14.sp,
         wordSpacing: 0.25,
         letterSpacing: 0.25,
         height: 1.5,
@@ -43,7 +43,7 @@ class ThemeText {
 
   static TextStyle? get _darkCaption => _poppinsTextTheme.bodySmall?.copyWith(
         color: AppColor.vulcan,
-        fontSize: Sizes.dimen_14.sp,
+        fontSize: 14.sp,
         wordSpacing: 0.25,
         letterSpacing: 0.25,
         height: 1.5,

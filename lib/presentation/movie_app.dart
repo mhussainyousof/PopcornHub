@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/screenutil/screenutil.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
@@ -9,18 +10,23 @@ class MovieApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init();
-    return MaterialApp(
-      title: 'Movie App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.light(
-          primary: AppColor.vulcan,
-          surface: AppColor.vulcan,
+    return ScreenUtilInit(
+      designSize: Size(414, 896),
+      builder:(context, child) {
+        return MaterialApp(
+        title: 'Movie App',
+        theme: ThemeData(
+          colorScheme: ColorScheme.light(
+            primary: AppColor.vulcan,
+            surface: AppColor.vulcan,
+          ),
+          textTheme: ThemeText.getTextTheme(),
+          appBarTheme: AppBarTheme(elevation: 0),
         ),
-        textTheme: ThemeText.getTextTheme(),
-        appBarTheme: AppBarTheme(elevation: 0),
-      ),
-      home: HomeScreen(),
+        home: HomeScreen(),
+      );
+      },
+      
     );
   }
 }
