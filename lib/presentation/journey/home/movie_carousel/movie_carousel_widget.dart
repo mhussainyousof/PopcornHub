@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
+import 'package:popcornhub/presentation/journey/home/movie_carousel/movie_backdrop_widget.dart';
+import 'package:popcornhub/presentation/journey/home/movie_carousel/movie_data_widget.dart';
 import 'package:popcornhub/presentation/journey/home/movie_carousel/movie_page_view.dart';
 import 'package:popcornhub/presentation/widget/movie_app_bar.dart';
+import 'package:popcornhub/presentation/widget/separator.dart';
 
 class MovieCarouselWidget extends StatelessWidget{
   final List<MovieEntity> movies;
@@ -13,13 +16,21 @@ class MovieCarouselWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      fit: StackFit.expand,
       children: [
-        MovieAppBar(),
-        MoviePageView(
-          movies: movies,
-          initialPage : defaultIndex,
-        )
+        MovieBackdropWidget(),
+        Column(
+          children: [
+            MovieAppBar(),
+            MoviePageView(
+              movies: movies,
+              initialPage : defaultIndex,
+            ),
+            MovieDataWidget(),
+            Separator()
+          ],
+        ),
       ],
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
+import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/journey/home/movie_carousel/animated_movie_card_widget.dart';
 import 'package:popcornhub/presentation/journey/home/movie_carousel/movie_card_widget.dart';
 
@@ -51,7 +53,10 @@ class _MoviePageViewState extends State<MoviePageView> {
         },
         pageSnapping: true,
         itemCount: widget.movies?.length ?? 0,
-        onPageChanged: (index){},
+        onPageChanged: (index){
+          BlocProvider.of<MovieBackdropBloc>(context).add(MovieBackdropEventChanged(widget.movies! [index]));
+          
+        },
         ),
     );
   }

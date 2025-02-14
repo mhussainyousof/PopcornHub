@@ -1,7 +1,6 @@
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 
 class MovieModel extends MovieEntity {
-  final String? backdropPath;
   final String? originalTitle;
   final String? mediaType;
   final bool? adult;
@@ -12,13 +11,14 @@ class MovieModel extends MovieEntity {
   final int? voteCount;
 
   const MovieModel({
+
     required super.posterPath,
+    required super.backdropPath,
     required super.id,
     required super.title,
     required super.voteAverage,
     required super.releaseDate,
     super.overview,
-    this.backdropPath,
     this.originalTitle,
     this.mediaType,
     this.adult,
@@ -39,7 +39,7 @@ class MovieModel extends MovieEntity {
       voteAverage: (json['vote_average'] as num?) ?? 0.0,
       releaseDate: json['release_date'] ?? "Unknown",
       overview: json['overview'],
-      backdropPath: json['backdrop_path'],
+      backdropPath: json['backdrop_path'] ?? 'Unknown',
       originalTitle: json['original_title'],
       mediaType: json['media_type'],
       adult: json['adult'],
