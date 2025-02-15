@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   movieBackdropBloc = movieCarouselBloc.movieBackdropBloc;
   movieCarouselBloc.add(MovieCarouselLoadedEvent());
   }
-
+  
   @override
   void dispose() {
     super.dispose();

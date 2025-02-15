@@ -8,12 +8,9 @@ class Separator extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 3.h,
+     margin: EdgeInsets.only(top: 4.h,bottom: 4.h),
+      height: 2.h,
       width: 80.w,
-      padding: EdgeInsets.only(
-        top: 2.h,
-        bottom: 6.h
-      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(1.r),
         gradient: LinearGradient(colors: [AppColor.royalBlue, AppColor.violet])
