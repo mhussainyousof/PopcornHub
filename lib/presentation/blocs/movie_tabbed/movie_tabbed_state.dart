@@ -5,7 +5,7 @@ sealed class MovieTabbedState extends Equatable {
   const MovieTabbedState({ this.currentTabIndex});
   
   @override
-  List<Object> get props => [currentTabIndex!];
+  List<Object> get props => [currentTabIndex ?? 0];
 }
 
 final class MovieTabbedInitial extends MovieTabbedState {

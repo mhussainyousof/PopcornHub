@@ -11,17 +11,15 @@ class MovieTabbedWidget extends StatefulWidget {
   @override
   State<MovieTabbedWidget> createState() => _MovieTabbedWidgetState();
 }
-
 class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
     with SingleTickerProviderStateMixin {
   MovieTabbedBloc get movieTabbedBloc =>
       BlocProvider.of<MovieTabbedBloc>(context);
-  int currentIndex = 0;
   
   @override
   void initState() {
     super.initState();
-    movieTabbedBloc.add(MovieTabEventChanged(currentTabIndex: currentIndex));
+    movieTabbedBloc.add(MovieTabEventChanged(currentTabIndex: 0));
   }
 
   @override
@@ -35,14 +33,13 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  for (var i = 0; i < MovieTabConstants.movieTabs.length; i++)
-                    TabTitleWidget(
-                        title: MovieTabConstants.movieTabs[i].title,
-                        onTap: () => _onTabTapped(i),
-                        isSelected: MovieTabConstants.movieTabs[i].index ==
+                children: MovieTabConstants.movieTabs.map((tab)=>
+                   TabTitleWidget(
+                        title: tab.title,
+                        onTap: () => _onTabTapped(tab.index),
+                        isSelected: tab.index ==
                             state.currentTabIndex)
-                ],
+                   ).toList()
               ),
               SizedBox(
                 height: 5.h,
