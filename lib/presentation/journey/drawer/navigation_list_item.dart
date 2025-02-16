@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NavigationListItem extends StatelessWidget {
   final String title;
   final void Function()? onPressed;
-
-  const NavigationListItem({super.key});
-  const NavigationSubListItem({
+  const NavigationListItem({
     super.key,
     required this.title,
     this.onPressed,
@@ -15,16 +14,11 @@ class NavigationListItem extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
               color: Theme.of(context).primaryColor.withOpacity(0.7),
-              blurRadius: 2
-            ),
-            
-          ]
-        
-        ),
+              blurRadius: 2),
+        ]),
         child: ListTile(
           title: Text(
             title,
@@ -39,9 +33,7 @@ class NavigationListItem extends StatelessWidget {
 class NavigationSubListItem extends StatelessWidget {
   final String title;
   final void Function()? onPressed;
-
-  const NavigationSubListItem({super.key});
-  const NavigationListItem({
+  const NavigationSubListItem({
     super.key,
     required this.title,
     this.onPressed,
@@ -51,17 +43,13 @@ class NavigationSubListItem extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
               color: Theme.of(context).primaryColor.withOpacity(0.7),
-              blurRadius: 2
-            ),
-            
-          ]
-        
-        ),
+              blurRadius: 2),
+        ]),
         child: ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 32.w),
           title: Text(
             title,
             style: Theme.of(context).textTheme.bodyMedium,
@@ -70,5 +58,4 @@ class NavigationSubListItem extends StatelessWidget {
       ),
     );
   }
-
 }

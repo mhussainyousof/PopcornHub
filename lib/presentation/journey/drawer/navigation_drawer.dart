@@ -24,19 +24,19 @@ class NavigationDrawerr extends StatelessWidget{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
         Padding(padding: EdgeInsets.fromLTRB(8.h, 8.h, 8.h, 18.h),
-        child: LogoWidget(height: 20.h),
+        child: LogoWidget(height: 60.h),
 
         ),
-        NavigationSubListItem(title: 'Favorite Movies',
+        NavigationListItem(title: 'Favorite Movies',
         onPressed: (){},
         ),
         NavigationExpandedListItem(title: 'Language', children: ['English', 'Spanish'],
         onPressed: (){},
         ),
-        NavigationSubListItem(title: 'Feedback',
+        NavigationListItem(title: 'Feedback',
         onPressed: (){},
         ),
-        NavigationSubListItem(title: 'About',
+        NavigationListItem(title: 'About',
         onPressed: (){},
         ),
 
