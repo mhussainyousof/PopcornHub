@@ -22,7 +22,7 @@ class MovieTabbedBloc extends Bloc<MovieTabbedEvent, MovieTabbedState> {
     required this.getPopular,
   }) : super(MovieTabbedInitial()) {
     on<MovieTabEventChanged>((event, emit) async {
-      Either<AppError, List<MovieEntity>> moviesEither = Left(AppError('error')); // Default value
+      Either<AppError, List<MovieEntity>> moviesEither = Left(AppError(AppErrorType.network)); // Default value
 
       switch (event.currentTabIndex) {
         case 0:
@@ -36,9 +36,16 @@ class MovieTabbedBloc extends Bloc<MovieTabbedEvent, MovieTabbedState> {
           break;
       }
 
+// emit(MovieTabLoadError(
+//   AppErrorType.network,
+//   currentTabIndex: event.currentTabIndex,
+
+// ));
       moviesEither.fold(
-        (failure) => emit(MovieTabLoadError()),
-        (movies) => emit(MovieTabChanged(currentTabIndex: event.currentTabIndex, movies: movies)),
+        (failure) => emit(MovieTabLoadError(
+          currentTabIndex: event.currentTabIndex,
+          failure.appErrorType)),
+        (movies) => emit(MovieTabChanged(currentTabIndex: event.currentTabIndex, movies: [])),
       );
     });
   }

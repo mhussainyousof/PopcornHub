@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/presentation/app_localizations.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
@@ -19,6 +20,7 @@ class TabTitleWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: EdgeInsets.only(bottom: 15.h),
         decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border(

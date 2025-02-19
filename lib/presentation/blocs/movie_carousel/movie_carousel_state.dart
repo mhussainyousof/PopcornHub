@@ -8,7 +8,10 @@ sealed class MovieCarouselState extends Equatable {
 }
 
 final class MovieCarouselInitial extends MovieCarouselState {}
-final class MovieCarouselError extends MovieCarouselState{}
+final class MovieCarouselError extends MovieCarouselState{
+   final AppErrorType errorType;
+   const MovieCarouselError(this.errorType);
+}
 final class MovieCarouselLoaded extends MovieCarouselState{
   final List<MovieEntity> movies;
   final int defaultIndex;
