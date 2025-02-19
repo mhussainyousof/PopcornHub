@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:popcornhub/common/extensions/string_extensions.dart';
+import 'package:popcornhub/presentation/app_localizations.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
 
@@ -23,7 +25,8 @@ class TabTitleWidget extends StatelessWidget {
                 bottom: BorderSide(
               color: isSelected ? AppColor.royalBlue : Colors.transparent,
             ))),
-        child: Text(title,
+        child: Text(
+          title.t(context),
             style: isSelected
                 ? Theme.of(context).textTheme.royalBlueSubtitle1
                 : Theme.of(context).textTheme.greySubtitle1),

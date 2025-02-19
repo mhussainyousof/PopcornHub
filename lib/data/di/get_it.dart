@@ -10,25 +10,36 @@ import 'package:popcornhub/data/domain/usecase/get_trending.dart';
 import 'package:popcornhub/data/repository/movie_repo_impl.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
+import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_tabbed/movie_tabbed_bloc.dart';
 
 final getItInstance = GetIt.I;
 
 Future<void> init() async {
   getItInstance.registerLazySingleton<Client>(() => Client());
-  getItInstance.registerLazySingleton<ApiClient>(() => ApiClient(getItInstance<Client>()));
-  getItInstance.registerLazySingleton<MovieRemoteDatasource>(() => MovieRemoteDatasourceImpl(getItInstance<ApiClient>()));
-  getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(getItInstance<MovieRemoteDatasource>()));
-  getItInstance.registerLazySingleton<GetTrending>(() => GetTrending(getItInstance<MovieRepository>()));
-  getItInstance.registerLazySingleton<GetPopular>(() => GetPopular(getItInstance<MovieRepository>()));
-  getItInstance.registerLazySingleton<GetCommingSoon>(() => GetCommingSoon(getItInstance<MovieRepository>()));
-  getItInstance.registerLazySingleton<GetPlayingNow>(() => GetPlayingNow(getItInstance<MovieRepository>()));
-  getItInstance.registerFactory(()=> MovieBackdropBloc());
-  getItInstance.registerFactory<MovieCarouselBloc>(()=> MovieCarouselBloc(
-    movieBackdropBloc: getItInstance(),
-    getTrending: getItInstance()));
+  getItInstance.registerLazySingleton<ApiClient>(
+      () => ApiClient(getItInstance<Client>()));
+  getItInstance.registerLazySingleton<MovieRemoteDatasource>(
+      () => MovieRemoteDatasourceImpl(getItInstance<ApiClient>()));
+  getItInstance.registerLazySingleton<MovieRepository>(
+      () => MovieRepositoryImpl(getItInstance<MovieRemoteDatasource>()));
+  getItInstance.registerLazySingleton<GetTrending>(
+      () => GetTrending(getItInstance<MovieRepository>()));
+  getItInstance.registerLazySingleton<GetPopular>(
+      () => GetPopular(getItInstance<MovieRepository>()));
+  getItInstance.registerLazySingleton<GetCommingSoon>(
+      () => GetCommingSoon(getItInstance<MovieRepository>()));
+  getItInstance.registerLazySingleton<GetPlayingNow>(
+      () => GetPlayingNow(getItInstance<MovieRepository>()));
+  getItInstance.registerFactory(() => MovieBackdropBloc());
+  getItInstance.registerFactory<MovieCarouselBloc>(() => MovieCarouselBloc(
+      movieBackdropBloc: getItInstance(), getTrending: getItInstance()));
+      
+  getItInstance.registerFactory(() => MovieTabbedBloc(
+      getCommingSoon: GetCommingSoon(getItInstance()),
+      getPlayingNow: GetPlayingNow(getItInstance()),
+      getPopular: GetPopular(getItInstance())));
 
 
-    getItInstance.registerFactory(()=>MovieTabbedBloc(getCommingSoon: GetCommingSoon(getItInstance()), getPlayingNow: GetPlayingNow(getItInstance()), getPopular: GetPopular(getItInstance())));
+  getItInstance.registerSingleton<LanguageBloc>(LanguageBloc());
 }
-
