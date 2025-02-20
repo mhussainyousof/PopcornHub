@@ -49,7 +49,7 @@ class AppDialog extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.h,),
-            image,
+            image,  
             Button(text: TranslationConstants.okay, onPressed: (){
               Navigator.of(context).pop();
             })

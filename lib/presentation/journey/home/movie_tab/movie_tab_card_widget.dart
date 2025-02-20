@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/extensions/string_extension.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
+import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_arguments.dart';
+import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_screen.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
 
 class MovieTabCardWidget extends StatelessWidget {
@@ -18,7 +20,12 @@ class MovieTabCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+         Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => MovieDetailScreen(
+                  movieDetailArguments:
+                      MovieDetailArguments(movieId: movieId))));
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

@@ -87,9 +87,10 @@ extension ThemeTextExtension on TextTheme {
   TextStyle? get royalBlueSubtitle1 => titleMedium?.copyWith(
       color: AppColor.royalBlue, fontWeight: FontWeight.w600);
 
-  TextStyle? get greySubtitle1 => titleMedium?.copyWith(color: Colors.grey);
+  TextStyle? get greySubtitle1 => titleMedium!.apply(fontSizeFactor: 0.9).copyWith(color: Colors.grey);
 
-  TextStyle? get violetHeadline6 => titleLarge?.copyWith(color: AppColor.violet);
+  TextStyle? get violetHeadline6 => titleLarge?.copyWith(
+    color: AppColor.violet);
 
   TextStyle? get vulcanBodyText2 =>
       bodyMedium?.copyWith(color: AppColor.vulcan, fontWeight: FontWeight.w600);

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:popcornhub/data/data_source/movie_remote_datasource.dart';
 import 'package:popcornhub/data/domain/entity/app_erro.dart';
+import 'package:popcornhub/data/domain/entity/movie_detail_entity.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/data/domain/repository/movie_repository.dart';
 import 'package:popcornhub/data/model/movie_model.dart';
@@ -54,6 +55,16 @@ class MovieRepositoryImpl extends MovieRepository {
     } on SocketException {
       return left(AppError(AppErrorType.network));
     } on Exception {
+      return left(AppError(AppErrorType.api));
+    }
+  }
+
+  @override
+  Future<Either<AppError, MovieDetailEntity>> getMovieDetail(int id) async {
+    try {
+      final movie = await remoteDataSource.getMovieDetail(id);
+      return right(movie);
+    } on SocketException {
       return left(AppError(AppErrorType.api));
     }
   }

@@ -12,7 +12,6 @@ import 'package:popcornhub/presentation/theme/theme_text.dart';
 import 'package:popcornhub/presentation/wiredash_app.dart';
 
 class MovieApp extends StatefulWidget {
-
   const MovieApp({super.key});
 
   @override
@@ -37,39 +36,40 @@ class _MovieAppState extends State<MovieApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<LanguageBloc>.value(
-     value: _languageBloc,
+      value: _languageBloc,
       child: ScreenUtilInit(
         designSize: Size(414, 896),
         builder: (context, child) {
           return BlocBuilder<LanguageBloc, LanguageState>(
             builder: (context, state) {
-              if(state is LanguageLoaded){
+              if (state is LanguageLoaded) {
                 return WiredashApp(
                   languageCode: state.locale.languageCode,
                   navigatorKey: _navigatorKey,
                   child: MaterialApp(
                     navigatorKey: _navigatorKey,
-                              title: 'Movie App',
-                              theme: ThemeData(
-                                colorScheme: ColorScheme.light(
-                  secondaryContainer: AppColor.royalBlue,
-                  secondary: AppColor.royalBlue,
-                  primary: AppColor.vulcan,
-                  surface: AppColor.vulcan,
-                                ),
-                                textTheme: ThemeText.getTextTheme(),
-                                appBarTheme: AppBarTheme(elevation: 0),
-                              ),
-                              supportedLocales: Languages.languages.map((e) => Locale(e.code)).toList(),
-                              locale: state.locale,
-                              localizationsDelegates: [
-                                GlobalMaterialLocalizations.delegate,
-                                GlobalWidgetsLocalizations.delegate,
-                                GlobalCupertinoLocalizations.delegate,
-                                AppLocalizations.delegate
-                              ],
-                              home: HomeScreen(),
-                            ),
+                    title: 'Movie App',
+                    theme: ThemeData(
+                      colorScheme: ColorScheme.light(
+                        secondaryContainer: AppColor.royalBlue,
+                        secondary: AppColor.royalBlue,
+                        primary: AppColor.vulcan,
+                        surface: AppColor.vulcan,
+                      ),
+                      textTheme: ThemeText.getTextTheme(),
+                      appBarTheme: AppBarTheme(elevation: 0),
+                    ),
+                    supportedLocales:
+                        Languages.languages.map((e) => Locale(e.code)).toList(),
+                    locale: state.locale,
+                    localizationsDelegates: [
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                      AppLocalizations.delegate
+                    ],
+                    home: HomeScreen(),
+                  ),
                 );
               }
               return SizedBox.shrink();
