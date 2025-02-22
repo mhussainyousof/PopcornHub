@@ -25,8 +25,9 @@ dependencies:
   wiredash: ^2.4.0
   flutter_localizations:
     sdk: flutter
+  youtube_player_flutter: ^9.1.1
 
-dev_dependencies:
+dev_dependencies: 
   flutter_test:
     sdk: flutter
 

@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:popcornhub/data/domain/entity/app_erro.dart';
+import 'package:popcornhub/data/domain/entity/cast_entity.dart';
 import 'package:popcornhub/data/domain/entity/movie_detail_entity.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
+import 'package:popcornhub/data/domain/entity/video_entity.dart';
 
 abstract class MovieRepository {
   Future<Either<AppError, List<MovieEntity>>> getTrending(); 
@@ -9,4 +11,6 @@ abstract class MovieRepository {
   Future<Either<AppError, List<MovieEntity>>> getPlayingNow(); 
   Future<Either<AppError, List<MovieEntity>>> getComingSoon(); 
   Future<Either<AppError, MovieDetailEntity>> getMovieDetail(int id); 
+  Future<Either<AppError, List<CastEntity>>> getCastCrew(int id); 
+  Future<Either<AppError, List<VideoEntity>>> getVideos(int id); 
 }

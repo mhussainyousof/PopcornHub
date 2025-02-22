@@ -68,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       alignment: Alignment.bottomCenter,
                       heightFactor: 0.43,
                       child: MovieTabbedWidget()),
-                )
+                ),
+
+                
               ],
             );
           }else if(state is MovieCarouselError){

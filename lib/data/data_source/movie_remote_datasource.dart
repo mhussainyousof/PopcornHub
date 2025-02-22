@@ -1,7 +1,11 @@
 import 'package:popcornhub/data/core/api_client.dart';
+import 'package:popcornhub/data/domain/entity/video_entity.dart';
+import 'package:popcornhub/data/model/cast_crew_result_data_model.dart';
 import 'package:popcornhub/data/model/movie_detail_model.dart';
 import 'package:popcornhub/data/model/movie_model.dart';
 import 'package:popcornhub/data/model/movie_result.dart';
+import 'package:popcornhub/data/model/video_model.dart';
+import 'package:popcornhub/data/model/video_result_model.dart';
 
 abstract class MovieRemoteDatasource {
   Future<List<MovieModel>> getTrending();
@@ -9,6 +13,8 @@ abstract class MovieRemoteDatasource {
   Future<List<MovieModel>> getPlayingNow();
   Future<List<MovieModel>> getComingSoon();
   Future <MovieDetailModel> getMovieDetail(int id);
+  Future <List<CastModel>> getCastCrew(int id);
+  Future <List<VideoEntity>> getVideos(int id);
 }
 
 class MovieRemoteDatasourceImpl extends MovieRemoteDatasource {
@@ -53,7 +59,18 @@ class MovieRemoteDatasourceImpl extends MovieRemoteDatasource {
     final movie = MovieDetailModel.fromJson(response);
     return movie;
   }
-
-
   
+  @override
+  Future<List<CastModel>> getCastCrew(int id)async {
+    final response = await _client.get('movie/$id/credits');
+    final cast = CastCrewResultModel.fromJson(response).cast;
+    return cast;
+  }
+  
+  @override
+  Future<List<VideoModel>> getVideos(int id) async {
+    final response = await _client.get('movie/$id/videos');
+    final videos = VideoResultModel.fromJson(response).videos!;
+    return videos;
+  }
 }

@@ -2,7 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:popcornhub/common/extensions/string_extension.dart';
+import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_arguments.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_screen.dart';
