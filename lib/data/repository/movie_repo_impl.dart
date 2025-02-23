@@ -1,14 +1,12 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:popcornhub/data/data_source/movie_remote_datasource.dart';
 import 'package:popcornhub/data/domain/entity/app_erro.dart';
-import 'package:popcornhub/data/domain/entity/movie_detail_entity.dart';
-import 'package:popcornhub/data/domain/entity/movie_entity.dart';
-import 'package:popcornhub/data/domain/entity/video_entity.dart';
 import 'package:popcornhub/data/domain/repository/movie_repository.dart';
 import 'package:popcornhub/data/model/cast_crew_result_data_model.dart';
+import 'package:popcornhub/data/model/movie_detail_model.dart';
 import 'package:popcornhub/data/model/movie_model.dart';
+import 'package:popcornhub/data/model/video_model.dart';
 
 class MovieRepositoryImpl extends MovieRepository {
   final MovieRemoteDatasource remoteDataSource;
@@ -26,7 +24,7 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getComingSoon() async {
+  Future<Either<AppError, List<MovieModel>>> getComingSoon() async {
     try {
       final movies = await remoteDataSource.getComingSoon();
       return right(movies);
@@ -38,7 +36,7 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getPlayingNow() async {
+  Future<Either<AppError, List<MovieModel>>> getPlayingNow() async {
     try {
       final movies = await remoteDataSource.getPlayingNow();
       return right(movies);
@@ -50,7 +48,7 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<MovieEntity>>> getPopular() async {
+  Future<Either<AppError, List<MovieModel>>> getPopular() async {
     try {
       final movies = await remoteDataSource.getPopular();
       return right(movies);
@@ -62,7 +60,7 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, MovieDetailEntity>> getMovieDetail(int id) async {
+  Future<Either<AppError, MovieDetailModel>> getMovieDetail(int id) async {
     try {
       final movie = await remoteDataSource.getMovieDetail(id);
       return right(movie);
@@ -84,7 +82,7 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<Either<AppError, List<VideoEntity>>> getVideos(int id) async{
+  Future<Either<AppError, List<VideoModel>>> getVideos(int id) async{
     try{
       final videos = await remoteDataSource.getVideos(id);
       return right(videos);
@@ -93,5 +91,18 @@ class MovieRepositoryImpl extends MovieRepository {
     }on Exception{
       return left(AppError(AppErrorType.api));
     }
+  }
+  
+  @override
+  Future<Either<AppError, List<MovieModel>>> getSearchedMovies(String searchTerm) async{
+    try{
+      final movies = await remoteDataSource.getSearchedMovies(searchTerm);
+      return right(movies);
+    }on SocketException{
+      return left(AppError(AppErrorType.network));
+    }on Exception{
+      return left(AppError(AppErrorType.api));
+    }   
+
   }
 }

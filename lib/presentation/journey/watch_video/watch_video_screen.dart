@@ -80,51 +80,25 @@ class VideoItem extends StatelessWidget {
 
   const VideoItem({super.key, required this.video, required this.onTap});
 
-  // تابع موقتی برای نمایش زمان تصادفی (بعداً می‌تونیم API واقعی اضافه کنیم)
-  String getFakeDuration() {
-    final randomMinutes = (2 + (30 * (video.key.hashCode % 10) / 10)).toInt();
-    final seconds = (10 + (50 * (video.key.hashCode % 5) / 5)).toInt();
-    return "$randomMinutes:${seconds.toString().padLeft(2, '0')}";
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.symmetric(vertical: 5.h),
+      padding:  EdgeInsets.symmetric(vertical: 3.h),
       child: ListTile(
         onTap: onTap,
-        leading: Stack(
-          children: [
-            CachedNetworkImage(
-              width: 120,
-              height: 70,
-              imageUrl: YoutubePlayer.getThumbnail(
-                videoId: video.key,
-                quality: ThumbnailQuality.high,
-              ),
-              fit: BoxFit.cover,
-            ),
-            Positioned(
-              bottom: 5,
-              right: 5,
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  getFakeDuration(), // زمان ویدیو
-                  style: const TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              ),
-            ),
-          ],
+        leading: CachedNetworkImage(
+          width: 120,
+          height: 70,
+          imageUrl: YoutubePlayer.getThumbnail(
+            videoId: video.key,
+            quality: ThumbnailQuality.high,
+          ),
+          fit: BoxFit.cover,
         ),
         title: Text(
           video.title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+          maxLines: 1, 
+          overflow: TextOverflow.ellipsis, 
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
