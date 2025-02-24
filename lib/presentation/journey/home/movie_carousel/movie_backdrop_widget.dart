@@ -23,10 +23,17 @@ class MovieBackdropWidget extends StatelessWidget {
               child: BlocBuilder<MovieBackdropBloc, MovieBackdropState>(
                 builder: (context, state) {
                   if (state is MovieBackdropChanged) {
+                    String backdropPath = state.movie.backdropPath;
+                    String posterPath = state.movie.posterPath;
+
+                    String imageUrl = backdropPath.isNotEmpty
+                        ? '${ApiConstants.baseImageUrl}$backdropPath'
+                        : '${ApiConstants.baseImageUrl}$posterPath';
+
                     return CachedNetworkImage(
-                      imageUrl:
-                          '${ApiConstants.baseImageUrl}${state.movie.backdropPath}',
+                      imageUrl: imageUrl,
                       fit: BoxFit.fitHeight,
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     );
                   }
                   return SizedBox.shrink();
@@ -35,8 +42,7 @@ class MovieBackdropWidget extends StatelessWidget {
             ),
             BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: SizedBox.expand(), 
-
+              child: SizedBox.expand(),
             )
           ],
         ),
@@ -44,4 +50,3 @@ class MovieBackdropWidget extends StatelessWidget {
     );
   }
 }
-

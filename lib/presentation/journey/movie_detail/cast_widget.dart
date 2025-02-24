@@ -48,7 +48,8 @@ class CastWidget extends StatelessWidget {
                               width: 120.w,
                               fit: BoxFit.fitWidth,
                             ),
-                          )),
+                          )
+                          ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
                             child: Text(

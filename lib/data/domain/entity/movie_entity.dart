@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:popcornhub/data/domain/entity/movie_detail_entity.dart';
 
-class  MovieEntity extends Equatable {
+class MovieEntity extends Equatable {
   final String posterPath;
   final int id;
   final String title;
@@ -9,7 +10,6 @@ class  MovieEntity extends Equatable {
   final String? overview;
   final String backdropPath;
 
-
   const MovieEntity(
       {required this.posterPath,
       required this.id,
@@ -17,11 +17,22 @@ class  MovieEntity extends Equatable {
       required this.voteAverage,
       required this.releaseDate,
       required this.backdropPath,
-       this.overview});
+      this.overview});
 
   @override
   List<Object> get props => [id, title];
-  
+
   @override
   bool get stringify => true;
+
+  factory MovieEntity.fromMovieDetailEntity(
+      MovieDetailEntity movieDetailEntity) {
+    return MovieEntity(
+        posterPath: movieDetailEntity.posterPath,
+        id: movieDetailEntity.id,
+        title: movieDetailEntity.title,
+        voteAverage: movieDetailEntity.voteAverage,
+        releaseDate: movieDetailEntity.releaseDate,
+        backdropPath: movieDetailEntity.backdropPath);
+  }
 }

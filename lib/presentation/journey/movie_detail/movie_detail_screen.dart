@@ -5,6 +5,7 @@ import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/blocs/cast/cast_bloc.dart';
+import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_detail/movie_detail_bloc.dart';
 import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/big_poster.dart';
@@ -23,6 +24,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   late final MovieDetailBloc _movieDetailBloc;
   late final CastBloc _castBloc;
   late final VideoBloc _videoBloc;
+  late final FavoriteBloc _favoriteBloc;
   @override
   void initState() {
     super.initState();
@@ -31,6 +33,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         .add(MovieDetailLoadEvent(widget.movieDetailArguments.movieId));
     _videoBloc = _movieDetailBloc.videoBloc;
     _castBloc = _movieDetailBloc.castBloc;
+    _favoriteBloc = _movieDetailBloc.favoriteBloc;
   }
 
   @override
@@ -39,6 +42,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     _movieDetailBloc.close();
     _castBloc.close();
     _videoBloc.close();
+    _favoriteBloc.close();
   }
 
   @override
@@ -48,7 +52,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         providers: [
           BlocProvider.value(value: _movieDetailBloc),
           BlocProvider.value(value: _castBloc),
-          BlocProvider.value(value: _videoBloc)
+          BlocProvider.value(value: _videoBloc),
+          BlocProvider.value(value: _favoriteBloc)
         ],
         child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
           builder: (context, state) {

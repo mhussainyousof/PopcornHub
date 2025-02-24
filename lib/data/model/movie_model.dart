@@ -39,7 +39,7 @@ class MovieModel extends MovieEntity {
       voteAverage: (json['vote_average'] as num?) ?? 0.0,
       releaseDate: json['release_date'] ?? "Unknown",
       overview: json['overview'],
-      backdropPath: json['backdrop_path'] ?? 'Unknown',
+      backdropPath: json['backdrop_path'] ?? '',
       originalTitle: json['original_title'],
       mediaType: json['media_type'],
       adult: json['adult'],
