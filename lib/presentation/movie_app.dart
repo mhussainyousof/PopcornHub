@@ -50,7 +50,7 @@ class _MovieAppState extends State<MovieApp> {
                     navigatorKey: _navigatorKey,
                     title: 'Movie App',
                     theme: ThemeData(
-                      colorScheme: ColorScheme.light(
+                      colorScheme: ColorScheme.dark(
                         secondaryContainer: AppColor.royalBlue,
                         secondary: AppColor.royalBlue,
                         primary: AppColor.vulcan,

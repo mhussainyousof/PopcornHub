@@ -45,9 +45,17 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
       );
     });
 
-    on<DeleteFavoriteMovieEvent>((event, emit) async {
-      await deleteFavoriteMovie(MovieParams(event.movieId));
-    });
+on<DeleteFavoriteMovieEvent>((event, emit) async {
+  await deleteFavoriteMovie(MovieParams(event.movieId));
+
+  final response = await getFavoriteMovies(NoParams());
+
+  response.fold(
+    (l) => emit(FavoriteMoviesError()), 
+    (r) => emit(FavoriteMovieLoaded(r)),
+  );
+});
+
 
     on<CheckIfFavoriteMovie>((event, emit) async {
       final response =
