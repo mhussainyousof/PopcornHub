@@ -16,14 +16,12 @@ class MovieCarouselBloc extends Bloc<MovieCarouselEvent, MovieCarouselState> {
       {required this.movieBackdropBloc, required this.getTrending})
       : super(MovieCarouselInitial()) {
     on<MovieCarouselEvent>((event, emit) async {
-
       if (event is MovieCarouselLoadedEvent) {
-
         final movieEither = await getTrending(NoParams());
-        
-        movieEither.fold((failure) => emit(MovieCarouselError(
-          failure.appErrorType
-        )), (movies) {
+
+        movieEither
+            .fold((failure) => emit(MovieCarouselError(failure.appErrorType)),
+                (movies) {
           movieBackdropBloc
               .add(MovieBackdropEventChanged(movies[event.defaultIndex]));
           if (movies.isNotEmpty) {
