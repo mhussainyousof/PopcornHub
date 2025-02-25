@@ -1,8 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:popcornhub/data/core/api_client.dart';
+import 'package:popcornhub/data/data_source/language_local_data_source.dart';
 import 'package:popcornhub/data/data_source/movie_local_data_source.dart';
 import 'package:popcornhub/data/data_source/movie_remote_datasource.dart';
+import 'package:popcornhub/data/domain/repository/app_repository.dart';
 import 'package:popcornhub/data/domain/repository/movie_repository.dart';
 import 'package:popcornhub/data/domain/usecase/check_if_movie_favorite.dart';
 import 'package:popcornhub/data/domain/usecase/delete_favorite_movie.dart';
@@ -12,10 +14,13 @@ import 'package:popcornhub/data/domain/usecase/get_favorite_movies.dart';
 import 'package:popcornhub/data/domain/usecase/get_movie_detail.dart';
 import 'package:popcornhub/data/domain/usecase/get_playingnow.dart';
 import 'package:popcornhub/data/domain/usecase/get_popular.dart';
+import 'package:popcornhub/data/domain/usecase/get_prefered_langauge.dart';
 import 'package:popcornhub/data/domain/usecase/get_trending.dart';
 import 'package:popcornhub/data/domain/usecase/get_videos.dart';
 import 'package:popcornhub/data/domain/usecase/save_movie.dart';
 import 'package:popcornhub/data/domain/usecase/search_movie.dart';
+import 'package:popcornhub/data/domain/usecase/update_langauge.dart';
+import 'package:popcornhub/data/repository/app_repo_impl.dart';
 import 'package:popcornhub/data/repository/movie_repo_impl.dart';
 import 'package:popcornhub/presentation/blocs/cast/cast_bloc.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
@@ -35,10 +40,14 @@ Future<void> init() async {
       () => ApiClient(getItInstance<Client>()));
   getItInstance.registerLazySingleton<MovieRemoteDatasource>(
       () => MovieRemoteDatasourceImpl(getItInstance<ApiClient>()));
+  getItInstance.registerLazySingleton<LanguageLocalDataSource>(
+      () => LanguageLocalDataSourceImpl());
   getItInstance.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl());
   getItInstance.registerLazySingleton<MovieRepository>(
       () => MovieRepositoryImpl(getItInstance(), getItInstance()));
+  getItInstance.registerLazySingleton<AppRepository>(
+      () => AppRepoImpl(languageLocalDataSource: getItInstance()));
   getItInstance.registerLazySingleton<GetTrending>(
       () => GetTrending(getItInstance<MovieRepository>()));
   getItInstance
@@ -61,6 +70,10 @@ Future<void> init() async {
       () => GetFavoriteMovies(getItInstance()));
   getItInstance
       .registerLazySingleton<SearchMovies>(() => SearchMovies(getItInstance()));
+  getItInstance.registerLazySingleton<UpdateLangauge>(
+      () => UpdateLangauge(appRepository: getItInstance()));
+  getItInstance.registerLazySingleton<GetPreferedLangauge>(
+      () => GetPreferedLangauge(appRepository: getItInstance()));
 
   getItInstance
       .registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
@@ -73,10 +86,12 @@ Future<void> init() async {
       getPlayingNow: getItInstance(),
       getPopular: getItInstance()));
 
-  getItInstance.registerSingleton<LanguageBloc>(LanguageBloc());
+  getItInstance.registerSingleton<LanguageBloc>(LanguageBloc(getPreferedLangauge: getItInstance(),
+  updateLangauge: getItInstance()
+  ));
 
   getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(
-    favoriteBloc: getItInstance(),
+      favoriteBloc: getItInstance(),
       videoBloc: getItInstance(),
       castBloc: getItInstance(),
       getMovieDetail: getItInstance()));
@@ -85,11 +100,9 @@ Future<void> init() async {
       .registerFactory<VideoBloc>(() => VideoBloc(getVideos: getItInstance()));
   getItInstance.registerFactory<SearchMovieBloc>(
       () => SearchMovieBloc(searchMovies: getItInstance()));
-  getItInstance.registerFactory<FavoriteBloc>(
-      () => FavoriteBloc(
-        checkIfMovieFavoriteMovie: getItInstance(),
-        deleteFavoriteMovie: getItInstance(),
-        getFavoriteMovies: getItInstance(),
-        saveMovie: getItInstance()
-      ));
+  getItInstance.registerFactory<FavoriteBloc>(() => FavoriteBloc(
+      checkIfMovieFavoriteMovie: getItInstance(),
+      deleteFavoriteMovie: getItInstance(),
+      getFavoriteMovies: getItInstance(),
+      saveMovie: getItInstance()));
 }
