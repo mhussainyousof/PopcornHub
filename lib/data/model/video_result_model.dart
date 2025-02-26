@@ -13,7 +13,7 @@ class VideoResultModel {
       json['results'].forEach((v) {
         var videoModel = VideoModel.fromJson(v);
         if (_isValidVideo(videoModel)) {
-          videos.add(videoModel); // **فقط یک‌بار مقداردهی کنیم**
+          videos.add(videoModel);
         }
       });
     }

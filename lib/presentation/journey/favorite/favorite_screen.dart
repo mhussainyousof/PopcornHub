@@ -5,7 +5,6 @@ import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
 import 'package:popcornhub/presentation/journey/favorite/favorite_movie_grid_view.dart';
-import 'package:popcornhub/presentation/theme/theme_text.dart';
 
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
@@ -34,29 +33,29 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(TranslationConstants.favoriteMovies.t(context),),
+        title: Text(
+          TranslationConstants.favoriteMovies.t(context),
+        ),
         centerTitle: true,
       ),
       body: BlocProvider.value(
-        value: _favoriteBloc,
-        child: BlocBuilder<FavoriteBloc, FavoriteState>(
-          builder: (context, state) {
-            if(state is FavoriteMovieLoaded){
-              if (state.movies.isEmpty){
-                return Center(child: Text(TranslationConstants.noFavoriteMovie.t(context),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium,
+          value: _favoriteBloc,
+          child: BlocBuilder<FavoriteBloc, FavoriteState>(
+              builder: (context, state) {
+            if (state is FavoriteMovieLoaded) {
+              if (state.movies.isEmpty) {
+                return Center(
+                    child: Text(
+                  TranslationConstants.noFavoriteMovie.t(context),
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ));
               }
-              return FavoriteMovieGridView(
-                state.movies
-              );
+              return FavoriteMovieGridView(state.movies);
             }
-            
-          return SizedBox.shrink();
-          }
-        )
-      ),
+
+            return SizedBox.shrink();
+          })),
     );
   }
 }

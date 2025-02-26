@@ -7,7 +7,7 @@ sealed class FavoriteEvent extends Equatable {
 class LoadFavoriteMovieEvent extends FavoriteEvent {
   @override
   List<Object?> get props => [];
-}
+} 
 
 class DeleteFavoriteMovieEvent extends FavoriteEvent {
   final int movieId;

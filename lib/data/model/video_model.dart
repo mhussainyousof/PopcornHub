@@ -34,10 +34,10 @@ class VideoModel extends VideoEntity {
       id: json['id'] as String?,
       iso6391: json['iso_639_1'] as String?,
       iso31661: json['iso_3166_1'] as String?,
-      key: json['key'].toString(), // **مطمئن شدن از تبدیل به String**
+      key: json['key'].toString(), 
       name: json['name'] ?? '',
       site: json['site'] as String?,
-      size: (json['size'] as int?) ?? 0, // مقدار `size` را نال‌سیف کنیم
+      size: (json['size'] as int?) ?? 0, 
       type: json['type'] ?? '',
     );
   }
@@ -48,10 +48,10 @@ class VideoModel extends VideoEntity {
       'id': id,
       'iso_639_1': iso6391,
       'iso_316_6_1': iso31661,
-      'key': key, // از قبل String هست
+      'key': key,
       'name': name,
       'site': site,
-      'size': size ?? 0, // جلوگیری از نال بودن مقدار `size`
+      'size': size ?? 0, 
       'type': type,
     };
   }

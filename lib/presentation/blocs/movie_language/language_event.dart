@@ -7,16 +7,12 @@ sealed class LanguageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
-final class ToggleLanguageEvent extends LanguageEvent{
+final class ToggleLanguageEvent extends LanguageEvent {
   final LanguageEntity language;
   const ToggleLanguageEvent(this.language);
 
-@override
+  @override
   List<Object> get props => [language.code];
 }
 
-
-class LoadPreferedLanguageEvent extends LanguageEvent{
-  
-}
+class LoadPreferedLanguageEvent extends LanguageEvent {}

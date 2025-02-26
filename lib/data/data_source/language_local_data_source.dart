@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:hive/hive.dart';
 
 abstract class LanguageLocalDataSource {
@@ -21,5 +20,4 @@ class LanguageLocalDataSourceImpl extends LanguageLocalDataSource{
     final languageBox = await Hive.openBox('languageBox');
     unawaited(languageBox.put('preferred_language', languageCode )); 
   }
-
 }

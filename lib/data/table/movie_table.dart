@@ -24,8 +24,8 @@ class MovieTable extends MovieEntity {
           title: title,
           posterPath: posterPath,
           backdropPath: '',
-          voteAverage: 0.0,
           releaseDate: '',
+          voteAverage: 0.0,
         );
 
   factory MovieTable.formMovieEntity(MovieEntity movieEntity) {

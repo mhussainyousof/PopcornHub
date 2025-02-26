@@ -35,74 +35,43 @@ import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
 final getItInstance = GetIt.I;
 
 Future<void> init() async {
+  //! 🔹 Register API and HTTP Client
   getItInstance.registerLazySingleton<Client>(() => Client());
-  getItInstance.registerLazySingleton<ApiClient>(
-      () => ApiClient(getItInstance<Client>()));
-  getItInstance.registerLazySingleton<MovieRemoteDatasource>(
-      () => MovieRemoteDatasourceImpl(getItInstance<ApiClient>()));
-  getItInstance.registerLazySingleton<LanguageLocalDataSource>(
-      () => LanguageLocalDataSourceImpl());
-  getItInstance.registerLazySingleton<MovieLocalDataSource>(
-      () => MovieLocalDataSourceImpl());
-  getItInstance.registerLazySingleton<MovieRepository>(
-      () => MovieRepositoryImpl(getItInstance(), getItInstance()));
-  getItInstance.registerLazySingleton<AppRepository>(
-      () => AppRepoImpl(languageLocalDataSource: getItInstance()));
-  getItInstance.registerLazySingleton<GetTrending>(
-      () => GetTrending(getItInstance<MovieRepository>()));
-  getItInstance
-      .registerLazySingleton<GetPopular>(() => GetPopular(getItInstance()));
-  getItInstance.registerLazySingleton(() => GetCommingSoon(getItInstance()));
-  getItInstance.registerLazySingleton<GetPlayingNow>(
-      () => GetPlayingNow(getItInstance()));
+  getItInstance.registerLazySingleton<ApiClient>(() => ApiClient(getItInstance<Client>()));
 
-  getItInstance.registerLazySingleton(() => GetMovieDetail(getItInstance()));
+  //! 🔹 Register Data Sources
+  getItInstance.registerLazySingleton<MovieRemoteDatasource>(() => MovieRemoteDatasourceImpl(getItInstance<ApiClient>()));
+  getItInstance.registerLazySingleton<MovieLocalDataSource>(() => MovieLocalDataSourceImpl());
+  getItInstance.registerLazySingleton<LanguageLocalDataSource>(() => LanguageLocalDataSourceImpl());
+
+  //! 🔹 Register Repository
+  getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(getItInstance<MovieLocalDataSource>(), getItInstance<MovieRemoteDatasource>()));
+  getItInstance.registerLazySingleton<AppRepository>(() => AppRepoImpl(languageLocalDataSource: getItInstance()));
+
+  //! 🔹 Register Use Cases
+  getItInstance.registerLazySingleton<GetTrending>(() => GetTrending(getItInstance()));
+  getItInstance.registerLazySingleton<GetPopular>(() => GetPopular(getItInstance()));
+  getItInstance.registerLazySingleton<GetCommingSoon>(() => GetCommingSoon(getItInstance()));
+  getItInstance.registerLazySingleton<GetPlayingNow>(() => GetPlayingNow(getItInstance()));
+  getItInstance.registerLazySingleton<GetMovieDetail>(() => GetMovieDetail(getItInstance()));
   getItInstance.registerLazySingleton<GetCast>(() => GetCast(getItInstance()));
-  getItInstance
-      .registerLazySingleton<GetVideos>(() => GetVideos(getItInstance()));
-  getItInstance
-      .registerLazySingleton<SaveMovie>(() => SaveMovie(getItInstance()));
-  getItInstance.registerLazySingleton<CheckIfMovieFavoriteMovie>(
-      () => CheckIfMovieFavoriteMovie(getItInstance()));
-  getItInstance.registerLazySingleton<DeleteFavoriteMovie>(
-      () => DeleteFavoriteMovie(getItInstance()));
-  getItInstance.registerLazySingleton<GetFavoriteMovies>(
-      () => GetFavoriteMovies(getItInstance()));
-  getItInstance
-      .registerLazySingleton<SearchMovies>(() => SearchMovies(getItInstance()));
-  getItInstance.registerLazySingleton<UpdateLangauge>(
-      () => UpdateLangauge(appRepository: getItInstance()));
-  getItInstance.registerLazySingleton<GetPreferedLangauge>(
-      () => GetPreferedLangauge(appRepository: getItInstance()));
+  getItInstance.registerLazySingleton<SearchMovies>(() => SearchMovies(getItInstance()));
+  getItInstance.registerLazySingleton<GetVideos>(() => GetVideos(getItInstance()));
+  getItInstance.registerLazySingleton<SaveMovie>(() => SaveMovie(getItInstance()));
+  getItInstance.registerLazySingleton<DeleteFavoriteMovie>(() => DeleteFavoriteMovie(getItInstance()));
+  getItInstance.registerLazySingleton<CheckIfMovieFavoriteMovie>(() => CheckIfMovieFavoriteMovie(getItInstance()));
+  getItInstance.registerLazySingleton<GetFavoriteMovies>(() => GetFavoriteMovies(getItInstance()));
+  getItInstance.registerLazySingleton<UpdateLangauge>(() => UpdateLangauge(appRepository: getItInstance()));
+  getItInstance.registerLazySingleton<GetPreferedLangauge>(() => GetPreferedLangauge(appRepository: getItInstance()));
 
-  getItInstance
-      .registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
-  getItInstance.registerFactory(() => MovieBackdropBloc());
-  getItInstance.registerFactory<MovieCarouselBloc>(() => MovieCarouselBloc(
-      movieBackdropBloc: getItInstance(), getTrending: getItInstance()));
-
-  getItInstance.registerFactory(() => MovieTabbedBloc(
-      getCommingSoon: getItInstance(),
-      getPlayingNow: getItInstance(),
-      getPopular: getItInstance()));
-
-  getItInstance.registerSingleton<LanguageBloc>(LanguageBloc(getPreferedLangauge: getItInstance(),
-  updateLangauge: getItInstance()
-  ));
-
-  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(
-      favoriteBloc: getItInstance(),
-      videoBloc: getItInstance(),
-      castBloc: getItInstance(),
-      getMovieDetail: getItInstance()));
-
-  getItInstance
-      .registerFactory<VideoBloc>(() => VideoBloc(getVideos: getItInstance()));
-  getItInstance.registerFactory<SearchMovieBloc>(
-      () => SearchMovieBloc(searchMovies: getItInstance()));
-  getItInstance.registerFactory<FavoriteBloc>(() => FavoriteBloc(
-      checkIfMovieFavoriteMovie: getItInstance(),
-      deleteFavoriteMovie: getItInstance(),
-      getFavoriteMovies: getItInstance(),
-      saveMovie: getItInstance()));
+  //! 🔹 Register BLoCs
+  getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
+  getItInstance.registerFactory<MovieBackdropBloc>(() => MovieBackdropBloc());
+  getItInstance.registerFactory<MovieCarouselBloc>(() => MovieCarouselBloc(movieBackdropBloc: getItInstance(), getTrending: getItInstance()));
+  getItInstance.registerFactory<MovieTabbedBloc>(() => MovieTabbedBloc(getCommingSoon: getItInstance(), getPlayingNow: getItInstance(), getPopular: getItInstance()));
+  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(favoriteBloc: getItInstance(), videoBloc: getItInstance(), castBloc: getItInstance(), getMovieDetail: getItInstance()));
+  getItInstance.registerFactory<VideoBloc>(() => VideoBloc(getVideos: getItInstance()));
+  getItInstance.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(searchMovies: getItInstance()));
+  getItInstance.registerFactory<FavoriteBloc>(() => FavoriteBloc(checkIfMovieFavoriteMovie: getItInstance(), deleteFavoriteMovie: getItInstance(), getFavoriteMovies: getItInstance(), saveMovie: getItInstance()));
+  getItInstance.registerSingleton<LanguageBloc>(LanguageBloc(getPreferedLangauge: getItInstance(), updateLangauge: getItInstance()));
 }
