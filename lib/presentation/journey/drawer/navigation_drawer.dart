@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/presentation/journey/favorite/favorite_screen.dart';
 import 'package:popcornhub/presentation/widget/app_dialog.dart';
 import 'package:wiredash/wiredash.dart';
@@ -34,7 +35,8 @@ class NavigationDrawerr extends StatelessWidget {
           NavigationListItem(
             title: TranslationConstants.favoriteMovies.t(context),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> FavoriteScreen()));
+              Navigator.of(context).pushNamed(RouteList.favorite);
+              // Navigator.of(context).push(MaterialPageRoute(builder: (context)=> FavoriteScreen()));
             },
           ),
           NavigationExpandedListItem(

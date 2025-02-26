@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
 import 'package:popcornhub/presentation/journey/watch_video/watch_video_arguments.dart';
@@ -19,9 +20,10 @@ class VideosWidget extends StatelessWidget {
           return Button(
               text: TranslationConstants.watchTrailers,
               onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(builder: (context)
-               => WatchVideoScreen(watchVideoArguments: WatchVideoArguments(videos))
-               ));
+                Navigator.of(context).pushNamed(RouteList.watchTrailer, arguments: WatchVideoArguments(videos));
+              //  Navigator.of(context).push(MaterialPageRoute(builder: (context)
+              //  => WatchVideoScreen(watchVideoArguments: WatchVideoArguments(videos))
+              //  ));
               });
         } else {
           return SizedBox.shrink();
