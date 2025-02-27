@@ -62,6 +62,12 @@ class NavigationDrawerr extends StatelessWidget {
               _showDialog2(context);
             },
           ),
+          NavigationListItem(
+            title: TranslationConstants.logout.t(context),
+            onPressed: () {
+             
+            },
+          ),
         ],
       )),
     );

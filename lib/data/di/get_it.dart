@@ -1,10 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:popcornhub/data/core/api_client.dart';
+import 'package:popcornhub/data/data_source/authentication_local_data_source.dart';
+import 'package:popcornhub/data/data_source/authintication_remote_data_source.dart';
 import 'package:popcornhub/data/data_source/language_local_data_source.dart';
 import 'package:popcornhub/data/data_source/movie_local_data_source.dart';
 import 'package:popcornhub/data/data_source/movie_remote_datasource.dart';
 import 'package:popcornhub/data/domain/repository/app_repository.dart';
+import 'package:popcornhub/data/domain/repository/authentication_repository.dart';
 import 'package:popcornhub/data/domain/repository/movie_repository.dart';
 import 'package:popcornhub/data/domain/usecase/check_if_movie_favorite.dart';
 import 'package:popcornhub/data/domain/usecase/delete_favorite_movie.dart';
@@ -17,13 +20,16 @@ import 'package:popcornhub/data/domain/usecase/get_popular.dart';
 import 'package:popcornhub/data/domain/usecase/get_prefered_langauge.dart';
 import 'package:popcornhub/data/domain/usecase/get_trending.dart';
 import 'package:popcornhub/data/domain/usecase/get_videos.dart';
+import 'package:popcornhub/data/domain/usecase/login_user.dart';
 import 'package:popcornhub/data/domain/usecase/save_movie.dart';
 import 'package:popcornhub/data/domain/usecase/search_movie.dart';
 import 'package:popcornhub/data/domain/usecase/update_langauge.dart';
 import 'package:popcornhub/data/repository/app_repo_impl.dart';
+import 'package:popcornhub/data/repository/authentication_repository_impl.dart';
 import 'package:popcornhub/data/repository/movie_repo_impl.dart';
 import 'package:popcornhub/presentation/blocs/cast/cast_bloc.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
+import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_detail/movie_detail_bloc.dart';
@@ -43,10 +49,15 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<MovieRemoteDatasource>(() => MovieRemoteDatasourceImpl(getItInstance<ApiClient>()));
   getItInstance.registerLazySingleton<MovieLocalDataSource>(() => MovieLocalDataSourceImpl());
   getItInstance.registerLazySingleton<LanguageLocalDataSource>(() => LanguageLocalDataSourceImpl());
+  getItInstance.registerLazySingleton<AuthenticationRemoteDataSource>(()=> AuthenticationRemoteDataSourceImpl(getItInstance<ApiClient>()));
+  getItInstance.registerLazySingleton<AuthenticationLocalDataSource>(()=> AuthenticationLocalDataSourceImpl());
+
 
   //! 🔹 Register Repository
   getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(getItInstance<MovieLocalDataSource>(), getItInstance<MovieRemoteDatasource>()));
   getItInstance.registerLazySingleton<AppRepository>(() => AppRepoImpl(languageLocalDataSource: getItInstance()));
+  getItInstance.registerLazySingleton<AuthenticationRepository>(() => AuthenticationRepositoryImpl(getItInstance<AuthenticationRemoteDataSource>(), getItInstance<AuthenticationLocalDataSource>()));
+
 
   //! 🔹 Register Use Cases
   getItInstance.registerLazySingleton<GetTrending>(() => GetTrending(getItInstance()));
@@ -63,6 +74,7 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<GetFavoriteMovies>(() => GetFavoriteMovies(getItInstance()));
   getItInstance.registerLazySingleton<UpdateLangauge>(() => UpdateLangauge(appRepository: getItInstance()));
   getItInstance.registerLazySingleton<GetPreferedLangauge>(() => GetPreferedLangauge(appRepository: getItInstance()));
+  getItInstance.registerLazySingleton<LoginUser>(() => LoginUser(getItInstance()));
 
   //! 🔹 Register BLoCs
   getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
@@ -74,4 +86,5 @@ Future<void> init() async {
   getItInstance.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(searchMovies: getItInstance()));
   getItInstance.registerFactory<FavoriteBloc>(() => FavoriteBloc(checkIfMovieFavoriteMovie: getItInstance(), deleteFavoriteMovie: getItInstance(), getFavoriteMovies: getItInstance(), saveMovie: getItInstance()));
   getItInstance.registerSingleton<LanguageBloc>(LanguageBloc(getPreferedLangauge: getItInstance(), updateLangauge: getItInstance()));
+  getItInstance.registerSingleton<LoginBloc>(LoginBloc(loginUser: getItInstance()));
 }

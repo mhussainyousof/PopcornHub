@@ -6,6 +6,7 @@ import 'package:popcornhub/common/constants/languages.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/app_localizations.dart';
+import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/fade_page_route_builder.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
@@ -24,23 +25,30 @@ class MovieApp extends StatefulWidget {
 class _MovieAppState extends State<MovieApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   late final LanguageBloc _languageBloc;
+  late final LoginBloc _loginBloc;
   @override
   void initState() {
     super.initState();
     _languageBloc = getItInstance<LanguageBloc>();
     _languageBloc.add(LoadPreferedLanguageEvent());
+    _loginBloc = getItInstance<LoginBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
     _languageBloc.close();
+    _loginBloc.close();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<LanguageBloc>.value(
-      value: _languageBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LanguageBloc>.value(value:_languageBloc ),
+        BlocProvider<LoginBloc>.value(value:_loginBloc )
+      ],
+      
       child: ScreenUtilInit(
         designSize: Size(414, 896),
         builder: (context, child) {
