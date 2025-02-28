@@ -4,14 +4,19 @@ import 'package:equatable/equatable.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/data/domain/entity/app_erro.dart';
 import 'package:popcornhub/data/domain/entity/login_request_params.dart';
+import 'package:popcornhub/data/domain/entity/no_params.dart';
 import 'package:popcornhub/data/domain/usecase/login_user.dart';
+import 'package:popcornhub/data/domain/usecase/logout_user.dart';
 
 part 'loging_event.dart';
 part 'loging_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUser loginUser;
-  LoginBloc({required this.loginUser}) : super(LogingInitial()) {
+  final LogoutUser logoutUser;
+  LoginBloc({
+    required this.logoutUser,
+    required this.loginUser}) : super(LogingInitial()) {
     on<LoginEvent>((event, emit) async {
       if (event is LoginIinitiateEvent) {
         final Either<AppError, bool> eitherResonse = await loginUser(
@@ -24,6 +29,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         }, (r) {
           emit(LoginSuccess());
         });
+      }else if(event is LogoutEvent){
+        await logoutUser(NoParams());
+        emit(LogoutSuccess());
       }
     });
   }

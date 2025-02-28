@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
-import 'package:popcornhub/data/domain/entity/app_erro.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
 import 'package:popcornhub/presentation/journey/search_movie/search_movie_card.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';

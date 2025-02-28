@@ -4,7 +4,6 @@ import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
 import 'package:popcornhub/presentation/journey/watch_video/watch_video_arguments.dart';
-import 'package:popcornhub/presentation/journey/watch_video/watch_video_screen.dart';
 import 'package:popcornhub/presentation/widget/button.dart';
 
 class VideosWidget extends StatelessWidget {

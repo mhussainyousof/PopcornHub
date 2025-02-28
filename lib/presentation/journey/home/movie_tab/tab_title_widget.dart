@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
-import 'package:popcornhub/presentation/app_localizations.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
 

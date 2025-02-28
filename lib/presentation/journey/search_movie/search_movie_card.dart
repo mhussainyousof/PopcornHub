@@ -5,7 +5,6 @@ import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_arguments.dart';
-import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_screen.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
 
 class SearchMovieCard extends StatelessWidget {

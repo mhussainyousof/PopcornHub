@@ -21,6 +21,7 @@ import 'package:popcornhub/data/domain/usecase/get_prefered_langauge.dart';
 import 'package:popcornhub/data/domain/usecase/get_trending.dart';
 import 'package:popcornhub/data/domain/usecase/get_videos.dart';
 import 'package:popcornhub/data/domain/usecase/login_user.dart';
+import 'package:popcornhub/data/domain/usecase/logout_user.dart';
 import 'package:popcornhub/data/domain/usecase/save_movie.dart';
 import 'package:popcornhub/data/domain/usecase/search_movie.dart';
 import 'package:popcornhub/data/domain/usecase/update_langauge.dart';
@@ -75,6 +76,7 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<UpdateLangauge>(() => UpdateLangauge(appRepository: getItInstance()));
   getItInstance.registerLazySingleton<GetPreferedLangauge>(() => GetPreferedLangauge(appRepository: getItInstance()));
   getItInstance.registerLazySingleton<LoginUser>(() => LoginUser(getItInstance()));
+  getItInstance.registerLazySingleton<LogoutUser>(() => LogoutUser(getItInstance()));
 
   //! 🔹 Register BLoCs
   getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
@@ -86,5 +88,5 @@ Future<void> init() async {
   getItInstance.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(searchMovies: getItInstance()));
   getItInstance.registerFactory<FavoriteBloc>(() => FavoriteBloc(checkIfMovieFavoriteMovie: getItInstance(), deleteFavoriteMovie: getItInstance(), getFavoriteMovies: getItInstance(), saveMovie: getItInstance()));
   getItInstance.registerSingleton<LanguageBloc>(LanguageBloc(getPreferedLangauge: getItInstance(), updateLangauge: getItInstance()));
-  getItInstance.registerSingleton<LoginBloc>(LoginBloc(loginUser: getItInstance()));
+  getItInstance.registerSingleton<LoginBloc>(LoginBloc(loginUser: getItInstance(), logoutUser: getItInstance()));
 }

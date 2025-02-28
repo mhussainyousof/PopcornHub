@@ -7,7 +7,6 @@ import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_arguments.dart';
-import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_screen.dart';
 
 class FavoriteMovieCardWidget extends StatelessWidget {
   final MovieEntity movie;

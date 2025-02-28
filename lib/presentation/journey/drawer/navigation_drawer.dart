@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
-import 'package:popcornhub/presentation/journey/favorite/favorite_screen.dart';
+import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/widget/app_dialog.dart';
 import 'package:wiredash/wiredash.dart';
 import 'package:popcornhub/common/constants/languages.dart';
@@ -62,11 +62,17 @@ class NavigationDrawerr extends StatelessWidget {
               _showDialog2(context);
             },
           ),
-          NavigationListItem(
-            title: TranslationConstants.logout.t(context),
-            onPressed: () {
-             
+          BlocListener<LoginBloc, LoginState>(
+            listenWhen: (previous, current)=> current is LogoutSuccess,
+            listener: (context, state) {
+              Navigator.of(context).pushNamedAndRemoveUntil(RouteList.initial, (route)=> false);
             },
+            child: NavigationListItem(
+              title: TranslationConstants.logout.t(context),
+              onPressed: () {
+                BlocProvider.of<LoginBloc>(context).add(LogoutEvent());
+              },
+            ),
           ),
         ],
       )),
@@ -89,5 +95,3 @@ class NavigationDrawerr extends StatelessWidget {
     );
   }
 }
-
-
