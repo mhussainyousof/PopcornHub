@@ -4,6 +4,7 @@ import 'package:popcornhub/data/domain/entity/app_erro.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/data/domain/entity/no_params.dart';
 import 'package:popcornhub/data/domain/usecase/get_trending.dart';
+import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 
 part 'movie_carousel_event.dart';
@@ -11,12 +12,16 @@ part 'movie_carousel_state.dart';
 
 class MovieCarouselBloc extends Bloc<MovieCarouselEvent, MovieCarouselState> {
   final GetTrending getTrending;
+  final LoadingBloc loadingBloc;
   final MovieBackdropBloc movieBackdropBloc;
   MovieCarouselBloc(
-      {required this.movieBackdropBloc, required this.getTrending})
+      {
+        required this.loadingBloc,
+        required this.movieBackdropBloc, required this.getTrending})
       : super(MovieCarouselInitial()) {
     on<MovieCarouselEvent>((event, emit) async {
       if (event is MovieCarouselLoadedEvent) {
+        loadingBloc.add(StartLoading());
         final movieEither = await getTrending(NoParams());
 
         movieEither
@@ -31,6 +36,7 @@ class MovieCarouselBloc extends Bloc<MovieCarouselEvent, MovieCarouselState> {
           emit(MovieCarouselLoaded(
               movies: movies, defaultIndex: event.defaultIndex));
         });
+        loadingBloc.add(  FinishLoading());
       }
     });
   }

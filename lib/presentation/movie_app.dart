@@ -6,10 +6,12 @@ import 'package:popcornhub/common/constants/languages.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/app_localizations.dart';
+import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/fade_page_route_builder.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
+import 'package:popcornhub/presentation/journey/loading/loading_screen.dart';
 import 'package:popcornhub/presentation/routes.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
@@ -26,12 +28,14 @@ class _MovieAppState extends State<MovieApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   late final LanguageBloc _languageBloc;
   late final LoginBloc _loginBloc;
+  late final LoadingBloc _loadingBloc;
   @override
   void initState() {
     super.initState();
     _languageBloc = getItInstance<LanguageBloc>();
     _languageBloc.add(LoadPreferedLanguageEvent());
     _loginBloc = getItInstance<LoginBloc>();
+    _loadingBloc = getItInstance<LoadingBloc>();
   }
 
   @override
@@ -39,6 +43,7 @@ class _MovieAppState extends State<MovieApp> {
     super.dispose();
     _languageBloc.close();
     _loginBloc.close();
+    _loadingBloc.close();
   }
 
   @override
@@ -46,7 +51,8 @@ class _MovieAppState extends State<MovieApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LanguageBloc>.value(value:_languageBloc ),
-        BlocProvider<LoginBloc>.value(value:_loginBloc )
+        BlocProvider<LoginBloc>.value(value:_loginBloc ),
+        BlocProvider<LoadingBloc>.value(value:_loadingBloc )
       ],
       
       child: ScreenUtilInit(
@@ -82,7 +88,7 @@ class _MovieAppState extends State<MovieApp> {
                         AppLocalizations.delegate
                       ],
                       builder: (context, child) {
-                        return child!;
+                        return LoadingScreen(screen: child!);
                       },
                       initialRoute: RouteList.initial,
                       onGenerateRoute: (RouteSettings settings) {

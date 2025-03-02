@@ -22,6 +22,9 @@ class MovieTabbedBloc extends Bloc<MovieTabbedEvent, MovieTabbedState> {
     required this.getPopular,
   }) : super(MovieTabbedInitial()) {
     on<MovieTabEventChanged>((event, emit) async {
+      
+        emit(MovieTabLoading(currentTabIndex: event.currentTabIndex));
+      
       Either<AppError, List<MovieEntity>> moviesEither = Left(AppError(AppErrorType.network)); // Default value
 
       switch (event.currentTabIndex) {

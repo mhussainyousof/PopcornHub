@@ -30,6 +30,7 @@ import 'package:popcornhub/data/repository/authentication_repository_impl.dart';
 import 'package:popcornhub/data/repository/movie_repo_impl.dart';
 import 'package:popcornhub/presentation/blocs/cast/cast_bloc.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
+import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
@@ -81,12 +82,21 @@ Future<void> init() async {
   //! 🔹 Register BLoCs
   getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
   getItInstance.registerFactory<MovieBackdropBloc>(() => MovieBackdropBloc());
-  getItInstance.registerFactory<MovieCarouselBloc>(() => MovieCarouselBloc(movieBackdropBloc: getItInstance(), getTrending: getItInstance()));
+  getItInstance.registerFactory<MovieCarouselBloc>(() => MovieCarouselBloc(
+    loadingBloc: getItInstance(),
+    movieBackdropBloc: getItInstance(), getTrending: getItInstance()));
   getItInstance.registerFactory<MovieTabbedBloc>(() => MovieTabbedBloc(getCommingSoon: getItInstance(), getPlayingNow: getItInstance(), getPopular: getItInstance()));
-  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(favoriteBloc: getItInstance(), videoBloc: getItInstance(), castBloc: getItInstance(), getMovieDetail: getItInstance()));
+  getItInstance.registerFactory<MovieDetailBloc>(() => MovieDetailBloc(
+    loadingBloc: getItInstance(),
+    favoriteBloc: getItInstance(), videoBloc: getItInstance(), castBloc: getItInstance(), getMovieDetail: getItInstance()));
   getItInstance.registerFactory<VideoBloc>(() => VideoBloc(getVideos: getItInstance()));
-  getItInstance.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(searchMovies: getItInstance()));
+  getItInstance.registerFactory<SearchMovieBloc>(() => SearchMovieBloc(
+    loadingBloc: getItInstance(),
+    searchMovies: getItInstance()));
   getItInstance.registerFactory<FavoriteBloc>(() => FavoriteBloc(checkIfMovieFavoriteMovie: getItInstance(), deleteFavoriteMovie: getItInstance(), getFavoriteMovies: getItInstance(), saveMovie: getItInstance()));
   getItInstance.registerSingleton<LanguageBloc>(LanguageBloc(getPreferedLangauge: getItInstance(), updateLangauge: getItInstance()));
-  getItInstance.registerSingleton<LoginBloc>(LoginBloc(loginUser: getItInstance(), logoutUser: getItInstance()));
+  getItInstance.registerFactory<LoginBloc>(()=> LoginBloc(
+    loadingBloc: getItInstance(),
+    loginUser: getItInstance(), logoutUser: getItInstance()));
+  getItInstance.registerSingleton<LoadingBloc>(LoadingBloc());
 }

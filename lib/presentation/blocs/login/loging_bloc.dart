@@ -7,6 +7,7 @@ import 'package:popcornhub/data/domain/entity/login_request_params.dart';
 import 'package:popcornhub/data/domain/entity/no_params.dart';
 import 'package:popcornhub/data/domain/usecase/login_user.dart';
 import 'package:popcornhub/data/domain/usecase/logout_user.dart';
+import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
 
 part 'loging_event.dart';
 part 'loging_state.dart';
@@ -14,11 +15,16 @@ part 'loging_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUser loginUser;
   final LogoutUser logoutUser;
+  final LoadingBloc loadingBloc;
   LoginBloc({
     required this.logoutUser,
-    required this.loginUser}) : super(LogingInitial()) {
+    required this.loginUser,
+    required this.loadingBloc
+    }) : super(LogingInitial()) {
     on<LoginEvent>((event, emit) async {
+
       if (event is LoginIinitiateEvent) {
+        loadingBloc.add(StartLoading());
         final Either<AppError, bool> eitherResonse = await loginUser(
             LoginRequestParams(
                 userName: event.userName, password: event.password));
@@ -29,7 +35,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         }, (r) {
           emit(LoginSuccess());
         });
+        loadingBloc.add(FinishLoading());
       }else if(event is LogoutEvent){
+
         await logoutUser(NoParams());
         emit(LogoutSuccess());
       }

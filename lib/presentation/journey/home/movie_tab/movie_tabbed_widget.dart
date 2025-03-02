@@ -7,6 +7,7 @@ import 'package:popcornhub/presentation/blocs/movie_tabbed/movie_tabbed_bloc.dar
 import 'package:popcornhub/presentation/journey/home/movie_tab/movie_listview_builder.dart';
 import 'package:popcornhub/presentation/journey/home/movie_tab/movie_tab_constants.dart';
 import 'package:popcornhub/presentation/journey/home/movie_tab/tab_title_widget.dart';
+import 'package:popcornhub/presentation/journey/loading/loading_circle.dart';
 import 'package:popcornhub/presentation/widget/app_error_widget.dart';
 
 class MovieTabbedWidget extends StatefulWidget {
@@ -14,13 +15,14 @@ class MovieTabbedWidget extends StatefulWidget {
   @override
   State<MovieTabbedWidget> createState() => _MovieTabbedWidgetState();
 }
+
 class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
     with SingleTickerProviderStateMixin {
   MovieTabbedBloc get movieTabbedBloc =>
       BlocProvider.of<MovieTabbedBloc>(context);
 
-      int currentIndex = 0;
-  
+  int currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -35,33 +37,40 @@ class _MovieTabbedWidgetState extends State<MovieTabbedWidget>
           padding: EdgeInsets.only(top: 0.h),
           child: Column(
             children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: MovieTabConstants.movieTabs.map((tab)=>
-                   TabTitleWidget(
-                        title: tab.title,
-                        onTap: () => _onTabTapped(tab.index),
-                        isSelected: tab.index ==
-                            state.currentTabIndex)
-                   ).toList()
-              ),
+              Row( 
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: MovieTabConstants.movieTabs
+                      .map((tab) => TabTitleWidget(
+                          title: tab.title,
+                          onTap: () => _onTabTapped(tab.index),
+                          isSelected: tab.index == state.currentTabIndex))
+                      .toList()),
               SizedBox(
                 height: 5.h,
               ),
               if (state is MovieTabChanged)
-              state.movies?.isEmpty ?? true ?
-              Expanded(child: Center(child:Text(
-                TranslationConstants.noMovies.t(context),
-                textAlign: TextAlign.center,
-                
-              ) 
-            )):
-
-                Expanded(child: MovieListviewBuilder(movies: state.movies!)),
+                state.movies?.isEmpty ?? true
+                    ? Expanded(
+                        child: Center(
+                            child: Text(
+                        TranslationConstants.noMovies.t(context),
+                        textAlign: TextAlign.center,
+                      )))
+                    : Expanded(
+                        child: MovieListviewBuilder(movies: state.movies!)),
               if (state is MovieTabLoadError)
-              Expanded(child: AppErrorWidget(errorType: state.errorType, onPressed: ()=>movieTabbedBloc.add(MovieTabEventChanged(currentTabIndex: state.currentTabIndex!))))
-
+                Expanded(
+                  child: AppErrorWidget(
+                    errorType: state.errorType,
+                    onPressed: () => movieTabbedBloc.add(
+                      MovieTabEventChanged(
+                          currentTabIndex: state.currentTabIndex!),
+                    ),
+                  ),
+                ),
+                // if(state is MovieTabLoading)
+                // Expanded(child: Center(child: LoadingCircle(size: 120.w),))
             ],
           ),
         );
