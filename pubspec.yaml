@@ -36,6 +36,12 @@ dev_dependencies:
   build_runner: ^2.4.15
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.3
+
+flutter_icons:
+  android: "luncher_icon"
+  ios: true
+  image_path: "assets/icons/logo.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
