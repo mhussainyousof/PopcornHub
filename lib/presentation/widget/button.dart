@@ -7,7 +7,7 @@ class Button extends StatelessWidget {
   final String text;
   final Function()? onPressed;
   final bool isEnabled;
-
+  
   const Button({
     super.key,
     required this.text,

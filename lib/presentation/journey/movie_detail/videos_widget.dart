@@ -17,12 +17,11 @@ class VideosWidget extends StatelessWidget {
         if (state is VideoLoaded && state.videos.iterator.moveNext()) {
           final videos = state.videos;
           return Button(
+            isEnabled: true,
               text: TranslationConstants.watchTrailers,
               onPressed: () {
                 Navigator.of(context).pushNamed(RouteList.watchTrailer, arguments: WatchVideoArguments(videos));
-              //  Navigator.of(context).push(MaterialPageRoute(builder: (context)
-              //  => WatchVideoScreen(watchVideoArguments: WatchVideoArguments(videos))
-              //  ));
+          
               });
         } else {
           return SizedBox.shrink();

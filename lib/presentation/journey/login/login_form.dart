@@ -89,15 +89,12 @@ class _LoginFormState extends State<LoginForm> {
                       RouteList.home, (route) => false);
                 }),
             Button(
-                isEnabled: enableSignIn,
+                isEnabled: true,
                 text: TranslationConstants.signIn,
-                onPressed: enableSignIn
-                    ? () {
-                        BlocProvider.of<LoginBloc>(context).add(
-                            LoginIinitiateEvent(_passwordController.text,
-                                _userNameController.text));
-                      }
-                    : null)
+                onPressed: (){
+                  Navigator.of(context).pushNamed(RouteList.home);
+                }
+                    )
           ],
         ),
       ),

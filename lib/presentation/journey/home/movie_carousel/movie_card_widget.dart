@@ -21,10 +21,6 @@ class MovieCardWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).pushNamed(RouteList.movieDetail, arguments: MovieDetailArguments(movieId: movieId));
-          // Navigator.of(context).push(MaterialPageRoute(
-          //     builder: (context) => MovieDetailScreen(
-          //         movieDetailArguments:
-          //             MovieDetailArguments(movieId: movieId))));
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16.w),
