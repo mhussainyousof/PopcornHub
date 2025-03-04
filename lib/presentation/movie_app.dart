@@ -70,11 +70,12 @@ class _MovieAppState extends State<MovieApp> {
                       languageCode: state.locale.languageCode,
                       navigatorKey: _navigatorKey,
                       child: MaterialApp(
+                        debugShowCheckedModeBanner: false,
                         navigatorKey: _navigatorKey,
                         title: 'Movie App',
                         theme: AppTheme.lightTheme(),
                         darkTheme: AppTheme.darkTheme(),
-                        themeMode: themeMode, // ✅ Apply theme dynamically
+                        themeMode: themeMode, 
                         supportedLocales: Languages.languages
                             .map((e) => Locale(e.code))
                             .toList(),
