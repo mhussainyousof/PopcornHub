@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-import 'theme_text.dart'; // Import ThemeText
+import 'theme_text.dart'; 
 
 class AppColor {
   AppColor._();

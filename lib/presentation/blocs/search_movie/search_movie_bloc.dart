@@ -6,7 +6,6 @@ import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/data/domain/entity/movie_search_params.dart';
 import 'package:popcornhub/data/domain/usecase/search_movie.dart';
 import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
-import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 part 'search_movie_event.dart';
 part 'search_movie_state.dart';
 

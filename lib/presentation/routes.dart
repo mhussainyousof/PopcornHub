@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/presentation/journey/favorite/favorite_screen.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
-import 'package:popcornhub/presentation/journey/loading/loading_screen.dart';
 import 'package:popcornhub/presentation/journey/login/login_screen.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_arguments.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_screen.dart';

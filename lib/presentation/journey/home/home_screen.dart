@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return WillPopScope(
       //! Attach exit confirmation to the back button
       onWillPop: _onWillPop,

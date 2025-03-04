@@ -8,7 +8,6 @@ import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_appbar
 import 'package:popcornhub/presentation/theme/theme_text.dart';
 
 class BigPoster extends StatelessWidget {
-  
   final MovieDetailEntity movie;
   const BigPoster({
     super.key,
@@ -51,16 +50,11 @@ class BigPoster extends StatelessWidget {
               trailing: Text(movie.voteAverage.convertToPercentageString(),
                   style: Theme.of(context).textTheme.violetHeadline6),
             )),
-
-            Positioned(
-              right: 20.w,
-              left: 20.w,
-              top: ScreenUtil().statusBarHeight+ 15.h,
-
-              child: MovieDetailAppbar(
-                movieDetailEntity : movie
-
-              ))
+        Positioned(
+            right: 20.w,
+            left: 20.w,
+            top: ScreenUtil().statusBarHeight + 15.h,
+            child: MovieDetailAppbar(movieDetailEntity: movie))
       ],
     );
   }
