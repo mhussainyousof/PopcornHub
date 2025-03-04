@@ -27,7 +27,7 @@ class NavigationDrawerr extends StatelessWidget {
         
         boxShadow: [
         BoxShadow(
-            color: AppColor.vulcan.withOpacity(0.7),
+            color: AppColor.vulcan.withOpacity(0.9),
             blurRadius: 4)
       ]),
       width: 300.w,
