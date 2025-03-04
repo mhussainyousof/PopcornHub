@@ -51,7 +51,7 @@
 
 ```sh
 # Step 1: Clone this repository
-git clone https://github.com/yourusername/PopcornHub.git
+git clone https://github.com/mhussainyousof/PopcornHub
 cd PopcornHub
 
 # Step 2: Install dependencies
