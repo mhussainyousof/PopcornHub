@@ -7,5 +7,6 @@ class Languages {
   static const languages = [
     LanguageEntity(code: 'en', value: 'English'),
     LanguageEntity(code: 'es', value: 'Spanish'),
+    LanguageEntity(code: 'fr', value: 'French'),
   ];
 }

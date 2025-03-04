@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:popcornhub/presentation/theme/app_color.dart';
 
 class NavigationListItem extends StatelessWidget {
   final String title;
@@ -16,13 +17,13 @@ class NavigationListItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-              color: Theme.of(context).primaryColor.withOpacity(0.7),
+              color: AppColor.vulcan.withOpacity(0.7),
               blurRadius: 2),
         ]),
         child: ListTile(
           title: Text(
             title,
-            style: Theme.of(context).textTheme.bodyMedium,
+             style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),
           ),
         ),
       ),
@@ -45,14 +46,14 @@ class NavigationSubListItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-              color: Theme.of(context).primaryColor.withOpacity(0.7),
+              color: AppColor.vulcan.withOpacity(0.7),
               blurRadius: 2),
         ]),
         child: ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 32.w),
           title: Text(
             title,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),
           ),
         ),
       ),

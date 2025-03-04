@@ -38,6 +38,7 @@ import 'package:popcornhub/presentation/blocs/movie_detail/movie_detail_bloc.dar
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_tabbed/movie_tabbed_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
+import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
 import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
 
 final getItInstance = GetIt.I;
@@ -99,4 +100,6 @@ Future<void> init() async {
     loadingBloc: getItInstance(),
     loginUser: getItInstance(), logoutUser: getItInstance()));
   getItInstance.registerSingleton<LoadingBloc>(LoadingBloc());
+  getItInstance.registerSingleton<ThemeBloc>(ThemeBloc());
+  
 }

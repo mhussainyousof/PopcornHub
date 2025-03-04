@@ -12,20 +12,18 @@ class Button extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
-    this.isEnabled = false,
+    this.isEnabled = true ,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: isEnabled
-            ? const LinearGradient(
-                colors: [AppColor.royalBlue, AppColor.violet],
-              )
-            : LinearGradient(
-                colors: [Colors.grey, Colors.grey.shade400],
+        gradient:
+              LinearGradient(
+                colors: isEnabled ?  [AppColor.royalBlue, AppColor.violet] : [Colors.grey, Colors.grey.shade400],
               ),
+
         borderRadius: BorderRadius.circular(30.r),
       ),
       padding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -35,7 +33,7 @@ class Button extends StatelessWidget {
         onPressed: isEnabled ? onPressed : null,
         child: Text(
           text.t(context),
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),
         ),
       ),
     );

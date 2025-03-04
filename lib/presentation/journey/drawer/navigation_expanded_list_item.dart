@@ -19,7 +19,7 @@ class NavigationExpandedListItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Theme.of(context).primaryColor.withOpacity(0.7),
+          color: AppColor.vulcan.withOpacity(0.7),
           blurRadius: 2,
         ),
       ]),
@@ -28,7 +28,7 @@ class NavigationExpandedListItem extends StatelessWidget {
         collapsedIconColor: AppColor.royalBlue,
         title: Text(
           title,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),
         ),
         children: children.asMap().entries.map((entry) {
           final index = entry.key;

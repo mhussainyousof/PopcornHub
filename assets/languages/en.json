@@ -26,5 +26,8 @@
     "sessionDenied": "Session denied",
     "enterTMDbUsername": "Enter TMDb username here...",
     "enterPassword": "Enter password here...",
-    "guestSignIn": "Guest Sign In"
+    "guestSignIn": "Guest Sign In",
+    "yes": "Yes",
+    "no": "No"
+
 }

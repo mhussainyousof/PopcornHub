@@ -11,7 +11,7 @@ import 'package:popcornhub/presentation/journey/watch_video/watch_video_screen.d
 
 class Routes {
   static Map<String, WidgetBuilder> getRoutes(RouteSettings setting) => {
-        // RouteList.initial: (context) => LoadingScreen()  ,
+        RouteList.loginScreen: (context) => LoginScreen()  ,
         RouteList.initial: (context) => LoginScreen()  ,
         RouteList.home: (context) => HomeScreen(),
         RouteList.movieDetail: (context) => MovieDetailScreen(

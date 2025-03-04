@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
+import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
+import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/widget/app_dialog.dart';
 import 'package:wiredash/wiredash.dart';
 import 'package:popcornhub/common/constants/languages.dart';
@@ -17,10 +19,15 @@ class NavigationDrawerr extends StatelessWidget {
   const NavigationDrawerr({super.key});
   @override
   Widget build(BuildContext context) {
+    final themeMode = context.watch<ThemeBloc>().state;
+    final themeBloc = context.read<ThemeBloc>();
+
     return Container(
-      decoration: BoxDecoration(boxShadow: [
+      decoration: BoxDecoration(
+        
+        boxShadow: [
         BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(0.7),
+            color: AppColor.vulcan.withOpacity(0.7),
             blurRadius: 4)
       ]),
       width: 300.w,
@@ -28,9 +35,36 @@ class NavigationDrawerr extends StatelessWidget {
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(8.h, 8.h, 8.h, 18.h),
-            child: LogoWidget(height: 60.h),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(8.h, 8.h, 8.h, 18.h),
+                child: LogoWidget(height: 60.h),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+                child: GestureDetector(
+                  onTap: () {
+                    themeBloc.add(ToggleThemeEvent()); 
+                  },
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    transitionBuilder: (child, animation) {
+                      return ScaleTransition(scale: animation, child: child);
+                    },
+                    child: Icon(
+                      themeMode == ThemeMode.dark
+                          ? Icons.dark_mode
+                          : Icons.light_mode,
+                      key: ValueKey(themeMode),
+                      color: Colors.white,
+                      size: 25.sp,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           NavigationListItem(
             title: TranslationConstants.favoriteMovies.t(context),
@@ -62,14 +96,16 @@ class NavigationDrawerr extends StatelessWidget {
             },
           ),
           BlocListener<LoginBloc, LoginState>(
-            listenWhen: (previous, current)=> current is LogoutSuccess,
+            listenWhen: (previous, current) => current is LogoutSuccess,
             listener: (context, state) {
-              Navigator.of(context).pushNamedAndRemoveUntil(RouteList.initial, (route)=> false);
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(RouteList.initial, (route) => false);
             },
             child: NavigationListItem(
               title: TranslationConstants.logout.t(context),
               onPressed: () {
-                BlocProvider.of<LoginBloc>(context).add(LogoutEvent());
+                Navigator.of(context).pushNamedAndRemoveUntil(RouteList.loginScreen, (Route)=> false);
+                // BlocProvider.of<LoginBloc>(context).add(LogoutEvent());
               },
             ),
           ),

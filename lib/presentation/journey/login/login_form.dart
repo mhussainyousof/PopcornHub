@@ -92,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
                 isEnabled: true,
                 text: TranslationConstants.signIn,
                 onPressed: (){
-                  Navigator.of(context).pushNamed(RouteList.home);
+                  Navigator.of(context).pushNamedAndRemoveUntil(RouteList.home, (route)=>false);
                 }
                     )
           ],

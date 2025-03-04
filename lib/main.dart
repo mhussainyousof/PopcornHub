@@ -17,6 +17,7 @@ unawaited(
   Hive.init(appDocumentDir.path);
   Hive.registerAdapter(MovieTableAdapter());
   await Hive.openBox<MovieTable>('movieBox');
+  await Hive.openBox('settings');
   await init();
   runApp(MovieApp());
 }
