@@ -1,49 +1,62 @@
-# 🎬 Popcorn Hub 🍿 — Your Ultimate Movie Companion!  
+# 🎬 Popcorn Hub 🍿 — Watch the Latest Movie Trailers!  
 
-🚀 **Popcorn Hub** is not just another movie app—it's the **Netflix of Flutter Apps** (without the monthly fee 😆).  
-Browse, search, and favorite your movies, all with a beautiful **dark & light mode** UI.  
-
-💡 **Sign in, explore movies, switch themes, and enjoy!**  
+🚀 **Popcorn Hub** is my **Third Project** and a  **movie app** where you can **watch the newest trailers, explore trending movies, and discover actors & animations**. Stay updated with the latest films and **get a sneak peek before they hit theaters!**  
 
 ---
 
-## **🔥 Features That Make This App Pop!**  
+## **🔥 Features**  
 
-✅ **Sign In / Sign Out** – Your gateway to the movie world!  
-✅ **Movie Categories** – Browse **Popular, Now Playing, and Upcoming** movies.  
-✅ **Movie Carousel** – The latest hits slide across your screen!  
-✅ **Search Movies** – Find any movie **faster than Google** (okay, maybe not 😆).  
-✅ **Light & Dark Mode** – Switch themes effortlessly!  
-✅ **Favorite Movies** – Save, manage, and remove your favorites.  
-✅ **Multi-Language Support** – Supports **English, Spanish, and French**.  
-✅ **Feedback System** – Report issues & give suggestions easily.  
-✅ **About Section** – Curious about the app? We've got you covered!  
-✅ **Logout Button** – Because **you need a break too!** 😆  
+✅ **Watch the latest movie trailers** 🎥  
+✅ **Browse popular, upcoming, and trending movies** 🔥  
+✅ **Search for movies by title** 🔎  
+✅ **View movie details, including actors & ratings** ⭐  
+✅ **Add movies to favorites & manage your watchlist** ❤️  
+✅ **Switch between Light & Dark Mode** 🌙  
+✅ **Supports English, Spanish, and French** 🌍  
+✅ **Leave feedback & report issues easily** 📝  
 
 ---
 
-## **🖼️ Screenshots**  
+## **📽 Application Demo (GIF)**  
 
-| 🎥 Movie List | 🌙 Dark Mode | 🔎 Search Movies |  
-|--------------|-------------|-----------------|  
-| ![Movie List](assets/screenshots/movie_list.png) | ![Dark Mode](assets/screenshots/dark_mode.png) | ![Search](assets/screenshots/search.png) |  
+> 🎬 **See Popcorn Hub in action!**  
 
-> **Want to see more?** Download & run the app yourself! 🚀  
+![App Demo](assets/demo/popcornhub.gif)  
 
 ---
 
-## **🛠 Built With Love Using:**  
-🔹 **Flutter & Dart** – The magic behind the UI.  
-🔹 **Bloc Pattern** – Because we love organized state management!  
-🔹 **Hive Storage** – For seamless local data saving.  
-🔹 **TMDB API** – Fetches real-time movie details.  
-🔹 **CachedNetworkImage** – Loads images like a pro!  
+## **🛠 What I Used**  
+
+- **Flutter & Dart** – The core technology for building the app.  
+- **Bloc State Management** – For handling app logic efficiently.  
+- **Hive Storage** – To store user preferences & favorites.  
+- **TMDB API** – Fetching movie details & trailers.  
+- **CachedNetworkImage** – Loading images efficiently.  
+- **GoRouter** – Managing navigation smoothly.
+- **AppLocalization**  – Langauges for Application
+
+---
+
+## **📌 What I Learned**  
+
+💡 **How to implement Bloc for better state management.**  
+💡 **Fetching & handling real-time API data (TMDB API).**  
+💡 **Optimizing UI for both Light & Dark Mode.**  
+💡 **Saving user preferences with local storage (Hive).**  
+💡 **Building a smooth & intuitive search experience.**  
 
 ---
 
 ## **🚀 How to Run the App?**  
 
-### **Step 1:** Clone this repository  
 ```sh
+# Step 1: Clone this repository
 git clone https://github.com/yourusername/PopcornHub.git
 cd PopcornHub
+
+# Step 2: Install dependencies
+flutter pub get
+
+# Step 3: Run the app
+flutter run
+
