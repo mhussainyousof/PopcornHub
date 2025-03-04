@@ -21,7 +21,10 @@
 
 > 🎬 **See Popcorn Hub in action!**  
 
-![App Demo](assets/demo/popcornhub.gif)  
+<p align="center">
+  <img src="assets/demo/popcornhub.gif" alt="App Demo" width="250px"/>
+</p>
+ 
 
 ---
 
