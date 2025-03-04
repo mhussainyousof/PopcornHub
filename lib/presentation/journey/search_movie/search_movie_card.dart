@@ -17,11 +17,8 @@ class SearchMovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(RouteList.movieDetail, arguments: MovieDetailArguments(movieId: movie.id));
-        // Navigator.of(context).push(MaterialPageRoute(
-        //   builder: (context) => MovieDetailScreen(
-        //       movieDetailArguments: MovieDetailArguments(movieId: movie.id)),
-        // ));
+        Navigator.of(context).pushNamed(RouteList.movieDetail,
+            arguments: MovieDetailArguments(movieId: movie.id));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -53,8 +50,7 @@ class SearchMovieCard extends StatelessWidget {
                       movie.overview!,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context).textTheme.greyCaption,
-
+                      style: Theme.of(context).textTheme.greyCaption,
                     )
                   ],
                 ),

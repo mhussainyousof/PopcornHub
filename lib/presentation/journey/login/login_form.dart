@@ -9,6 +9,9 @@ import 'package:popcornhub/presentation/journey/login/lable_field_widget.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
 import 'package:popcornhub/presentation/widget/button.dart';
 
+//! 🔐 LoginForm: Handles user authentication 🔐
+//! Collects username & password, validates input, and triggers login.
+
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
@@ -17,33 +20,37 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  //! Controllers for handling username & password input
   late TextEditingController _userNameController, _passwordController;
-  late bool enableSignIn = false;
+  late bool enableSignIn = false; //! Tracks if the sign-in button should be enabled
 
   @override
   void initState() {
     super.initState();
+
+    //! Initialize text controllers
     _userNameController = TextEditingController();
     _passwordController = TextEditingController();
-    _userNameController.addListener(() {
-      setState(() {
-        enableSignIn = _userNameController.text.isNotEmpty &&
-            _passwordController.text.isNotEmpty;
-      });
-    });
-    _passwordController.addListener(() {
-      setState(() {
-        enableSignIn = _userNameController.text.isNotEmpty &&
-            _passwordController.text.isNotEmpty;
-      });
+
+    //! Add listeners to enable/disable sign-in button dynamically
+    _userNameController.addListener(_updateSignInState);
+    _passwordController.addListener(_updateSignInState);
+  }
+
+  //! Update sign-in button state based on input fields
+  void _updateSignInState() {
+    setState(() {
+      enableSignIn = _userNameController.text.isNotEmpty &&
+          _passwordController.text.isNotEmpty;
     });
   }
 
   @override
   void dispose() {
-    super.dispose();
+    //! Dispose controllers to free memory
     _userNameController.dispose();
     _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -54,47 +61,59 @@ class _LoginFormState extends State<LoginForm> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            //! 🔹 Login Title
             Padding(
               padding: EdgeInsets.only(bottom: 30.h),
               child: Text(
                 TranslationConstants.loginToMovieApp.t(context),
-                // textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
+
+            //! 🔹 Username Input Field
             LableFieldWidget(
-                lable: TranslationConstants.username.t(context),
-                hintText: TranslationConstants.enterTMDbUsername.t(context),
-                controller: _userNameController),
+              lable: TranslationConstants.username.t(context),
+              hintText: TranslationConstants.enterTMDbUsername.t(context),
+              controller: _userNameController,
+            ),
+
+            //! 🔹 Password Input Field
             LableFieldWidget(
               lable: TranslationConstants.password.t(context),
               hintText: TranslationConstants.enterPassword.t(context),
               controller: _passwordController,
               isPasswordField: true,
             ),
+
+            //! 🚨 Display login error message if login fails
             BlocConsumer<LoginBloc, LoginState>(
-                buildWhen: (previous, current) => current is LoginError,
-                builder: (context, state) {
-                  if (state is LoginError) {
-                    return Text(
-                      state.message.t(context),
-                      style: Theme.of(context).textTheme.orangeSubtitle1,
-                    );
-                  }
-                  return SizedBox.shrink();
-                },
-                listenWhen: (previous, current) => current is LoginSuccess,
-                listener: (context, state) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      RouteList.home, (route) => false);
-                }),
-            Button(
-                isEnabled: true,
-                text: TranslationConstants.signIn,
-                onPressed: (){
-                  Navigator.of(context).pushNamedAndRemoveUntil(RouteList.home, (route)=>false);
+              buildWhen: (previous, current) => current is LoginError,
+              builder: (context, state) {
+                if (state is LoginError) {
+                  return Text(
+                    state.message.t(context),
+                    style: Theme.of(context).textTheme.orangeSubtitle1,
+                  );
                 }
-                    )
+                return SizedBox.shrink();
+              },
+
+              //! ✅ Navigate to home screen if login is successful
+              listenWhen: (previous, current) => current is LoginSuccess,
+              listener: (context, state) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    RouteList.home, (route) => false);
+              },
+            ),
+
+            //! 🔘 Sign-In Button
+            Button(
+              text: TranslationConstants.signIn,
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    RouteList.home, (route) => false);
+              },
+            ),
           ],
         ),
       ),
