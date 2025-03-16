@@ -18,5 +18,5 @@ abstract class MovieRepository {
   Future<Either<AppError, List<MovieEntity>>> getFavoriteMovies();
   Future<Either<AppError, void>> deleteFavoriteMovie(int movieId);
   Future<Either<AppError, bool>> checkIfMovieFavorite(int movieId);
-
+  Future<Either<AppError, List<MovieEntity>>> getMoviesByGenre(int genreId);
 }

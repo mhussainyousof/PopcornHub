@@ -70,4 +70,16 @@ class MovieModel extends MovieEntity {
       'vote_count': voteCount,
     }..removeWhere((key, value) => value == null); 
   }
+
+    MovieEntity toEntity() {
+    return MovieEntity(
+      posterPath: posterPath,
+      id: id,
+      title: title,
+      voteAverage: voteAverage,
+      releaseDate: releaseDate,
+      backdropPath: backdropPath,
+      overview: overview,
+    );
+  }
 }

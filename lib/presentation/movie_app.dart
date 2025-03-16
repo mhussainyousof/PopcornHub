@@ -19,7 +19,6 @@ import 'package:popcornhub/presentation/wiredash_app.dart';
 
 class MovieApp extends StatefulWidget {
   const MovieApp({super.key});
-
   @override
   State<MovieApp> createState() => _MovieAppState();
 }

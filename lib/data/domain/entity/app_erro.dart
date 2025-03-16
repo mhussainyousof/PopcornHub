@@ -10,4 +10,4 @@ class AppError extends Equatable{
   List<Object?> get props =>[appErrorType];
   }
 
- enum AppErrorType{api, network, database, unauthorised, sessionDenied}
+ enum AppErrorType{api, network, database, unauthorised, sessionDenied, unauthorized}

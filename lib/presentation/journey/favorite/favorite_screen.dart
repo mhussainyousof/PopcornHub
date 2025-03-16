@@ -6,9 +6,9 @@ import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
 import 'package:popcornhub/presentation/journey/favorite/favorite_movie_grid_view.dart';
 
+
 class FavoriteScreen extends StatefulWidget {
   const FavoriteScreen({super.key});
-
   @override
   State<FavoriteScreen> createState() => _FavoriteScreenState();
 }
@@ -53,7 +53,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               }
               return FavoriteMovieGridView(state.movies);
             }
-
             return SizedBox.shrink();
           })),
     );

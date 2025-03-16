@@ -9,8 +9,4 @@ class MovieParams extends Equatable {
   @override
 
   List<Object?> get props => [id];
-  
-
-  
-
 }

@@ -14,6 +14,7 @@ import 'package:popcornhub/data/domain/usecase/delete_favorite_movie.dart';
 import 'package:popcornhub/data/domain/usecase/get_cast.dart';
 import 'package:popcornhub/data/domain/usecase/get_comming_soon.dart';
 import 'package:popcornhub/data/domain/usecase/get_favorite_movies.dart';
+import 'package:popcornhub/data/domain/usecase/get_genre.dart';
 import 'package:popcornhub/data/domain/usecase/get_movie_detail.dart';
 import 'package:popcornhub/data/domain/usecase/get_playingnow.dart';
 import 'package:popcornhub/data/domain/usecase/get_popular.dart';
@@ -37,6 +38,7 @@ import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc
 import 'package:popcornhub/presentation/blocs/movie_detail/movie_detail_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_tabbed/movie_tabbed_bloc.dart';
+import 'package:popcornhub/presentation/blocs/moviebygenre/movie_by_genre_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
 import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
 import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
@@ -79,6 +81,8 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<GetPreferedLangauge>(() => GetPreferedLangauge(appRepository: getItInstance()));
   getItInstance.registerLazySingleton<LoginUser>(() => LoginUser(getItInstance()));
   getItInstance.registerLazySingleton<LogoutUser>(() => LogoutUser(getItInstance()));
+  getItInstance.registerLazySingleton<GetMoviesByGenre>(() => GetMoviesByGenre(getItInstance()));
+  
 
   //! 🔹 Register BLoCs
   getItInstance.registerFactory<CastBloc>(() => CastBloc(getCast: getItInstance()));
@@ -101,5 +105,9 @@ Future<void> init() async {
     loginUser: getItInstance(), logoutUser: getItInstance()));
   getItInstance.registerSingleton<LoadingBloc>(LoadingBloc());
   getItInstance.registerSingleton<ThemeBloc>(ThemeBloc());
+  getItInstance.registerFactory<MovieByGenreBloc>(
+  () => MovieByGenreBloc(getMoviesByGenre: getItInstance()),
+);
+
   
 }

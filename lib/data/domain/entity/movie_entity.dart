@@ -25,8 +25,7 @@ class MovieEntity extends Equatable {
   @override
   bool get stringify => true;
 
-  factory MovieEntity.fromMovieDetailEntity(
-      MovieDetailEntity movieDetailEntity) {
+  factory MovieEntity.fromMovieDetailEntity(MovieDetailEntity movieDetailEntity) {
     return MovieEntity(
         posterPath: movieDetailEntity.posterPath,
         id: movieDetailEntity.id,

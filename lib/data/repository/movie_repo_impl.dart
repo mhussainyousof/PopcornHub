@@ -155,4 +155,14 @@ class MovieRepositoryImpl extends MovieRepository {
      return left(AppError(AppErrorType.database));
     }
   }
+  
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getMoviesByGenre(int genreId)async {
+    try{
+      final movies = await remoteDataSource.getMoviesByGenre(genreId);
+      return right(movies.map((model)=>model.toEntity()).toList());
+    } on Exception{
+      return left(AppError(AppErrorType.database));
+    }
+  }
 }

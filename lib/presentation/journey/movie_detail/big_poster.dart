@@ -41,7 +41,7 @@ class BigPoster extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .apply(fontSizeFactor: 0.9),
+                    .apply(fontSizeFactor: 0.9, color: Colors.white),
               ),
               subtitle: Text(
                 movie.releaseDate,

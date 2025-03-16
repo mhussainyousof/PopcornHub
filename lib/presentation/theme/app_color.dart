@@ -17,7 +17,7 @@ class AppTheme {
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColor.lightBackground,
       colorScheme: ColorScheme.light(
-        primary: AppColor.royalBlue,
+        primary: AppColor.vulcan,
         secondary: AppColor.violet,
       ),
       textTheme: ThemeText.getLightTextTheme(), // Apply Light TextTheme
