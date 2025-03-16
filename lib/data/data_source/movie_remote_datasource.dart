@@ -16,6 +16,7 @@ abstract class MovieRemoteDatasource {
   Future<List<CastModel>> getCastCrew(int id);
   Future<List<VideoModel>> getVideos(int id);
   Future<List<MovieModel>> getSearchedMovies(String searchTerm);
+  
   Future<List<MovieModel>> getMoviesByGenre(int genreId);
 }
 
