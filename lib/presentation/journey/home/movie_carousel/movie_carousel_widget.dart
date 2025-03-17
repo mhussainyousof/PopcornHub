@@ -13,7 +13,6 @@ class MovieCarouselWidget extends StatelessWidget{
     required this.movies,
     required this.defaultIndex,
     super.key}) : assert(defaultIndex >= 0, 'defaultIndex cannot be less than 0');
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -21,6 +20,7 @@ class MovieCarouselWidget extends StatelessWidget{
       children: [
         MovieBackdropWidget(),
         Column(
+          
           children: [
             MovieAppBar(),
             MoviePageView(

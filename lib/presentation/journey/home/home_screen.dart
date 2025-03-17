@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
 import 'package:popcornhub/presentation/journey/drawer/navigation_drawer.dart';
 import 'package:popcornhub/presentation/journey/mood_movie/mood_movie.dart';
+import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/widget/app_error_widget.dart';
 import 'package:popcornhub/presentation/journey/home/movie_carousel/movie_carousel_widget.dart';
 
@@ -44,8 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) =>  MoodMoviesScreen(
-        
+        builder: (context) =>  MoodMoviesScreen(   
         moodName: mood,
         genreId: genreId, 
       ),
@@ -65,75 +66,67 @@ Widget build(BuildContext context) {
     ],
     child: Scaffold(
       drawer: NavigationDrawerr(),
-      body: SafeArea(
-        child: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
-          bloc: movieCarouselBloc,
-          builder: (context, state) {
-            if (state is MovieCarouselLoaded) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //! Movie Carousel
-                  SizedBox(
-                    height: size.height * 0.6,
-                    child: MovieCarouselWidget(
-                      movies: state.movies,
-                      defaultIndex: state.defaultIndex,
-                    ),
+      body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
+        bloc: movieCarouselBloc,
+        builder: (context, state) {
+          if (state is MovieCarouselLoaded) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //! Movie Carousel
+                SizedBox(
+                  height: size.height * 0.55,
+                  child: MovieCarouselWidget(
+                    movies: state.movies,
+                    defaultIndex: state.defaultIndex,
                   ),
-
-                  const SizedBox(height: 16),
-
-                  //! متن Mood
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text(
-                      "Hey, what's your mood today?",
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
+                ),
+      
+                //! متن Mood
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    "Hey, what's your mood today?",
+                    style:Theme.of(context).textTheme.titleMedium
                   ),
-
-                  const SizedBox(height: 12),
-                  //! ایموجی‌ها در لیست اسکرول عمودی
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Wrap(
-                        spacing: 16,
-                        runSpacing: 10,
-                        children: [
-                          _buildMoodButton("🔥", "assets/icons/action.png", 28, size),
-                          _buildMoodButton("💔", "assets/icons/horror.png",10749, size),
-                          _buildMoodButton("😂", "assets/icons/happy.png", 35, size),
-                          _buildMoodButton("😱", "assets/icons/sad.png", 27, size),
-                          // _buildMoodButton("🚀", "Sci-Fi", 878, size),
-                        ],
-                      ),
-                    ),
+                ),
+      
+                const SizedBox(height: 12),
+                SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 1),
+                  child: Wrap(
+                    spacing: 16,
+                    runSpacing: 10,
+                    children: [
+                      _buildMoodButton("🔥", "assets/lottie/action.json", 28, size),
+                      // _buildMoodButton("🔥", "assets/lottie/action2.json", 28, size),
+                      _buildMoodButton("💔", "assets/lottie/sad.json",10749, size),
+                      _buildMoodButton("😂", "assets/lottie/fun.json", 35, size),
+                      _buildMoodButton("😱", "assets/lottie/horror.json", 27, size),
+                      _buildMoodButton("🚀", "assets/lottie/fiction.json", 878, size),
+                    ],
                   ),
-                ],
-              );
-            } else if (state is MovieCarouselError) {
-              return AppErrorWidget(
-                onPressed: () =>
-                    movieCarouselBloc.add(MovieCarouselLoadedEvent()),
-                errorType: state.errorType,
-              );
-            }
-
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
+                ),
+              ],
+            );
+          } else if (state is MovieCarouselError) {
+            return AppErrorWidget(
+              onPressed: () =>
+                  movieCarouselBloc.add(MovieCarouselLoadedEvent()),
+              errorType: state.errorType,
+            );
+          }
+      
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     ),
   );
 }
 
 Widget _buildMoodButton(String label, String imageAsset, int genreId, Size size, ) {
-  double buttonSize = size.width * 0.18;
 
+  double buttonSize = size.width * 0.20;
   final Color moodColor = _getMoodColor(label);
 
   return GestureDetector(
@@ -148,42 +141,24 @@ Widget _buildMoodButton(String label, String imageAsset, int genreId, Size size,
             height: buttonSize,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [
-                  moodColor.withOpacity(0.8),
-                  moodColor.withOpacity(0.5),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
               boxShadow: [
                 BoxShadow(
                   color: moodColor.withOpacity(0.4),
-                  blurRadius: 10,
+                  blurRadius: 8,
                   spreadRadius: 2,
                   offset: const Offset(0, 6),
                 ),
               ],
             ),
             child: 
-            Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
+            Lottie.asset(            
               imageAsset,
+              repeat: true,
               fit: BoxFit.contain,
             ),
           ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Lottie.asset(
-            //     lottiePath,
-            //     repeat: true,
-            //     fit: BoxFit.contain,
-            //   ),
-            // ),
-          ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 10),
         Text(
           label,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -198,21 +173,19 @@ Widget _buildMoodButton(String label, String imageAsset, int genreId, Size size,
 
 
 Color _getMoodColor(String label) {
-  switch (label.toLowerCase()) {
-    case 'action':
+  switch (label) {
+    case '🔥':
       return Colors.redAccent;
-    case 'romance':
+    case '💔':
       return Colors.pinkAccent;
-    case 'comedy':
+    case '😂':
       return Colors.amberAccent;
-    case 'horror':
+    case '😱':
       return Colors.deepPurpleAccent;
-    case 'sci-fi':
+    case '🚀':
       return Colors.lightBlueAccent;
     default:
       return Colors.grey;
   }
 }
-
-
 }
