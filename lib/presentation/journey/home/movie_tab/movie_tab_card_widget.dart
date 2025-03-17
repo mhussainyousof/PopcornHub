@@ -47,7 +47,7 @@ class MovieTabCardWidget extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .whiteBodyText2!
-                    .apply(color: isDark ? Colors.white : AppColor.vulcan),
+                    .apply(color: isDark ? Colors.white : AppColor.richBlack),
               ))
         ],
       ),

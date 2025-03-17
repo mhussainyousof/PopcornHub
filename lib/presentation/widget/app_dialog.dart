@@ -23,14 +23,14 @@ class AppDialog extends StatelessWidget {
     final isDark = themeMode == Brightness.dark;
 
     return Dialog(
-      backgroundColor: isDark ? AppColor.vulcan : Colors.white, 
+      backgroundColor: isDark ? AppColor.richBlack : Colors.white, 
       elevation: 32,
       insetPadding: EdgeInsets.all(32),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isDark ? AppColor.vulcan : Colors.white,
+          color: isDark ? AppColor.richBlack : Colors.white,
           boxShadow: [
             BoxShadow(
               color: isDark ? Colors.black54 : Colors.grey.shade300, 

@@ -18,7 +18,7 @@ class MovieDataWidget  extends StatelessWidget{
           return Text(
             state.movie.title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: isDark? Colors.white : AppColor.vulcan),
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: isDark? Colors.white : AppColor.richBlack),
             maxLines: 1,
             overflow: TextOverflow.fade,
           );

@@ -20,9 +20,9 @@ class WiredashApp extends StatelessWidget {
       secret: 'geVkONpyWg-ywH2nLYFnVk2xukNBv1BH',
       theme: WiredashThemeData(
         brightness: Brightness.dark,
-        primaryColor: AppColor.royalBlue,
-        secondaryColor: AppColor.violet,
-        secondaryBackgroundColor: AppColor.vulcan,
+        primaryColor: AppColor.charcoalGrey,
+        secondaryColor: AppColor.pureWhite,
+        secondaryBackgroundColor: AppColor.richBlack,
        
       ),
       child: child,

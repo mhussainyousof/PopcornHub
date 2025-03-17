@@ -21,7 +21,7 @@ class Button extends StatelessWidget {
       decoration: BoxDecoration(
         gradient:
               LinearGradient(
-                colors: isEnabled ?  [AppColor.royalBlue, AppColor.violet] : [Colors.grey, Colors.grey.shade400],
+                colors: isEnabled ? (Theme.of(context).brightness == Brightness.dark ?  [AppColor.charcoalGrey, AppColor.deepPurple] : [AppColor.mintGreen.withAlpha(100), AppColor.deepPurple] ): [Colors.grey, Colors.grey.shade400],
               ),
 
         borderRadius: BorderRadius.circular(30.r),

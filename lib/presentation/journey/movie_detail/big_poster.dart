@@ -5,6 +5,7 @@ import 'package:popcornhub/common/extensions/num_extensions.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/domain/entity/movie_detail_entity.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_appbar.dart';
+import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
 
 class BigPoster extends StatelessWidget {
@@ -23,8 +24,8 @@ class BigPoster extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                Theme.of(context).primaryColor.withOpacity(0.2),
-                Theme.of(context).primaryColor
+                AppColor.richBlack.withAlpha(60),
+                AppColor.richBlack
               ])),
           child: CachedNetworkImage(
             imageUrl: '${ApiConstants.baseImageUrl}${movie.posterPath}',

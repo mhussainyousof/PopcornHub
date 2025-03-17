@@ -42,7 +42,7 @@ class ThemeText {
       );
 
   static TextStyle? get _darkCaption => _poppinsTextTheme.bodySmall?.copyWith(
-        color: AppColor.vulcan,
+        color: AppColor.richBlack,
         fontSize: 14.sp,
         wordSpacing: 0.25,
         letterSpacing: 0.25,
@@ -50,16 +50,16 @@ class ThemeText {
       );
 
   static TextStyle? get _vulcanHeadline6 =>
-      _whiteHeadline6?.copyWith(color: AppColor.vulcan);
+      _whiteHeadline6?.copyWith(color: AppColor.richBlack);
 
   static TextStyle? get _vulcanHeadline5 =>
-      _whiteHeadline5?.copyWith(color: AppColor.vulcan);
+      _whiteHeadline5?.copyWith(color: AppColor.richBlack);
 
   static TextStyle? get vulcanSubtitle1 =>
-      whiteSubtitle1?.copyWith(color: AppColor.vulcan);
+      whiteSubtitle1?.copyWith(color: AppColor.richBlack);
 
   static TextStyle? get vulcanBodyText2 =>
-      whiteBodyText2?.copyWith(color: AppColor.vulcan);
+      whiteBodyText2?.copyWith(color: AppColor.richBlack);
 
   static TextStyle? get _lightCaption =>
       _darkCaption?.copyWith(color: Colors.white);
@@ -85,15 +85,15 @@ class ThemeText {
 
 extension ThemeTextExtension on TextTheme {
   TextStyle? get royalBlueSubtitle1 => titleMedium?.copyWith(
-      color: AppColor.royalBlue, fontWeight: FontWeight.w600);
+      color: AppColor.charcoalGrey, fontWeight: FontWeight.w600);
 
   TextStyle? get greySubtitle1 => titleMedium!.apply(fontSizeFactor: 0.9).copyWith(color: Colors.grey);
 
   TextStyle? get violetHeadline6 => titleLarge?.copyWith(
-    color: AppColor.violet);
+    color: AppColor.pureWhite);
 
   TextStyle? get vulcanBodyText2 =>
-      bodyMedium?.copyWith(color: AppColor.vulcan, fontWeight: FontWeight.w600);
+      bodyMedium?.copyWith(color: AppColor.richBlack, fontWeight: FontWeight.w600);
 
   TextStyle? get whiteBodyText2 =>
       vulcanBodyText2?.copyWith(color: Colors.white);

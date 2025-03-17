@@ -20,10 +20,10 @@ class LoadingScreen extends StatelessWidget {
             if(state is LoadingStarted)
             Container(
               decoration:
-                  BoxDecoration(color: AppColor.vulcan.withOpacity(0.8)),
+                  BoxDecoration(color: AppColor.richBlack.withOpacity(0.8)),
               child: Container(
                 decoration:
-                    BoxDecoration(color: AppColor.vulcan.withOpacity(0.8)),
+                    BoxDecoration(color: AppColor.richBlack.withOpacity(0.8)),
                 child: Center(
                   child: LoadingCircle(size: 200.w),
                 ),

@@ -13,7 +13,7 @@ class Separator extends StatelessWidget{
       width: 80.w,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(1.r),
-        gradient: LinearGradient(colors: [AppColor.royalBlue, AppColor.violet])
+        gradient: LinearGradient(colors: [AppColor.charcoalGrey, AppColor.pureWhite])
       ),
     );
     

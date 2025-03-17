@@ -1,48 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// class AppColor1 {
+//   AppColor1._();
+  // static const Color vulcan = Color(0xFF0B0C10);        // Dark background
+  // static const Color royalBlue = Color(0xFF45A29E);     // Primary Teal
+  // static const Color violet = Color(0xFF9B59B6);        // Accent Violet
+  // static const Color lightBackground = Color(0xFFF8F8F8); // Light theme BG
+  // static const Color greyText = Color(0xFFC5C6C7);      // Secondary text
+  // static const Color pinkAccent = Color(0xFFFF6F91);    // Soft pink for highlights
+// }
 
 class AppColor {
   AppColor._();
 
-  static const Color vulcan = Color(0xFF0B0C10);        // Dark background
-  static const Color royalBlue = Color(0xFF45A29E);     // Primary Teal
-  static const Color violet = Color(0xFF9B59B6);        // Accent Violet
-  static const Color lightBackground = Color(0xFFF8F8F8); // Light theme BG
-  static const Color greyText = Color(0xFFC5C6C7);      // Secondary text
-  static const Color pinkAccent = Color(0xFFFF6F91);    // Soft pink for highlights
+  static const Color richBlack = Color(0xFF0D0D0D);       // Dark background
+  static const Color charcoalGrey = Color(0xFF1C1C1E);    // Dark card/appbar
+  static const Color pureWhite = Color(0xFFFFFFFF);       // Light background
+  static const Color snowGrey = Color(0xFFF5F5F7);        // Light cards/appbar
+
+  static const Color electricBlue = Color(0xFF4F9DDE);    // Primary
+  static const Color deepPurple = Color(0xFF7D5FFF);      // Secondary / accent
+  static const Color softCoral = Color(0xFFFF6B6B);       // Highlights / error
+  static const Color mintGreen = Color(0xFF2CD6B4);       // Success / accent
+
+  static const Color coolGrey = Color(0xFFA0A3BD);        // Secondary text (dark)
+  static const Color slateGrey = Color(0xFF4E4B66);       // Secondary text (light)
 }
 
 class AppTheme {
   static ThemeData lightTheme() {
     return ThemeData(
       brightness: Brightness.light,
-      scaffoldBackgroundColor: AppColor.lightBackground,
+      scaffoldBackgroundColor: AppColor.pureWhite,
       colorScheme: ColorScheme.light(
-        primary: AppColor.royalBlue,
-        secondary: AppColor.violet,
+        primary: AppColor.electricBlue,
+        secondary: AppColor.deepPurple,
       ),
-      textTheme: GoogleFonts.poppinsTextTheme().apply(
-        bodyColor: Colors.black87,
-        displayColor: Colors.black87,
+      textTheme: TextTheme(
+        headlineLarge: GoogleFonts.cinzel(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        headlineMedium: GoogleFonts.cinzel(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.black87,
+        ),
+        bodyLarge: GoogleFonts.robotoSlab(
+          fontSize: 16,
+          color: AppColor.slateGrey,
+        ),
+        bodyMedium: GoogleFonts.robotoSlab(
+          fontSize: 14,
+          color: AppColor.slateGrey,
+        ),
+        bodySmall: GoogleFonts.robotoSlab(
+          fontSize: 12,
+          color: AppColor.slateGrey,
+        ),
       ),
       appBarTheme: const AppBarTheme(
-        color: Colors.transparent,
+        color: AppColor.snowGrey,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.black87),
+        titleTextStyle: TextStyle(
+          color: Colors.black87,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      cardColor: Colors.white.withOpacity(0.9),
+      cardColor: AppColor.snowGrey,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.violet,
+          backgroundColor: AppColor.electricBlue,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),
-      iconTheme: const IconThemeData(color: Colors.black),
+      iconTheme: const IconThemeData(color: Colors.black87),
       useMaterial3: true,
     );
   }
@@ -50,24 +89,50 @@ class AppTheme {
   static ThemeData darkTheme() {
     return ThemeData(
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: AppColor.vulcan,
+      scaffoldBackgroundColor: AppColor.richBlack,
       colorScheme: ColorScheme.dark(
-        primary: AppColor.royalBlue,
-        secondary: AppColor.pinkAccent,
+        primary: AppColor.electricBlue,
+        secondary: AppColor.mintGreen,
       ),
-      textTheme: GoogleFonts.robotoMonoTextTheme().apply(
-        bodyColor: AppColor.greyText,
-        displayColor: Colors.white,
+      textTheme: TextTheme(
+        headlineLarge: GoogleFonts.cinzel(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        headlineMedium: GoogleFonts.cinzel(
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+          color: Colors.white,
+        ),
+        bodyLarge: GoogleFonts.robotoSlab(
+          fontSize: 16,
+          color: AppColor.coolGrey,
+        ),
+        bodyMedium: GoogleFonts.robotoSlab(
+          fontSize: 14,
+          color: AppColor.coolGrey,
+        ),
+        bodySmall: GoogleFonts.robotoSlab(
+          fontSize: 12,
+          color: AppColor.coolGrey,
+        ),
       ),
       appBarTheme: const AppBarTheme(
-        color: Colors.transparent,
+        color: AppColor.charcoalGrey,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
+        titleTextStyle: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      cardColor: Colors.white.withOpacity(0.05),
+      cardColor: AppColor.charcoalGrey,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.royalBlue,
+          backgroundColor: AppColor.electricBlue,
+          foregroundColor: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

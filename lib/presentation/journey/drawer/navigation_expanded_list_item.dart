@@ -19,13 +19,13 @@ class NavigationExpandedListItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: AppColor.vulcan.withOpacity(0.7),
+          color: AppColor.richBlack.withOpacity(0.7),
           blurRadius: 2,
         ),
       ]),
       child: ExpansionTile(
-        iconColor: AppColor.royalBlue,
-        collapsedIconColor: AppColor.royalBlue,
+        iconColor: AppColor.charcoalGrey,
+        collapsedIconColor: AppColor.charcoalGrey,
         title: Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),

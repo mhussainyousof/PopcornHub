@@ -17,7 +17,7 @@ class NavigationListItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-              color: AppColor.vulcan.withOpacity(0.7),
+              color: AppColor.richBlack.withOpacity(0.7),
               blurRadius: 2),
         ]),
         child: ListTile(
@@ -46,7 +46,7 @@ class NavigationSubListItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
-              color: AppColor.vulcan.withOpacity(0.7),
+              color: AppColor.richBlack.withOpacity(0.7),
               blurRadius: 2),
         ]),
         child: ListTile(

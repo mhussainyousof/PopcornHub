@@ -37,7 +37,7 @@ class LableFieldWidget extends StatelessWidget {
             obscureText: isPasswordField,
             obscuringCharacter: '*',
             controller: controller,
-            cursorColor: AppColor.royalBlue,
+            cursorColor: AppColor.charcoalGrey,
             style:Theme.of(context).textTheme.titleMedium ,
             decoration: InputDecoration(
               hintText: hintText,

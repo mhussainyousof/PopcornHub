@@ -104,11 +104,11 @@ Widget build(BuildContext context) {
                         spacing: 16,
                         runSpacing: 10,
                         children: [
-                          _buildMoodButton("🔥", "Action", 28, size),
-                          _buildMoodButton("💔", "Romance",10749, size),
-                          _buildMoodButton("😂", "Comedy", 35, size),
-                          _buildMoodButton("😱", "Horror", 27, size),
-                          _buildMoodButton("🚀", "Sci-Fi", 878, size),
+                          _buildMoodButton("🔥", "assets/icons/action.png", 28, size),
+                          _buildMoodButton("💔", "assets/icons/horror.png",10749, size),
+                          _buildMoodButton("😂", "assets/icons/happy.png", 35, size),
+                          _buildMoodButton("😱", "assets/icons/sad.png", 27, size),
+                          // _buildMoodButton("🚀", "Sci-Fi", 878, size),
                         ],
                       ),
                     ),
@@ -131,42 +131,88 @@ Widget build(BuildContext context) {
   );
 }
 
-Widget _buildMoodButton(String emoji, String label, int genreId, Size size) {
-  double buttonSize = size.width * 0.12; 
+Widget _buildMoodButton(String label, String imageAsset, int genreId, Size size, ) {
+  double buttonSize = size.width * 0.18;
+
+  final Color moodColor = _getMoodColor(label);
 
   return GestureDetector(
     onTap: () => _navigateToMood(label, genreId),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          width: buttonSize,
-          height: buttonSize,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade900,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 8,
-                offset: const Offset(0, 0),
+        Hero(
+          tag: label,
+          child: Container(
+            width: buttonSize,
+            height: buttonSize,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                colors: [
+                  moodColor.withOpacity(0.8),
+                  moodColor.withOpacity(0.5),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            ],
+              boxShadow: [
+                BoxShadow(
+                  color: moodColor.withOpacity(0.4),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: 
+            Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              imageAsset,
+              fit: BoxFit.contain,
+            ),
           ),
-          alignment: Alignment.center,
-          child: Text(
-            emoji,
-            style: TextStyle(fontSize: buttonSize * 0.4),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Lottie.asset(
+            //     lottiePath,
+            //     repeat: true,
+            //     fit: BoxFit.contain,
+            //   ),
+            // ),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 12),
         Text(
           label,
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: moodColor,
+                fontWeight: FontWeight.bold,
+              ),
         ),
-      ],  
+      ],
     ),
   );
 }
+
+
+Color _getMoodColor(String label) {
+  switch (label.toLowerCase()) {
+    case 'action':
+      return Colors.redAccent;
+    case 'romance':
+      return Colors.pinkAccent;
+    case 'comedy':
+      return Colors.amberAccent;
+    case 'horror':
+      return Colors.deepPurpleAccent;
+    case 'sci-fi':
+      return Colors.lightBlueAccent;
+    default:
+      return Colors.grey;
+  }
+}
+
+
 }
