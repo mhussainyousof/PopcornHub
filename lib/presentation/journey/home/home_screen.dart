@@ -10,7 +10,6 @@ import 'package:popcornhub/presentation/widget/app_error_widget.dart';
 import 'package:popcornhub/presentation/journey/home/movie_carousel/movie_carousel_widget.dart';
 
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
@@ -54,8 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  @override
-  @override
+@override
 Widget build(BuildContext context) {
   final size = MediaQuery.of(context).size;
 
@@ -167,7 +165,7 @@ Widget _buildMoodButton(String emoji, String label, int genreId, Size size) {
           label,
           style: Theme.of(context).textTheme.titleSmall,
         ),
-      ],
+      ],  
     ),
   );
 }

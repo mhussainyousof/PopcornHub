@@ -8,9 +8,9 @@ import 'package:popcornhub/data/domain/entity/no_params.dart';
 import 'package:popcornhub/data/domain/usecase/login_user.dart';
 import 'package:popcornhub/data/domain/usecase/logout_user.dart';
 import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
-
 part 'loging_event.dart';
 part 'loging_state.dart';
+
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUser loginUser;
@@ -30,7 +30,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                 userName: event.userName, password: event.password));
         eitherResonse.fold((l) {
           var message = getErrorMessage(l.appErrorType);
-          print(message);
           return emit(LoginError(message));
         }, (r) {
           emit(LoginSuccess());

@@ -5,6 +5,7 @@ import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/data/domain/entity/movie_params.dart';
 import 'package:popcornhub/presentation/blocs/moviebygenre/movie_by_genre_bloc.dart';
+import 'package:popcornhub/presentation/widget/button.dart';
 
 class MoodMoviesScreen extends StatelessWidget {
   final String moodName;
@@ -38,14 +39,9 @@ class MoodMoviesScreen extends StatelessWidget {
                   children: [
                     Text(state.message),
                     const SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: () {
-                        context.read<MovieByGenreBloc>().add(
-                              LoadMoviesByGenreEvent(MovieParams(genreId)),
-                            );
-                      },
-                      child: const Text('Retry'),
-                    ),
+                    Button(text: 'Retry', onPressed: (){
+                      context.read<MovieByGenreBloc>().add(LoadMoviesByGenreEvent(MovieParams(genreId)));
+                    })
                   ],
                 ),
               );
