@@ -181,4 +181,16 @@ class MovieRepositoryImpl extends MovieRepository {
       return left(AppError(AppErrorType.database));
     }
   }
+  
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getMoviesByActor(int actorId) async{
+  try{
+    final movies = await remoteDataSource.getMoviesByActor(actorId);
+    return right(movies);
+  }on SocketException{
+      return left(AppError(AppErrorType.network));
+    }on Exception{
+      return left(AppError(AppErrorType.api));
+    }
+  }
 }

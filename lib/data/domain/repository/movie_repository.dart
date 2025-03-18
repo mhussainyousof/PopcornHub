@@ -21,4 +21,6 @@ import 'package:popcornhub/data/domain/entity/video_entity.dart';
     Future<Either<AppError, bool>> checkIfMovieFavorite(int movieId);
     Future<Either<AppError, List<MovieEntity>>> getMoviesByGenre(int genreId);
     Future<Either<AppError, List<ActorEntity>>> getActors();
+    Future<Either<AppError, List<MovieEntity>>> getMoviesByActor(int actorId);
+    
   }

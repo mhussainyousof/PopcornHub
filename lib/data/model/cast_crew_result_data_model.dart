@@ -66,22 +66,26 @@ class CastModel extends CastEntity {
   @override
   final String creditId;
   final int? gender;
-  final int? id;
+  final int id;
   @override
+  
   final String name;
   final int? order;
   final String profilePath;
 
   const CastModel({
     this.castId,
+
     required this.character,
     required this.creditId,
     this.gender,
-    this.id,
+    required this.id,
     required this.name,
     this.order,
     required this.profilePath,
   }) : super(
+
+    id: id,
           creditId: creditId,
           name: name,
           posterPath: profilePath,

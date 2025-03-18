@@ -16,6 +16,7 @@ import 'package:popcornhub/data/domain/usecase/get_cast.dart';
 import 'package:popcornhub/data/domain/usecase/get_comming_soon.dart';
 import 'package:popcornhub/data/domain/usecase/get_favorite_movies.dart';
 import 'package:popcornhub/data/domain/usecase/get_genre.dart';
+import 'package:popcornhub/data/domain/usecase/get_movie_by_actor.dart';
 import 'package:popcornhub/data/domain/usecase/get_movie_detail.dart';
 import 'package:popcornhub/data/domain/usecase/get_playingnow.dart';
 import 'package:popcornhub/data/domain/usecase/get_popular.dart';
@@ -31,6 +32,7 @@ import 'package:popcornhub/data/repository/app_repo_impl.dart';
 import 'package:popcornhub/data/repository/authentication_repository_impl.dart';
 import 'package:popcornhub/data/repository/movie_repo_impl.dart';
 import 'package:popcornhub/presentation/blocs/actor/actor_bloc.dart';
+import 'package:popcornhub/presentation/blocs/actor_movie/actor_movie_bloc.dart';
 import 'package:popcornhub/presentation/blocs/cast/cast_bloc.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
 import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
@@ -85,6 +87,7 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<LogoutUser>(() => LogoutUser(getItInstance()));
   getItInstance.registerLazySingleton<GetMoviesByGenre>(() => GetMoviesByGenre(getItInstance()));
   getItInstance.registerLazySingleton<GetActors>(() => GetActors(getItInstance()));
+  getItInstance.registerLazySingleton<GetMovieByActor>(() => GetMovieByActor(movieRepository: getItInstance()));
   
 
   //! 🔹 Register BLoCs
@@ -114,4 +117,11 @@ Future<void> init() async {
   getItInstance.registerFactory<ActorBloc>(
   () => ActorBloc(getActors: getItInstance()),
 );
+getItInstance.registerFactory<ActorMovieBloc>(
+  () => ActorMovieBloc(
+    getMovieByActor: getItInstance(),
+  ),
+);
+
+
 }

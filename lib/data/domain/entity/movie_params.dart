@@ -10,3 +10,13 @@ class MovieParams extends Equatable {
 
   List<Object?> get props => [id];
 }
+class ActorMovieParam extends Equatable {
+  final String id;
+  const ActorMovieParam(
+     this.id,
+  );
+  
+  @override
+
+  List<Object?> get props => [id];
+}

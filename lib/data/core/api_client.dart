@@ -11,7 +11,6 @@ class ApiClient {
     final response = await _client.get(Uri.parse(getPath(path, params)),
         headers: {'Content-Type': 'application/json'});
 
-   await Future.delayed(Duration(milliseconds: 2000));
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {

@@ -7,6 +7,7 @@ import 'package:popcornhub/presentation/blocs/actor/actor_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
+import 'package:popcornhub/presentation/journey/actor_movie/actor_mvoie.dart';
 import 'package:popcornhub/presentation/journey/drawer/navigation_drawer.dart';
 import 'package:popcornhub/presentation/journey/mood_movie/mood_movie.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
@@ -195,12 +196,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   final actor = actors[index];
                   return Column(
                     children: [
-                      CircleAvatar(
-                        radius: 40,
-                        backgroundImage: 
-                            NetworkImage(
-                                '${ApiConstants.baseImageUrl}${actor.profilePath}'
-                       )
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                             return ActorMoviesScreen(actorId:actor.id);
+                          }));
+                        },
+                        child: CircleAvatar(
+                          radius: 40,
+                          backgroundImage: 
+                              NetworkImage(
+                                  '${ApiConstants.baseImageUrl}${actor.profilePath}'
+                         )
+                        ),
                       ),
                       const SizedBox(height: 6),
                       SizedBox(
