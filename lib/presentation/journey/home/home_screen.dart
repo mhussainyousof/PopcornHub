@@ -11,7 +11,6 @@ import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/widget/app_error_widget.dart';
 import 'package:popcornhub/presentation/journey/home/movie_carousel/movie_carousel_widget.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
@@ -42,150 +41,242 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  void _navigateToMood(String mood, int genreId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>  MoodMoviesScreen(   
-        moodName: mood,
-        genreId: genreId, 
-      ),
+  void _navigateToMood(String mood, int genreId, String imageAsset) {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 800),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return FadeTransition(
+            opacity: animation,
+            child: ScaleTransition(
+              scale: Tween<double>(begin: 0.95, end: 1.0).animate(
+                CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeInOut,
+                ),
+              ),
+              child: MoodMoviesScreen(
+                moodName: mood,
+                genreId: genreId,
+                imageAsset: imageAsset,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 
-@override
-Widget build(BuildContext context) {
-  final size = MediaQuery.of(context).size;
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
 
-  return MultiBlocProvider(
-    providers: [
-      BlocProvider(create: (context) => movieCarouselBloc),
-      BlocProvider(create: (context) => movieBackdropBloc),
-      BlocProvider(create: (context) => searchMovieBloc),
-    ],
-    child: Scaffold(
-      drawer: NavigationDrawerr(),
-      body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
-        bloc: movieCarouselBloc,
-        builder: (context, state) {
-          if (state is MovieCarouselLoaded) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                //! Movie Carousel
-                SizedBox(
-                  height: size.height * 0.55,
-                  child: MovieCarouselWidget(
-                    movies: state.movies,
-                    defaultIndex: state.defaultIndex,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => movieCarouselBloc),
+        BlocProvider(create: (context) => movieBackdropBloc),
+        BlocProvider(create: (context) => searchMovieBloc),
+      ],
+      child: Scaffold(
+        drawer: NavigationDrawerr(),
+        body: BlocBuilder<MovieCarouselBloc, MovieCarouselState>(
+          bloc: movieCarouselBloc,
+          builder: (context, state) {
+            if (state is MovieCarouselLoaded) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  //! Movie Carousel
+                  SizedBox(
+                    height: size.height * 0.55,
+                    child: MovieCarouselWidget(
+                      movies: state.movies,
+                      defaultIndex: state.defaultIndex,
+                    ),
                   ),
-                ),
-      
-                //! متن Mood
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    "Hey, what's your mood today?",
-                    style:Theme.of(context).textTheme.titleMedium
-                  ),
-                ),
-      
-                const SizedBox(height: 12),
-                SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 1),
-                  child: Wrap(
-                    spacing: 16,
-                    runSpacing: 10,
+
+                  Column(
                     children: [
-                      _buildMoodButton("🔥", "assets/lottie/action.json", 28, size),
-                      // _buildMoodButton("🔥", "assets/lottie/action2.json", 28, size),
-                      _buildMoodButton("💔", "assets/lottie/sad.json",10749, size),
-                      _buildMoodButton("😂", "assets/lottie/fun.json", 35, size),
-                      _buildMoodButton("😱", "assets/lottie/horror.json", 27, size),
-                      _buildMoodButton("🚀", "assets/lottie/fiction.json", 878, size),
+                      Text(
+                        "Hey, choose you vibe today!",
+                        textAlign: TextAlign.center,
+                        style:
+                            Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          color: AppColor.deepPurple,
+                          fontWeight: FontWeight.w800,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 4,
+                              color: Theme.of(context).brightness ==
+                                      Brightness.dark
+                                  ? Colors.white.withOpacity(0.2)
+                                  : Colors.black.withOpacity(0.2),
+                              offset: const Offset(2, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      SingleChildScrollView(
+                        padding: const EdgeInsets.symmetric(horizontal: 1),
+                        child: Wrap(
+                          spacing: 16,
+                          runSpacing: 10,
+                          children: [
+                            Wrap(
+                              spacing: 16,
+                              runSpacing: 10,
+                              children: [
+                                MoodButton(
+                                  label: "🔥",
+                                  imageAsset: "assets/lottie/action.json",
+                                  genreId: 28,
+                                  size: size,
+                                  onTap: (label, genreId) => _navigateToMood(
+                                      label,
+                                      genreId,
+                                     "assets/lottie/action.json"),
+                                ),
+                                MoodButton(
+                                  label: "😂",
+                                  imageAsset: "assets/lottie/fun.json",
+                                  genreId: 35,
+                                  size: size,
+                                  onTap:(label, genreId)=> _navigateToMood(
+                                    label, genreId, 'assets/lottie/fun.json'
+                                  ),
+                                ),
+                                MoodButton(
+                                  label: "💔",
+                                  imageAsset: "assets/lottie/sad.json",
+                                  genreId: 10749,
+                                  size: size,
+                                  onTap: (label, genreId) => _navigateToMood(
+                                      label, genreId, "assets/lottie/sad.json"),
+                                ),
+                                MoodButton(
+                                  label: "😱",
+                                  imageAsset: "assets/lottie/horror.json",
+                                  genreId: 27,
+                                  size: size,
+                                  onTap:(label, genreId)=> _navigateToMood(
+                                    label, genreId, 'assets/lottie/horror.json'
+                                  ),
+     
+                           ),
+                                MoodButton(
+                                  label: "🚀",
+                                  imageAsset: "assets/lottie/fiction.json",
+                                  genreId: 878,
+                                  size: size,
+                                  onTap:(label, genreId)=> _navigateToMood(
+                                    label, genreId, 'assets/lottie/fiction.json'
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
-              ],
-            );
-          } else if (state is MovieCarouselError) {
-            return AppErrorWidget(
-              onPressed: () =>
-                  movieCarouselBloc.add(MovieCarouselLoadedEvent()),
-              errorType: state.errorType,
-            );
-          }
-      
-          return const Center(child: CircularProgressIndicator());
-        },
+                ],
+              );
+            } else if (state is MovieCarouselError) {
+              return AppErrorWidget(
+                onPressed: () =>
+                    movieCarouselBloc.add(MovieCarouselLoadedEvent()),
+                errorType: state.errorType,
+              );
+            }
+
+            return SizedBox.shrink();
+          },
+        ),
       ),
-    ),
-  );
-}
-
-Widget _buildMoodButton(String label, String imageAsset, int genreId, Size size, ) {
-
-  double buttonSize = size.width * 0.20;
-  final Color moodColor = _getMoodColor(label);
-
-  return GestureDetector(
-    onTap: () => _navigateToMood(label, genreId),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Hero(
-          tag: label,
-          child: Container(
-            width: buttonSize,
-            height: buttonSize,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: moodColor.withOpacity(0.4),
-                  blurRadius: 8,
-                  spreadRadius: 2,
-                  offset: const Offset(0, 6),
-                ),
-              ],
-            ),
-            child: 
-            Lottie.asset(            
-              imageAsset,
-              repeat: true,
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: moodColor,
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-      ],
-    ),
-  );
-}
-
-
-Color _getMoodColor(String label) {
-  switch (label) {
-    case '🔥':
-      return Colors.redAccent;
-    case '💔':
-      return Colors.pinkAccent;
-    case '😂':
-      return Colors.amberAccent;
-    case '😱':
-      return Colors.deepPurpleAccent;
-    case '🚀':
-      return Colors.lightBlueAccent;
-    default:
-      return Colors.grey;
+    );
   }
 }
+
+class MoodButton extends StatelessWidget {
+  final String label;
+  final String imageAsset;
+  final int genreId;
+  final Size size;
+  final Function(String, int) onTap;
+
+  const MoodButton({
+    Key? key,
+    required this.label,
+    required this.imageAsset,
+    required this.genreId,
+    required this.size,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double buttonSize = size.width * 0.20;
+    final Color moodColor = _getMoodColor(label);
+
+    return GestureDetector(
+      onTap: () => onTap(label, genreId),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Hero(
+            tag: "mood_$label",
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                width: buttonSize,
+                height: buttonSize,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: moodColor.withOpacity(0.5),
+                      blurRadius: 8,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: Lottie.asset(
+                  imageAsset,
+                  repeat: true,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: moodColor,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Color _getMoodColor(String label) {
+    switch (label) {
+      case '🔥':
+        return Colors.redAccent;
+      case '💔':
+        return Colors.pinkAccent;
+      case '😂':
+        return Colors.amberAccent;
+      case '😱':
+        return Colors.deepPurpleAccent;
+      case '🚀':
+        return Colors.lightBlueAccent;
+      default:
+        return Colors.grey;
+    }
+  }
 }

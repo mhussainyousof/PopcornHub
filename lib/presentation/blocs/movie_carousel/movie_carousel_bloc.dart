@@ -21,7 +21,7 @@ class MovieCarouselBloc extends Bloc<MovieCarouselEvent, MovieCarouselState> {
       : super(MovieCarouselInitial()) {
     on<MovieCarouselEvent>((event, emit) async {
       if (event is MovieCarouselLoadedEvent) {
-        loadingBloc.add(StartLoading());
+        // loadingBloc.add(StartLoading());
         final movieEither = await getTrending(NoParams());
 
         movieEither
