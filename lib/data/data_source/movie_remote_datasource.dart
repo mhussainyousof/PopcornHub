@@ -1,4 +1,6 @@
 import 'package:popcornhub/data/core/api_client.dart';
+import 'package:popcornhub/data/model/actor_model.dart';
+import 'package:popcornhub/data/model/actor_result.dart';
 
 import 'package:popcornhub/data/model/cast_crew_result_data_model.dart';
 import 'package:popcornhub/data/model/movie_detail_model.dart';
@@ -16,8 +18,8 @@ abstract class MovieRemoteDatasource {
   Future<List<CastModel>> getCastCrew(int id);
   Future<List<VideoModel>> getVideos(int id);
   Future<List<MovieModel>> getSearchedMovies(String searchTerm);
-  
   Future<List<MovieModel>> getMoviesByGenre(int genreId);
+  Future<List<ActorModel>> getActors();
 }
 
 class MovieRemoteDatasourceImpl extends MovieRemoteDatasource {
@@ -96,5 +98,16 @@ class MovieRemoteDatasourceImpl extends MovieRemoteDatasource {
     final movies = MovieResultModel.fromJson(response).movies;
     return movies;
   }
+  
+  @override
+  Future<List<ActorModel>> getActors() async {
+    final response = await _client.get('person/popular', params: {
+      'language': 'en-US',
+      'page': 1,
+    });
+    
+    final actors = ActorResultModel.fromJson(response).actors;
+    return actors;
+    }
 }
  

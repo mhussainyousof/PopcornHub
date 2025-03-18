@@ -12,9 +12,9 @@ class MovieBackdropWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       alignment: Alignment.topCenter,
-      heightFactor: 0.7,
+      heightFactor: 0.9,
       child: ClipRRect(
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(20.r)),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(50.r), top:  Radius.circular(50.r)),
         child: Stack(
           children: [
             FractionallySizedBox(
@@ -30,10 +30,16 @@ class MovieBackdropWidget extends StatelessWidget {
                         ? '${ApiConstants.baseImageUrl}$backdropPath'
                         : '${ApiConstants.baseImageUrl}$posterPath';
 
-                    return CachedNetworkImage(
-                      imageUrl: imageUrl,
-                      fit: BoxFit.fitHeight,
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          fit: BoxFit.fitHeight,
+                          errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
+                      ),
                     );
                   }
                   return SizedBox.shrink();

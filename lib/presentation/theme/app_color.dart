@@ -20,6 +20,7 @@ class AppColor {
 class AppTheme {
   static ThemeData lightTheme() {
     return ThemeData(
+      
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColor.pureWhite,
       colorScheme: ColorScheme.light(
@@ -51,7 +52,7 @@ class AppTheme {
         ),
       ),
       appBarTheme: const AppBarTheme(
-        color: AppColor.snowGrey,
+        color: AppColor.pureWhite,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.black87),
         titleTextStyle: TextStyle(

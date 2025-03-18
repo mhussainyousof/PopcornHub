@@ -29,7 +29,7 @@ class AnimatedMovieCardWidget extends StatelessWidget {
             child: SizedBox(
               height: Curves.easeIn.transform(value) *
                   ScreenUtil().screenHeight *
-                  0.35,
+                  0.30,
               width: 230.w,
               child: child,
             ),
@@ -40,8 +40,8 @@ class AnimatedMovieCardWidget extends StatelessWidget {
             child: SizedBox(
               height: Curves.easeIn.transform(index == 0? value:value * 0.5) *
                   ScreenUtil().screenHeight *
-                  0.35,
-              width: 230.w,
+                  0.30,
+              width: 200.w,
               child: child,
             ),
           );

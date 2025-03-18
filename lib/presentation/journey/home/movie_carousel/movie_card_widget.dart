@@ -23,7 +23,7 @@ class MovieCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.w),
         child: CachedNetworkImage(
           imageUrl: '${ApiConstants.baseImageUrl}$posterPath',
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
     );

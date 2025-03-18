@@ -42,13 +42,11 @@ class MoodMoviesScreen extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-          
               BlocBuilder<MovieByGenreBloc, MovieByGenreState>(
                 builder: (context, state) {
                   if (state is MovieByGenreLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  }
-                        
+                  }  
                   if (state is MovieByGenreError) {
                     return Center(
                       child: Column(
@@ -67,8 +65,7 @@ class MoodMoviesScreen extends StatelessWidget {
                         ],
                       ),
                     );
-                  }
-                        
+                  }    
                   if (state is MovieByGenreLoaded) {
                     final movies = state.movies;
                         

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
+import 'package:popcornhub/presentation/blocs/actor/actor_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
@@ -21,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final MovieCarouselBloc movieCarouselBloc;
   late final MovieBackdropBloc movieBackdropBloc;
   late final SearchMovieBloc searchMovieBloc;
+  late final ActorBloc actorBloc;
 
   @override
   void initState() {
@@ -29,8 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
     movieCarouselBloc = getItInstance<MovieCarouselBloc>();
     searchMovieBloc = getItInstance<SearchMovieBloc>();
     movieBackdropBloc = movieCarouselBloc.movieBackdropBloc;
-
+    actorBloc = getItInstance<ActorBloc>();
     movieCarouselBloc.add(MovieCarouselLoadedEvent());
+    actorBloc.add(LoadActorsEvent());
   }
 
   @override
@@ -39,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     movieBackdropBloc.close();
     searchMovieBloc.close();
     super.dispose();
+    actorBloc.close();
   }
 
   void _navigateToMood(String mood, int genreId, String imageAsset) {
@@ -76,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
         BlocProvider(create: (context) => movieCarouselBloc),
         BlocProvider(create: (context) => movieBackdropBloc),
         BlocProvider(create: (context) => searchMovieBloc),
+        BlocProvider(create: (context) => actorBloc),
       ],
       child: Scaffold(
         drawer: NavigationDrawerr(),
@@ -83,51 +89,38 @@ class _HomeScreenState extends State<HomeScreen> {
           bloc: movieCarouselBloc,
           builder: (context, state) {
             if (state is MovieCarouselLoaded) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  //! Movie Carousel
-                  SizedBox(
-                    height: size.height * 0.55,
-                    child: MovieCarouselWidget(
-                      movies: state.movies,
-                      defaultIndex: state.defaultIndex,
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: 30,
                     ),
-                  ),
-
-                  Column(
-                    children: [
-                      Text(
-                        "Hey, choose you vibe today!",
-                        textAlign: TextAlign.center,
-                        style:
-                            Theme.of(context).textTheme.headlineLarge?.copyWith(
-                          color: AppColor.deepPurple,
-                          fontWeight: FontWeight.w800,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 4,
-                              color: Theme.of(context).brightness ==
-                                      Brightness.dark
-                                  ? Colors.white.withOpacity(0.2)
-                                  : Colors.black.withOpacity(0.2),
-                              offset: const Offset(2, 2),
-                            ),
-                          ],
-                        ),
+                    TextTitle(
+                      text: 'Trendings?',
+                    ),
+                    //! Movie Carousel
+                    SizedBox(
+                      height: size.height * 0.40,
+                      child: MovieCarouselWidget(
+                        movies: state.movies,
+                        defaultIndex: state.defaultIndex,
                       ),
-                      const SizedBox(height: 12),
-                      SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(horizontal: 1),
-                        child: Wrap(
-                          spacing: 16,
-                          runSpacing: 10,
-                          children: [
-                            Wrap(
-                              spacing: 16,
-                              runSpacing: 10,
-                              children: [
-                                MoodButton(
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextTitle(text: 'Or you vibe?'),
+                        const SizedBox(height: 12),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            spacing: 16,
+                            children: [
+                              MoodButton(
                                   label: "🔥",
                                   imageAsset: "assets/lottie/action.json",
                                   genreId: 28,
@@ -135,52 +128,102 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: (label, genreId) => _navigateToMood(
                                       label,
                                       genreId,
-                                     "assets/lottie/action.json"),
-                                ),
-                                MoodButton(
+                                      "assets/lottie/action.json")),
+                              MoodButton(
                                   label: "😂",
                                   imageAsset: "assets/lottie/fun.json",
                                   genreId: 35,
                                   size: size,
-                                  onTap:(label, genreId)=> _navigateToMood(
-                                    label, genreId, 'assets/lottie/fun.json'
-                                  ),
-                                ),
-                                MoodButton(
+                                  onTap: (label, genreId) => _navigateToMood(
+                                      label,
+                                      genreId,
+                                      'assets/lottie/fun.json')),
+                              MoodButton(
                                   label: "💔",
                                   imageAsset: "assets/lottie/sad.json",
                                   genreId: 10749,
                                   size: size,
                                   onTap: (label, genreId) => _navigateToMood(
-                                      label, genreId, "assets/lottie/sad.json"),
-                                ),
-                                MoodButton(
+                                      label,
+                                      genreId,
+                                      "assets/lottie/sad.json")),
+                              MoodButton(
                                   label: "😱",
                                   imageAsset: "assets/lottie/horror.json",
                                   genreId: 27,
                                   size: size,
-                                  onTap:(label, genreId)=> _navigateToMood(
-                                    label, genreId, 'assets/lottie/horror.json'
-                                  ),
-     
-                           ),
-                                MoodButton(
+                                  onTap: (label, genreId) => _navigateToMood(
+                                      label,
+                                      genreId,
+                                      'assets/lottie/horror.json')),
+                              MoodButton(
                                   label: "🚀",
                                   imageAsset: "assets/lottie/fiction.json",
                                   genreId: 878,
                                   size: size,
-                                  onTap:(label, genreId)=> _navigateToMood(
-                                    label, genreId, 'assets/lottie/fiction.json'
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                                  onTap: (label, genreId) => _navigateToMood(
+                                      label,
+                                      genreId,
+                                      'assets/lottie/fiction.json')),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextTitle(text: 'Or maybe stars?'),
+                    const SizedBox(height: 12),
+                    BlocBuilder<ActorBloc, ActorState>(
+                      builder: (context, state) {
+                        if(state is ActorLoading){
+                         return Center(child: 
+                          LinearProgressIndicator()
+                          );
+                        }
+                        if(state is ActorError){
+                          return Center(child: Text(state.message));
+                        }
+                        if (state is ActorLoaded) {
+  final actors = state.actors;
+
+ return SizedBox(
+              height: 140,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: actors.length,
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+                itemBuilder: (context, index) {
+                  final actor = actors[index];
+                  return Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundImage: 
+                            NetworkImage(
+                                '${ApiConstants.baseImageUrl}${actor.profilePath}'
+                       )
+                      ),
+                      const SizedBox(height: 6),
+                      SizedBox(
+                        width: 80,
+                        child: Text(
+                          actor.name,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ),
-                    ],
-                  ),
-                ],
+            ],
+        );
+      },
+    ),
+  );
+  
+}
+return SizedBox.shrink();
+                      }
+                    )
+                  ],
+                ),
               );
             } else if (state is MovieCarouselError) {
               return AppErrorWidget(
@@ -189,10 +232,40 @@ class _HomeScreenState extends State<HomeScreen> {
                 errorType: state.errorType,
               );
             }
-
             return SizedBox.shrink();
           },
         ),
+      ),
+    );
+  }
+}
+
+class TextTitle extends StatelessWidget {
+  const TextTitle({
+    required this.text,
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+        fontSize: 18,
+        color: AppColor.deepPurple,
+        fontWeight: FontWeight.w800,
+        shadows: [
+          Shadow(
+            blurRadius: 4,
+            color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white.withOpacity(0.2)
+                : Colors.black.withOpacity(0.2),
+            offset: const Offset(2, 2),
+          ),
+        ],
       ),
     );
   }
@@ -235,7 +308,7 @@ class MoodButton extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: moodColor.withOpacity(0.5),
+                      color: moodColor.withOpacity(0.4),
                       blurRadius: 8,
                       spreadRadius: 2,
                       offset: const Offset(0, 6),

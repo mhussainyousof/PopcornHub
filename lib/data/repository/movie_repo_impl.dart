@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:popcornhub/data/data_source/movie_local_data_source.dart';
 import 'package:popcornhub/data/data_source/movie_remote_datasource.dart';
+import 'package:popcornhub/data/domain/entity/actor_entity.dart';
 import 'package:popcornhub/data/domain/entity/app_erro.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/data/domain/repository/movie_repository.dart';
@@ -163,6 +164,18 @@ class MovieRepositoryImpl extends MovieRepository {
       final movies = await remoteDataSource.getMoviesByGenre(genreId);
       return right(movies.map((model)=>model.toEntity()).toList());
     } on SocketException{
+      return left(AppError(AppErrorType.network));
+    }on Exception{
+      return left(AppError(AppErrorType.database));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<ActorEntity>>> getActors() async{
+    try{
+      final actors = await remoteDataSource.getActors();
+      return right(actors.map((actor)=>actor.toEntity()).toList());
+    }on SocketException{
       return left(AppError(AppErrorType.network));
     }on Exception{
       return left(AppError(AppErrorType.database));
