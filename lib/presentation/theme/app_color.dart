@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:popcornhub/presentation/theme/navigation.dart';
 
 class AppColor {
   AppColor._();
@@ -20,7 +21,7 @@ class AppColor {
 class AppTheme {
   static ThemeData lightTheme() {
     return ThemeData(
-      
+      navigationBarTheme: AppNavigationBarTheme.lightNavigationBarTheme,
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColor.pureWhite,
       colorScheme: ColorScheme.light(
@@ -78,6 +79,7 @@ class AppTheme {
 
   static ThemeData darkTheme() {
     return ThemeData(
+      navigationBarTheme: AppNavigationBarTheme.darkNavigationBarTheme,
       brightness: Brightness.dark,
       scaffoldBackgroundColor: AppColor.richBlack,
       colorScheme: ColorScheme.dark(

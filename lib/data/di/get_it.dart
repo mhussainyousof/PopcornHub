@@ -43,6 +43,7 @@ import 'package:popcornhub/presentation/blocs/movie_detail/movie_detail_bloc.dar
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_tabbed/movie_tabbed_bloc.dart';
 import 'package:popcornhub/presentation/blocs/moviebygenre/movie_by_genre_bloc.dart';
+import 'package:popcornhub/presentation/blocs/popular/popular_movies_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
 import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
 import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
@@ -122,6 +123,12 @@ getItInstance.registerFactory<ActorMovieBloc>(
     getMovieByActor: getItInstance(),
   ),
 );
+getItInstance.registerFactory<PopularMoviesBloc>(
+  () => PopularMoviesBloc(
+    getPopular: getItInstance(),
+  ),
+);
+
 
 
 }
