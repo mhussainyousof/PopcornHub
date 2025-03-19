@@ -33,13 +33,14 @@ class MoodButton extends StatelessWidget {
             child: Material(
               color: Colors.transparent,
               child: Container(
+                margin: EdgeInsets.only(top: 5),
                 width: buttonSize,
                 height: buttonSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: moodColor.withOpacity(0.4),
+                      color: moodColor.withOpacity(0.3),
                       blurRadius: 8,
                       spreadRadius: 2,
                       offset: const Offset(0, 6),
@@ -54,7 +55,7 @@ class MoodButton extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 15),
           Text(
             label,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -76,7 +77,7 @@ class MoodButton extends StatelessWidget {
       case '😂':
         return AppColor.mintGreen;
       case '😱':
-        return AppColor.electricBlue;
+        return Colors.lightBlue;
       case '🚀':
         return AppColor.electricBlue;
       default:

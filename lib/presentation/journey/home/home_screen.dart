@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
-import 'package:popcornhub/data/domain/entity/actor_entity.dart';
 import 'package:popcornhub/presentation/blocs/actor/actor_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_carousel/movie_carousel_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
-import 'package:popcornhub/presentation/journey/actor_movie/actor_mvoie.dart';
 import 'package:popcornhub/presentation/journey/drawer/navigation_drawer.dart';
 import 'package:popcornhub/presentation/journey/home/actor&vibe/actor_picture.dart';
 import 'package:popcornhub/presentation/journey/home/actor&vibe/mood_button.dart';
@@ -120,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                     //! Actors
-                    TextTitle(text: 'Or Stars?'),
+                    TextTitle(text: 'Stars?'),
                     const SizedBox(height: 5),
                     BlocBuilder<ActorBloc, ActorState>(
                       builder: (context, state) {
@@ -146,13 +143,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
                     SizedBox(height: 16),
                     //! vibes
-                        TextTitle(text: 'Or you vibe?'),
+                        TextTitle(text: 'Or your vibe?'),
                         const SizedBox(height: 5),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
-                            spacing: 14,
+                            spacing: 16,
                             children: [
                               MoodButton(
                                   label: "🔥",
@@ -175,12 +172,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               MoodButton(
                                   label: "💔",
                                   imageAsset: "assets/lottie/sad.json",
-                                  genreId: 10749,
+                                  genreId: 18,
                                   size: size,
                                   onTap: (label, genreId) => _navigateToMood(
                                       label,
                                       genreId,
                                       "assets/lottie/sad.json")),
+                              MoodButton(
+                                  label: "👨‍👩‍👧‍👦",
+                                  imageAsset: "assets/lottie/family.json",
+                                  genreId: 10751,
+                                  size: size,
+                                  onTap: (label, genreId) => _navigateToMood(
+                                      label,
+                                      genreId,
+                                      "assets/lottie/family.json")),
                               MoodButton(
                                   label: "😱",
                                   imageAsset: "assets/lottie/horror.json",

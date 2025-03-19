@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
+import 'package:popcornhub/navigation_home.dart';
 import 'package:popcornhub/presentation/journey/favorite/favorite_screen.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
 import 'package:popcornhub/presentation/journey/login/login_screen.dart';
@@ -20,5 +21,6 @@ class Routes {
               watchVideoArguments: setting.arguments as WatchVideoArguments,
             ),
         RouteList.favorite: (context) => FavoriteScreen(),
+        RouteList.navigationHome: (context) => NavigationHome()
       };
 }

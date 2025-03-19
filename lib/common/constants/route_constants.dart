@@ -7,4 +7,6 @@ class RouteList {
   static const String watchTrailer = '/watch-trailer';
   static const String favorite = '/favorite';
   static const String loginScreen = '/login-screen';
+  static const String navigationHome = '/navigation-home';
+
 }
