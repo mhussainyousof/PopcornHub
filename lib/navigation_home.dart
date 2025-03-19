@@ -1,17 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
-import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/presentation/blocs/playing_now/playing_now_bloc.dart';
 import 'package:popcornhub/presentation/blocs/popular/popular_movies_bloc.dart';
 import 'package:popcornhub/presentation/blocs/soon/soon_bloc.dart';
 import 'package:popcornhub/presentation/journey/explore/explore_cubit.dart';
 import 'package:popcornhub/presentation/journey/explore/widgets/explore_listview.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
-import 'package:popcornhub/presentation/theme/app_color.dart';
 
 class NavigationHome extends StatelessWidget {
   @override
