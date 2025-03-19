@@ -109,7 +109,7 @@ class AppTheme {
         ),
       ),
       appBarTheme: const AppBarTheme(
-        color: AppColor.charcoalGrey,
+        color: AppColor.richBlack,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
         titleTextStyle: TextStyle(

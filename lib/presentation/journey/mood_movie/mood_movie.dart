@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
@@ -35,28 +36,33 @@ class MoodMoviesScreen extends StatelessWidget {
             children: [          
               Hero(
                 tag: 'mood_$moodName', 
-                child: Lottie.asset(
-                  height: 160,
-                  width: 160,
-                  imageAsset, 
-                  repeat: true,
-                  fit: BoxFit.contain,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Lottie.asset(
+                    height: 160,
+                    width: 160,
+                    imageAsset, 
+                    repeat: true,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               BlocBuilder<MovieByGenreBloc, MovieByGenreState>(
                 builder: (context, state) {
                   if (state is MovieByGenreLoading) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 100),
+                      child: const Center(child: LinearProgressIndicator()),
+                    );
                   }  
                   if (state is MovieByGenreError) {
                     return Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(state.message),
                           const SizedBox(height: 12),
                           Button(
-                            text: 'Retry',
+                            text: TranslationConstants.retry,
+                            
                             onPressed: () {
                               context.read<MovieByGenreBloc>().add(
                                     LoadMoviesByGenreEvent(MovieParams(genreId)),
@@ -76,7 +82,6 @@ class MoodMoviesScreen extends StatelessWidget {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      // padding: const EdgeInsets.all(16),
                       itemCount: movies.length,
                       itemBuilder: (context, index) {
                         final movie = movies[index];
@@ -100,39 +105,48 @@ class MoodMoviesScreen extends StatelessWidget {
         ? '${ApiConstants.baseImageUrl}${movie.posterPath}'
         : '';
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.start,
-
-      children: [
-        Card(
-          elevation: 4,
-          margin: const EdgeInsets.only(bottom: 16),
-          child: 
-             hasPoster
-                ? ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    width: 100,
-                    height: 100,
-                      imageUrl,
-                      fit: BoxFit.fill,
-                      errorBuilder: (_, __, ___) {
-                        return const Icon(Icons.broken_image);
-                      },
-                    ),
-                )
-                : const Icon(Icons.image_not_supported),
-          ),
-          SizedBox(width: 12,),
-             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 Text(movie.title.intelliTrim()),
-             Text('⭐ ${movie.voteAverage.toStringAsFixed(1)}'),
-               ],
-             ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+      
+        children: [
+          Card(
+            elevation: 4,
+            margin: const EdgeInsets.only(bottom: 16),
+            child: 
+               hasPoster
+                  ? ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      width: 100,
+                      height: 100,
+                        imageUrl,
+                        fit: BoxFit.fill,
+                        errorBuilder: (_, __, ___) {
+                          return const Icon(Icons.broken_image);
+                        },
+                      ),
+                  )
+                  : const Icon(Icons.image_not_supported),
+            ),
+            SizedBox(width: 12,),
+               Expanded(
+                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     Text(movie.title,
+                               style: Theme.of(context).textTheme.bodyMedium,
+                     overflow: TextOverflow.ellipsis,
+                     ),
+                     SizedBox(height: 20,),
+                 Text('⭐ ${movie.voteAverage.toStringAsFixed(1)}',
+                 style: Theme.of(context).textTheme.labelMedium,
+                 ),
+                   ],
+                 ),
+               ),
+        ],
+      ),
     );
     
   }

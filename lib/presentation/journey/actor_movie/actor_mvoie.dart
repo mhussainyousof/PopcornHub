@@ -69,6 +69,10 @@ class ActorMoviesScreen extends StatelessWidget {
                                     return Center(
                                       child: CircularProgressIndicator(),
                                     );
+                                  
+                                  },
+                                  errorBuilder: (context, error, stackTrace){
+                                    return Center(child: Icon(Icons.broken_image),);
                                   },
                                 ),
                               ),
