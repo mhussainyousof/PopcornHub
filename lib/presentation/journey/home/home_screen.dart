@@ -174,62 +174,64 @@ class _HomeScreenState extends State<HomeScreen> {
                     TextTitle(text: 'Or maybe stars?'),
                     const SizedBox(height: 12),
                     BlocBuilder<ActorBloc, ActorState>(
-                      builder: (context, state) {
-                        if(state is ActorLoading){
-                         return Center(child: 
-                          LinearProgressIndicator()
-                          );
-                        }
-                        if(state is ActorError){
-                          return Center(child: Text(state.message));
-                        }
-                        if (state is ActorLoaded) {
-  final actors = state.actors;
-
- return SizedBox(
-              height: 140,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: actors.length,
-                separatorBuilder: (context, index) => const SizedBox(width: 8),
-                itemBuilder: (context, index) {
-                  final actor = actors[index];
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                             return ActorMoviesScreen(actorId:actor.id);
-                          }));
-                        },
-                        child: CircleAvatar(
-                          radius: 40,
-                          backgroundImage: 
-                              NetworkImage(
-                                  '${ApiConstants.baseImageUrl}${actor.profilePath}'
-                         )
-                        ),
-                      ),
-                      const SizedBox(height: 6),
-                      SizedBox(
-                        width: 80,
-                        child: Text(
-                          actor.name,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ),
-            ],
-        );
-      },
-    ),
-  );
-  
-}
-return SizedBox.shrink();
+                        builder: (context, state) {
+                      if (state is ActorLoading) {
+                        return Center(child: LinearProgressIndicator());
                       }
-                    )
+                      if (state is ActorError) {
+                        return Center(child: Text(state.message));
+                      }
+                      if (state is ActorLoaded) {
+                        final actors = state.actors;
+
+                        return SizedBox(
+                          height: 140,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: actors.length,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(width: 1),
+                            itemBuilder: (context, index) {
+                              final actor = actors[index];
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return ActorMoviesScreen(
+                                              actorId: actor.id);
+                                        }));
+                                      },
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(200),
+                                          child: Image.network(
+                                            '${ApiConstants.baseImageUrl}${actor.profilePath}',
+                                            width: 80,
+                                            height: 80,
+                                            fit: BoxFit.contain,
+                                          ))),
+                                  const SizedBox(height: 6),
+                                  SizedBox(
+                                    width: 80,
+                                    child: Text(
+                                      actor.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.center,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      }
+                      return SizedBox.shrink();
+                    })
                   ],
                 ),
               );

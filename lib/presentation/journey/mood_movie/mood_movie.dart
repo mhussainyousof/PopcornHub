@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
@@ -75,7 +76,7 @@ class MoodMoviesScreen extends StatelessWidget {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      padding: const EdgeInsets.all(16),
+                      // padding: const EdgeInsets.all(16),
                       itemCount: movies.length,
                       itemBuilder: (context, index) {
                         final movie = movies[index];
@@ -99,26 +100,41 @@ class MoodMoviesScreen extends StatelessWidget {
         ? '${ApiConstants.baseImageUrl}${movie.posterPath}'
         : '';
 
-    return Card(
-      elevation: 4,
-      margin: const EdgeInsets.only(bottom: 16),
-      child: ListTile(
-        leading: hasPoster
-            ? Image.network(
-              width: 100,
-              height: 100,
-                imageUrl,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) {
-                  return const Icon(Icons.broken_image);
-                },
-              )
-            : const Icon(Icons.image_not_supported),
-        title: Text(movie.title),
-        subtitle: Text('⭐ ${movie.voteAverage.toStringAsFixed(1)}'),
-        onTap: () {},
-      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
+
+      children: [
+        Card(
+          elevation: 4,
+          margin: const EdgeInsets.only(bottom: 16),
+          child: 
+             hasPoster
+                ? ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    width: 100,
+                    height: 100,
+                      imageUrl,
+                      fit: BoxFit.fill,
+                      errorBuilder: (_, __, ___) {
+                        return const Icon(Icons.broken_image);
+                      },
+                    ),
+                )
+                : const Icon(Icons.image_not_supported),
+          ),
+          SizedBox(width: 12,),
+             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Text(movie.title.intelliTrim()),
+             Text('⭐ ${movie.voteAverage.toStringAsFixed(1)}'),
+               ],
+             ),
+      ],
     );
+    
   }
 }
 

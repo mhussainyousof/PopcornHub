@@ -88,12 +88,24 @@ class ActorMoviesScreen extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   SizedBox(height: 4),
-                                  Text(
-                                    movie.releaseDate,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelSmall
-                                        ?.copyWith(color: Colors.grey),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        movie.releaseDate,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            ?.copyWith(color: Colors.grey),
+                                      ),
+                                       Text(
+                                        '${movie.voteAverage.toStringAsFixed(1)} 🌟',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall
+                                            ?.copyWith(color: Colors.grey),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
