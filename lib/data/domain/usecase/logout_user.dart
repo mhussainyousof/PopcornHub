@@ -8,7 +8,7 @@ class LogoutUser extends Usecase<void, NoParams>{
   final AuthenticationRepository _authenticationRepository;
   LogoutUser(this._authenticationRepository);
   @override
-  Future<Either<AppError, void>> call(NoParams params) =>
+  Future<Either<AppError, void>> call(NoParams params) async=>
     
    _authenticationRepository.logoutUser(); 
   

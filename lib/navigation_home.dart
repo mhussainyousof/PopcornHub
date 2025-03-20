@@ -4,7 +4,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:popcornhub/common/constants/languages.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
+import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
+import 'package:popcornhub/data/domain/entity/account_entity.dart';
+import 'package:popcornhub/presentation/blocs/account/account_bloc.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/blocs/playing_now/playing_now_bloc.dart';
@@ -19,57 +22,61 @@ import 'package:popcornhub/presentation/widget/app_dialog.dart';
 class NavigationHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context)=>NavigationCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => NavigationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AccountBloc(getAccountDetails: getItInstance())
+            ..add(LoadAccountDetailsEvent()),
+        ),
+      ],
       child: Scaffold(
         bottomNavigationBar: BlocBuilder<NavigationCubit, int>(
           builder: (context, currentIndex) {
             return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: NavigationBar(
-            selectedIndex: currentIndex,
-            onDestinationSelected:(index){
-              context.read<NavigationCubit>().updateIndex(index);
-            } ,
-            destinations: [
-              NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-              NavigationDestination(
-                  icon: Icon(Iconsax.video_play), label: 'Explore'),
-              NavigationDestination(
-                  icon: Icon(Iconsax.menu_board), label: 'Dashboard'),
-            ],
-          ),
-        );
+              padding: const EdgeInsets.all(8.0),
+              child: NavigationBar(
+                selectedIndex: currentIndex,
+                onDestinationSelected: (index) {
+                  context.read<NavigationCubit>().updateIndex(index);
+                },
+                destinations: [
+                  NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
+                  NavigationDestination(icon: Icon(Iconsax.video_play), label: 'Explore'),
+                  NavigationDestination(icon: Icon(Iconsax.menu_board), label: 'Dashboard'),
+                ],
+              ),
+            );
           },
         ),
         body: BlocBuilder<NavigationCubit, int>(
           builder: (context, currentIndex) {
-
             return IndexedStack(
-              index : currentIndex,
-              children:[
+              index: currentIndex,
+              children: [
                 HomeScreen(),
                 ExploreScreen(),
-                DashboardScreen(),
-              ]
+                BlocProvider(
+  create: (context) {
+    print('✅ BlocProvider Created');
+    final bloc = AccountBloc(getAccountDetails: getItInstance());
+    bloc.add(LoadAccountDetailsEvent());
+    return bloc;
+  },
+  child: DashboardScreen(),
+)
+              ],
             );
-
-            // switch(currentIndex){
-            //   case 0: 
-            //   return HomeScreen();
-            //   case 1:
-            //   return ExploreScreen();
-            //   case 2:
-            //   return Placeholder();
-            //   default:
-            //   return HomeScreen();
-            // } 
           },
-        )
+        ),
       ),
     );
   }
 }
+
+
 
 class ExploreScreen extends StatefulWidget {
   @override
@@ -82,7 +89,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
   late final SoonBloc soonBloc;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     popularMoviesBloc = getItInstance<PopularMoviesBloc>();
     popularMoviesBloc.add(PopMovieLoadedEvent());
@@ -94,21 +101,21 @@ class _ExploreScreenState extends State<ExploreScreen> {
     soonBloc.add(SoonLoadMovieEvent());
   }
 
-@override
-void dispose(){
-   popularMoviesBloc.close();
+  @override
+  void dispose() {
+    popularMoviesBloc.close();
     playingNowBloc.close();
     soonBloc.close();
-  super.dispose();
-}
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-          BlocProvider.value(value: popularMoviesBloc),
-          BlocProvider.value(value: playingNowBloc),
-          BlocProvider.value(value: soonBloc),
+        BlocProvider.value(value: popularMoviesBloc),
+        BlocProvider.value(value: playingNowBloc),
+        BlocProvider.value(value: soonBloc),
       ],
       child: SafeArea(
         child: Scaffold(
@@ -122,8 +129,7 @@ void dispose(){
                       return Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: ExploreListview(
-                          height: 190,
-                            mainText: 'POPULAR', movies: movies),
+                            height: 190, mainText: 'POPULAR', movies: movies),
                       );
                     }
                     return SizedBox.shrink();
@@ -163,11 +169,14 @@ void dispose(){
   }
 }
 
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({Key? key}) : super(key: key);
 
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
-
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     final themeMode = context.watch<ThemeBloc>().state;
@@ -176,21 +185,35 @@ class DashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: const Text('Dashboard'),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildProfileSection(),
+          BlocBuilder<AccountBloc, AccountState>(
+            builder: (context, state) {
+              if (state is AccountLoaded) {
+                return _buildProfileSection(state.account);
+              } else if (state is AccountLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is AccountError) {
+                return const Center(child: Text('Error loading account details'));
+              } else {
+                return const Center(child: Text('Unknown state'));
+              }
+            },
+          ),
 
-          // 🌙 Toggle Theme
+          // Theme Switcher
           Card(
             child: ListTile(
               leading: Icon(
-                themeMode == ThemeMode.dark ? Icons.dark_mode : Icons.light_mode,
+                themeMode == ThemeMode.dark
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
                 color: Colors.deepPurple,
               ),
-              title: Text('Dark Mode'),
+              title: const Text('Dark Mode'),
               trailing: Switch(
                 value: themeMode == ThemeMode.dark,
                 onChanged: (_) {
@@ -200,22 +223,22 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
 
-          // 🎬 Favorite Movies
+          // Favorite
           Card(
             child: ListTile(
-              leading: Icon(Icons.favorite, color: Colors.redAccent),
-              title: Text('Favorite Movies'),
+              leading: const Icon(Icons.favorite, color: Colors.redAccent),
+              title: const Text('Watch Later'),
               onTap: () {
                 Navigator.of(context).pushNamed(RouteList.favorite);
               },
             ),
           ),
 
-          // 🌍 Change Language
+          // Language Switcher
           Card(
             child: ExpansionTile(
-              leading: Icon(Icons.language, color: Colors.blueAccent),
-              title: Text('Change Language'),
+              leading: const Icon(Icons.language, color: Colors.blueAccent),
+              title: const Text('Change Language'),
               children: Languages.languages.map((lang) {
                 return ListTile(
                   title: Text(lang.value),
@@ -227,16 +250,16 @@ class DashboardScreen extends StatelessWidget {
             ),
           ),
 
-          // ℹ️ About
+          // About
           Card(
             child: ListTile(
-              leading: Icon(Icons.info_outline, color: Colors.green),
-              title: Text('About'),
+              leading: const Icon(Icons.info_outline, color: Colors.green),
+              title: const Text('About'),
               onTap: () => _showAboutDialog(context),
             ),
           ),
 
-          // 🚪 Logout
+          // Logout
           BlocListener<LoginBloc, LoginState>(
             listenWhen: (previous, current) => current is LogoutSuccess,
             listener: (context, state) {
@@ -247,8 +270,8 @@ class DashboardScreen extends StatelessWidget {
             },
             child: Card(
               child: ListTile(
-                leading: Icon(Icons.logout, color: Colors.grey),
-                title: Text('Logout'),
+                leading: const Icon(Icons.logout, color: Colors.grey),
+                title: const Text('Logout'),
                 onTap: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     RouteList.loginScreen,
@@ -263,18 +286,15 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileSection() {
+  Widget _buildProfileSection(AccountEntity account) {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: AssetImage('assets/images/user_avatar.png'),
+          backgroundImage: AssetImage('${ApiConstants.baseImageUrl}${account.avatarPath}'),
         ),
-        title: Text('John Doe'),
-        subtitle: Text('johndoe@example.com'),
-        trailing: Icon(Icons.edit),
-        onTap: () {
-          // Navigate to edit profile page
-        },
+        title: Text(account.username),
+        subtitle: Text(account.username),
+        onTap: () {},
       ),
     );
   }
@@ -293,5 +313,3 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 }
-
-

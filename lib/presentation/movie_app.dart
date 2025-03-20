@@ -88,7 +88,7 @@ class _MovieAppState extends State<MovieApp> {
                         builder: (context, child) {
                           return LoadingScreen(screen: child!);
                         },
-                        initialRoute: RouteList.navigationHome,
+                        initialRoute: RouteList.loginScreen,
                         // home: HomeScreen(),
                         onGenerateRoute: (RouteSettings settings) {
                           final routes = Routes.getRoutes(settings);

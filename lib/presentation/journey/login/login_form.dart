@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
+import 'package:popcornhub/navigation_home.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/journey/login/lable_field_widget.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
@@ -22,7 +23,8 @@ class LoginForm extends StatefulWidget {
 class _LoginFormState extends State<LoginForm> {
   //! Controllers for handling username & password input
   late TextEditingController _userNameController, _passwordController;
-  late bool enableSignIn = false; //! Tracks if the sign-in button should be enabled
+  late bool enableSignIn =
+      false; //! Tracks if the sign-in button should be enabled
 
   @override
   void initState() {
@@ -101,19 +103,24 @@ class _LoginFormState extends State<LoginForm> {
               //! ✅ Navigate to home screen if login is successful
               listenWhen: (previous, current) => current is LoginSuccess,
               listener: (context, state) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    RouteList.home, (route) => false);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil(RouteList.navigationHome, (route) => false);
               },
             ),
-
-            //! 🔘 Sign-In Button
+            //! 🔘 Sign-In Button  
             Button(
-              text: TranslationConstants.signIn,
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    RouteList.home, (route) => false);
-              },
-            ),
+                onPressed: enableSignIn ? () {
+                  
+                  BlocProvider.of<LoginBloc>(context).add(
+                        LoginIinitiateEvent(
+                          _passwordController.text,
+                          _userNameController.text,
+                        ),
+                      );
+                }:null,
+                text: TranslationConstants.signIn,
+                isEnabled: enableSignIn,
+                ),
           ],
         ),
       ),

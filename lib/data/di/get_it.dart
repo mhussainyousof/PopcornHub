@@ -1,16 +1,19 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart';
 import 'package:popcornhub/data/core/api_client.dart';
+import 'package:popcornhub/data/data_source/account_remote_data_source.dart';
 import 'package:popcornhub/data/data_source/authentication_local_data_source.dart';
 import 'package:popcornhub/data/data_source/authintication_remote_data_source.dart';
 import 'package:popcornhub/data/data_source/language_local_data_source.dart';
 import 'package:popcornhub/data/data_source/movie_local_data_source.dart';
 import 'package:popcornhub/data/data_source/movie_remote_datasource.dart';
+import 'package:popcornhub/data/domain/repository/accountrepository%20.dart';
 import 'package:popcornhub/data/domain/repository/app_repository.dart';
 import 'package:popcornhub/data/domain/repository/authentication_repository.dart';
 import 'package:popcornhub/data/domain/repository/movie_repository.dart';
 import 'package:popcornhub/data/domain/usecase/check_if_movie_favorite.dart';
 import 'package:popcornhub/data/domain/usecase/delete_favorite_movie.dart';
+import 'package:popcornhub/data/domain/usecase/get_account.dart';
 import 'package:popcornhub/data/domain/usecase/get_actor.dart';
 import 'package:popcornhub/data/domain/usecase/get_cast.dart';
 import 'package:popcornhub/data/domain/usecase/get_comming_soon.dart';
@@ -28,9 +31,11 @@ import 'package:popcornhub/data/domain/usecase/logout_user.dart';
 import 'package:popcornhub/data/domain/usecase/save_movie.dart';
 import 'package:popcornhub/data/domain/usecase/search_movie.dart';
 import 'package:popcornhub/data/domain/usecase/update_langauge.dart';
+import 'package:popcornhub/data/repository/account_repositoryimpl%20.dart';
 import 'package:popcornhub/data/repository/app_repo_impl.dart';
 import 'package:popcornhub/data/repository/authentication_repository_impl.dart';
 import 'package:popcornhub/data/repository/movie_repo_impl.dart';
+import 'package:popcornhub/presentation/blocs/account/account_bloc.dart';
 import 'package:popcornhub/presentation/blocs/actor/actor_bloc.dart';
 import 'package:popcornhub/presentation/blocs/actor_movie/actor_movie_bloc.dart';
 import 'package:popcornhub/presentation/blocs/cast/cast_bloc.dart';
@@ -63,12 +68,14 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<LanguageLocalDataSource>(() => LanguageLocalDataSourceImpl());
   getItInstance.registerLazySingleton<AuthenticationRemoteDataSource>(()=> AuthenticationRemoteDataSourceImpl(getItInstance<ApiClient>()));
   getItInstance.registerLazySingleton<AuthenticationLocalDataSource>(()=> AuthenticationLocalDataSourceImpl());
+  getItInstance.registerLazySingleton<AccountRemoteDataSource>(()=> AccountRemoteDataSourceImpl(getItInstance<ApiClient>()));
 
 
   //! 🔹 Register Repository
   getItInstance.registerLazySingleton<MovieRepository>(() => MovieRepositoryImpl(getItInstance<MovieLocalDataSource>(), getItInstance<MovieRemoteDatasource>()));
   getItInstance.registerLazySingleton<AppRepository>(() => AppRepoImpl(languageLocalDataSource: getItInstance()));
   getItInstance.registerLazySingleton<AuthenticationRepository>(() => AuthenticationRepositoryImpl(getItInstance<AuthenticationRemoteDataSource>(), getItInstance<AuthenticationLocalDataSource>()));
+  getItInstance.registerLazySingleton<AccountRepository>(() => AccountRepositoryImpl(getItInstance<AccountRemoteDataSource>(), getItInstance<AuthenticationLocalDataSource>()));
 
 
   //! 🔹 Register Use Cases
@@ -91,6 +98,7 @@ Future<void> init() async {
   getItInstance.registerLazySingleton<GetMoviesByGenre>(() => GetMoviesByGenre(getItInstance()));
   getItInstance.registerLazySingleton<GetActors>(() => GetActors(getItInstance()));
   getItInstance.registerLazySingleton<GetMovieByActor>(() => GetMovieByActor(movieRepository: getItInstance()));
+  getItInstance.registerLazySingleton<GetAccountDetails>(() => GetAccountDetails(getItInstance()));
   
 
   //! 🔹 Register BLoCs
@@ -138,6 +146,11 @@ getItInstance.registerFactory<PlayingNowBloc>(
 getItInstance.registerFactory<SoonBloc>(
   () => SoonBloc(
     getCommingSoon: getItInstance(),
+  ),
+);
+getItInstance.registerFactory<AccountBloc>(
+  () => AccountBloc(
+    getAccountDetails: getItInstance(),
   ),
 );
 }
