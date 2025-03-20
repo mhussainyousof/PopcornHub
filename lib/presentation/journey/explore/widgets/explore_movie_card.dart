@@ -38,8 +38,8 @@ class MoviePicWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 1,
-            bottom: 0,
+            left: 2,
+            bottom: 2,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 1),
               decoration: BoxDecoration(
@@ -63,8 +63,8 @@ class MoviePicWidget extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 1,
-            bottom: 0,
+            right: 2,
+            bottom: 2,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 1),
               decoration: BoxDecoration(

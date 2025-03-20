@@ -10,49 +10,54 @@ class GetActors extends Usecase<List<ActorEntity>, NoParams> {
 
   GetActors(this.repository);
 
-  @override
-  Future<Either<AppError, List<ActorEntity>>> call(NoParams params) async {
-    try {
-      final moviesEither = await repository.getTrending();
+ @override
+Future<Either<AppError, List<ActorEntity>>> call(NoParams params) async {
+  try {
+    final moviesEither = await repository.getTrending();
 
-      return await moviesEither.fold(
-        (error) => Left(error),
-        (movies) async {
-          List<ActorEntity> actorsList = [];
+    return await moviesEither.fold(
+      (error) => Left(error),
+      (movies) async {
+        List<ActorEntity> actorsList = [];
 
-          for (final movie in movies.take(20)) {
-            final castEither = await repository.getCastCrew(movie.id);
+        // Create a list of Future<Either<AppError, List<Cast>>>
+        final castFutures = movies.take(20).map((movie) {
+          return repository.getCastCrew(movie.id);
+        }).toList();
 
-            castEither.fold(
-              (error) {
-                print('خطا در گرفتن بازیگرهای فیلم ${movie.id}: $error');
-              },
-              (casts) {
-                final filteredCasts = casts
-                    .where((cast) => cast.posterPath.isNotEmpty)
-                    .take(2);
+        // Execute them all in parallel
+        final castResults = await Future.wait(castFutures);
 
-                final topCasts = filteredCasts.map(
-                  (cast) => ActorEntity(
-                    id: cast.id,
-                    name: cast.name,
-                    profilePath: cast.posterPath,
-                    popularity: 0.0, 
-                  ),
-                );
+        for (final result in castResults) {
+          result.fold(
+            (error) {
+              print('خطا در گرفتن بازیگرهای فیلم: $error');
+            },
+            (casts) {
+              final filteredCasts = casts
+                  .where((cast) => cast.posterPath.isNotEmpty)
+                  .take(2);
 
-                actorsList.addAll(topCasts);
-              },
-            );
-          }
+              final topCasts = filteredCasts.map(
+                (cast) => ActorEntity(
+                  id: cast.id,
+                  name: cast.name,
+                  profilePath: cast.posterPath,
+                  popularity: 0.0,
+                ),
+              );
 
-          return Right(actorsList);
-        },
-      );
-    } catch (e) {
-      print('خطای کلی: $e');
-      return Left(AppError(AppErrorType.api));
-    }
+              actorsList.addAll(topCasts);
+            },
+          );
+        }
+
+        return Right(actorsList);
+      },
+    );
+  } catch (e) {
+    print('خطای کلی: $e');
+    return Left(AppError(AppErrorType.api));
   }
 }
-
+}

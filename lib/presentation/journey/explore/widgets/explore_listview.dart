@@ -13,7 +13,9 @@ class ExploreListview extends StatelessWidget {
     required this.mainText,
     this.listview_height = 200,
     this.textDirection = TextDirection.ltr,
+    this.textDirection2 = TextDirection.rtl,
     this.left_height = 0,
+
   });
 
   final List<MovieEntity> movies;
@@ -23,6 +25,7 @@ class ExploreListview extends StatelessWidget {
   final double listview_height;
   final double left_height;
   final TextDirection textDirection;
+  final TextDirection textDirection2;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +65,7 @@ class ExploreListview extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: movies.length,
+                reverse: textDirection == textDirection2, // اگر rtl بود، برعکسش کن
                 itemBuilder: (context, index) {
                   final movie = movies[index];
                   return AnimatedMoviePicWidget(

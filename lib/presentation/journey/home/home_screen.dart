@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
     movieCarouselBloc.close();
     movieBackdropBloc.close();
     searchMovieBloc.close();
-    super.dispose();
     actorBloc.close();
+    super.dispose();
   }
 
   void _navigateToMood(String mood, int genreId, String imageAsset) {
@@ -78,10 +78,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => movieCarouselBloc),
-        BlocProvider(create: (context) => movieBackdropBloc),
-        BlocProvider(create: (context) => searchMovieBloc),
-        BlocProvider(create: (context) => actorBloc),
+        BlocProvider.value(value: movieCarouselBloc),
+        BlocProvider.value(value: movieBackdropBloc),
+        BlocProvider.value(value: searchMovieBloc),
+        BlocProvider.value(value: actorBloc),
       ],
       child: Scaffold(
         drawer: NavigationDrawerr(),
@@ -116,33 +116,33 @@ class _HomeScreenState extends State<HomeScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                    //! Actors
-                    TextTitle(text: 'Stars?'),
-                    const SizedBox(height: 5),
-                    BlocBuilder<ActorBloc, ActorState>(
-                      builder: (context, state) {
-                        if (state is ActorLoaded) {
-                          final actors = state.actors;
-                          return SizedBox(
-                            height: 100,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: actors.length,
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(width: 10),
-                              itemBuilder: (context, index) {
-                                final actor = actors[index];
-                                return ActorPicture(actor: actor);
-                              },
-                            ),
-                          );
-                        }
-                        return SizedBox.shrink();
-                      },
-                    ),
+                        //! Actors
+                        TextTitle(text: 'Stars?'),
+                        const SizedBox(height: 5),
+                        BlocBuilder<ActorBloc, ActorState>(
+                          builder: (context, state) {
+                            if (state is ActorLoaded) {
+                              final actors = state.actors;
+                              return SizedBox(
+                                height: 100,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: actors.length,
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(width: 10),
+                                  itemBuilder: (context, index) {
+                                    final actor = actors[index];
+                                    return ActorPicture(actor: actor);
+                                  },
+                                ),
+                              );
+                            }
+                            return SizedBox.shrink();
+                          },
+                        ),
 
-                    SizedBox(height: 16),
-                    //! vibes
+                        SizedBox(height: 16),
+                        //! vibes
                         TextTitle(text: 'Or your vibe?'),
                         const SizedBox(height: 5),
                         SingleChildScrollView(
@@ -210,7 +210,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    
                   ],
                 ),
               );

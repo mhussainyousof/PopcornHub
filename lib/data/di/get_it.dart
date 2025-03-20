@@ -46,6 +46,7 @@ import 'package:popcornhub/presentation/blocs/moviebygenre/movie_by_genre_bloc.d
 import 'package:popcornhub/presentation/blocs/playing_now/playing_now_bloc.dart';
 import 'package:popcornhub/presentation/blocs/popular/popular_movies_bloc.dart';
 import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
+import 'package:popcornhub/presentation/blocs/soon/soon_bloc.dart';
 import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
 import 'package:popcornhub/presentation/blocs/videos/video_bloc.dart';
 
@@ -132,6 +133,11 @@ getItInstance.registerFactory<PopularMoviesBloc>(
 getItInstance.registerFactory<PlayingNowBloc>(
   () => PlayingNowBloc(
     getPlayingNow: getItInstance(),
+  ),
+);
+getItInstance.registerFactory<SoonBloc>(
+  () => SoonBloc(
+    getCommingSoon: getItInstance(),
   ),
 );
 }
