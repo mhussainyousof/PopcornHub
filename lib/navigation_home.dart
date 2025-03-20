@@ -16,11 +16,13 @@ import 'package:popcornhub/presentation/blocs/popular/popular_movies_bloc.dart';
 import 'package:popcornhub/presentation/blocs/soon/soon_bloc.dart';
 import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
 import 'package:popcornhub/presentation/journey/explore/explore_cubit.dart';
-import 'package:popcornhub/presentation/journey/explore/widgets/explore_listview.dart';
+import 'package:popcornhub/presentation/journey/explore/explore_listview.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/widget/app_dialog.dart';
 import 'package:switcher_button/switcher_button.dart';
+
+
 
 class NavigationHome extends StatelessWidget {
   @override
@@ -55,8 +57,8 @@ class NavigationHome extends StatelessWidget {
               builder: (context, currentIndex) {
                 return ClipRRect(
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
                   ),
                   child: NavigationBar(
                     animationDuration: Duration(seconds: 1),

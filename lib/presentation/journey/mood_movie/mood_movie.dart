@@ -7,6 +7,7 @@ import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/data/domain/entity/movie_params.dart';
 import 'package:popcornhub/presentation/blocs/moviebygenre/movie_by_genre_bloc.dart';
+import 'package:popcornhub/presentation/journey/mood_movie/mood_movie_widget.dart';
 import 'package:popcornhub/presentation/widget/button.dart';
 
 class MoodMoviesScreen extends StatelessWidget {
@@ -84,7 +85,7 @@ class MoodMoviesScreen extends StatelessWidget {
                       itemCount: movies.length,
                       itemBuilder: (context, index) {
                         final movie = movies[index];
-                        return _buildMovieItem(context, movie);
+                        return buildMovieItem(context, movie);
                       },
                     );
                   }
@@ -98,57 +99,7 @@ class MoodMoviesScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMovieItem(BuildContext context, MovieEntity movie) {
-    final bool hasPoster = movie.posterPath.isNotEmpty;
-    final String imageUrl = hasPoster
-        ? '${ApiConstants.baseImageUrl}${movie.posterPath}'
-        : '';
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-      
-        children: [
-          Card(
-            elevation: 4,
-            margin: const EdgeInsets.only(bottom: 16),
-            child: 
-               hasPoster
-                  ? ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.network(
-                      width: 100,
-                      height: 100,
-                        imageUrl,
-                        fit: BoxFit.fill,
-                        errorBuilder: (_, __, ___) {
-                          return const Icon(Icons.broken_image);
-                        },
-                      ),
-                  )
-                  : const Icon(Icons.image_not_supported),
-            ),
-            SizedBox(width: 12,),
-               Expanded(
-                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
-                     Text(movie.title,
-                               style: Theme.of(context).textTheme.bodyMedium,
-                     overflow: TextOverflow.ellipsis,
-                     ),
-                     SizedBox(height: 20,),
-                 Text('⭐ ${movie.voteAverage.toStringAsFixed(1)}',
-                 style: Theme.of(context).textTheme.labelMedium,
-                 ),
-                   ],
-                 ),
-               ),
-        ],
-      ),
-    );
-    
-  }
 }
 
 

@@ -19,11 +19,11 @@ class _AnimatedTextState extends State<AnimatedText> with SingleTickerProviderSt
     _controller = AnimationController(
       duration: Duration(milliseconds: 500),
       vsync: this,
-    )..repeat(reverse: true); // تکرار انیمیشن
+    )..repeat(reverse: true); 
 
     _animation = Tween<Offset>(
       begin: Offset.zero,
-      end: Offset(0.1, 0), // میزان لرزش
+      end: Offset(0.1, 0), 
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,

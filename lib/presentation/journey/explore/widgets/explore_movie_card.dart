@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
+import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_arguments.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
 
 class MoviePicWidget extends StatelessWidget {
@@ -22,19 +24,24 @@ class MoviePicWidget extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12),
-            child: CachedNetworkImage(
-              imageUrl: '${ApiConstants.baseImageUrl}${movie.posterPath}',
-              height: 190,
-              width: 150,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Center(child: CircularProgressIndicator(
-                backgroundColor: AppColor.mintGreen,
-                color: AppColor.softCoral,
-                strokeAlign: 1,
-              ),),
-              errorWidget: (context, url, error) => Icon(Iconsax.image),
+          GestureDetector(
+            onTap: (){
+              Navigator.of(context).pushNamed(RouteList.movieDetail, arguments: MovieDetailArguments(movieId: movie.id));
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CachedNetworkImage(
+                imageUrl: '${ApiConstants.baseImageUrl}${movie.posterPath}',
+                height: 190,
+                width: 150,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Center(child: CircularProgressIndicator(
+                  backgroundColor: AppColor.mintGreen,
+                  color: AppColor.softCoral,
+                  strokeAlign: 1,
+                ),),
+                errorWidget: (context, url, error) => Icon(Iconsax.image),
+              ),
             ),
           ),
           Positioned(
