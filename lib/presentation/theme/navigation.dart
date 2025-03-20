@@ -35,13 +35,23 @@ class AppNavigationBarTheme {
     backgroundColor: AppColor.richBlack,
     indicatorColor: AppColor.mintGreen.withAlpha(51),
     labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
-      (states) => TextStyle(
-        fontSize: 10, 
+      (states) {
+        if(states.contains(WidgetState.selected)){
+        return  TextStyle(
+        fontSize: 14, 
+        
+        
         color: states.contains(WidgetState.selected)
             ? AppColor.mintGreen
             : AppColor.coolGrey,
-        fontWeight: FontWeight.w500,
-      ),
+        fontWeight: FontWeight.w800,
+      );
+        }
+        return TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.normal
+        );
+      }
     ),
     iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
       (states) => IconThemeData(

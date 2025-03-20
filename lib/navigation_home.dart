@@ -27,48 +27,65 @@ class NavigationHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(context) => NavigationCubit(),),
-        BlocProvider(create:(context) => AccountBloc(getAccountDetails: getItInstance())..add(LoadAccountDetailsEvent()),)
+        BlocProvider(
+          create: (context) => NavigationCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AccountBloc(getAccountDetails: getItInstance())
+            ..add(LoadAccountDetailsEvent()),
+        )
       ],
-      child: Scaffold(bottomNavigationBar: BlocBuilder<NavigationCubit, int>(
-        builder: (context, currentIndex) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: NavigationBar(
-              selectedIndex: currentIndex,
-              onDestinationSelected: (index) {
-                context.read<NavigationCubit>().updateIndex(index);
-              },
-              destinations: [
-                NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-                NavigationDestination(
-                    icon: Icon(Iconsax.video_play), label: 'Explore'),
-                NavigationDestination(
-                    icon: Icon(Iconsax.menu_board), label: 'Dashboard'),
+      child: Scaffold(
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surface,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColor.richBlack.withOpacity(0.1),
+                  blurRadius: 10,
+                ),
               ],
             ),
-          );
-        },
-      ), body: BlocBuilder<NavigationCubit, int>(
-        builder: (context, currentIndex) {
-          return IndexedStack(index: currentIndex, children: [
-            HomeScreen(),
-            ExploreScreen(),
-           DashboardScreen(),
-          ]);
+            child: BlocBuilder<NavigationCubit, int>(
+              builder: (context, currentIndex) {
+                return NavigationBar(
+                  backgroundColor: Colors.transparent,
+                    indicatorColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
 
-          // switch(currentIndex){
-          //   case 0:
-          //   return HomeScreen();
-          //   case 1:
-          //   return ExploreScreen();
-          //   case 2:
-          //   return Placeholder();
-          //   default:
-          //   return HomeScreen();
-          // }
-        },
-      )),
+
+                  selectedIndex: currentIndex,
+                  onDestinationSelected: (index) {
+                    context.read<NavigationCubit>().updateIndex(index);
+                  },
+                  destinations: [
+                    NavigationDestination(
+                        selectedIcon: Icon(Iconsax.home, size: 27),
+                        icon: Icon(Iconsax.home), label: 'Home'),
+                    NavigationDestination(
+                         selectedIcon: Icon(Iconsax.video_play, size: 27),
+                        icon: Icon(Iconsax.video_play), label: 'Explore'),
+                    NavigationDestination(
+                        selectedIcon: Icon(Iconsax.menu_board, size: 27),
+                        icon: Icon(Iconsax.menu_board), label: 'Dashboard'),
+                  ],
+                );
+              },
+            ),
+          ),
+          body: BlocBuilder<NavigationCubit, int>(
+            builder: (context, currentIndex) {
+              return IndexedStack(index: currentIndex, children: [
+                HomeScreen(),
+                ExploreScreen(),
+                DashboardScreen(),
+              ]);
+            },
+          )),
     );
   }
 }
@@ -194,7 +211,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               } else if (state is AccountLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is AccountError) {
-                return const Center(child: Text('Error loading account details'));
+                return const Center(
+                    child: Text('Error loading account details'));
               } else {
                 return const Center(child: Text('Unknown state'));
               }
@@ -226,7 +244,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             width: 60,
             fit: BoxFit.cover,
             placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Iconsax.profile_circle),
+            errorWidget: (context, url, error) =>
+                const Icon(Iconsax.profile_circle),
           ),
         ),
         title: Text(account.username),
@@ -241,13 +260,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           themeMode == ThemeMode.dark ? Iconsax.moon : Iconsax.sun_1,
           color: AppColor.electricBlue,
         ),
-        title:  Text('App Theme'),
+        title: Text('App Theme'),
         trailing: SwitcherButton(
           onColor: AppColor.mintGreen,
           offColor: Colors.grey.shade300,
           value: themeMode == ThemeMode.dark,
           size: 45,
-          
           onChange: (value) {
             setState(() {
               _isCheckedTheme = value;
