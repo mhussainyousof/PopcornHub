@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -17,66 +18,60 @@ import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
 import 'package:popcornhub/presentation/journey/explore/explore_cubit.dart';
 import 'package:popcornhub/presentation/journey/explore/widgets/explore_listview.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
+import 'package:popcornhub/presentation/theme/app_color.dart';
 import 'package:popcornhub/presentation/widget/app_dialog.dart';
+import 'package:switcher_button/switcher_button.dart';
 
 class NavigationHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => NavigationCubit(),
-        ),
-        BlocProvider(
-          create: (context) => AccountBloc(getAccountDetails: getItInstance())
-            ..add(LoadAccountDetailsEvent()),
-        ),
+        BlocProvider(create:(context) => NavigationCubit(),),
+        BlocProvider(create:(context) => AccountBloc(getAccountDetails: getItInstance())..add(LoadAccountDetailsEvent()),)
       ],
-      child: Scaffold(
-        bottomNavigationBar: BlocBuilder<NavigationCubit, int>(
-          builder: (context, currentIndex) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: NavigationBar(
-                selectedIndex: currentIndex,
-                onDestinationSelected: (index) {
-                  context.read<NavigationCubit>().updateIndex(index);
-                },
-                destinations: [
-                  NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
-                  NavigationDestination(icon: Icon(Iconsax.video_play), label: 'Explore'),
-                  NavigationDestination(icon: Icon(Iconsax.menu_board), label: 'Dashboard'),
-                ],
-              ),
-            );
-          },
-        ),
-        body: BlocBuilder<NavigationCubit, int>(
-          builder: (context, currentIndex) {
-            return IndexedStack(
-              index: currentIndex,
-              children: [
-                HomeScreen(),
-                ExploreScreen(),
-                BlocProvider(
-  create: (context) {
-    print('✅ BlocProvider Created');
-    final bloc = AccountBloc(getAccountDetails: getItInstance());
-    bloc.add(LoadAccountDetailsEvent());
-    return bloc;
-  },
-  child: DashboardScreen(),
-)
+      child: Scaffold(bottomNavigationBar: BlocBuilder<NavigationCubit, int>(
+        builder: (context, currentIndex) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: NavigationBar(
+              selectedIndex: currentIndex,
+              onDestinationSelected: (index) {
+                context.read<NavigationCubit>().updateIndex(index);
+              },
+              destinations: [
+                NavigationDestination(icon: Icon(Iconsax.home), label: 'Home'),
+                NavigationDestination(
+                    icon: Icon(Iconsax.video_play), label: 'Explore'),
+                NavigationDestination(
+                    icon: Icon(Iconsax.menu_board), label: 'Dashboard'),
               ],
-            );
-          },
-        ),
-      ),
+            ),
+          );
+        },
+      ), body: BlocBuilder<NavigationCubit, int>(
+        builder: (context, currentIndex) {
+          return IndexedStack(index: currentIndex, children: [
+            HomeScreen(),
+            ExploreScreen(),
+           DashboardScreen(),
+          ]);
+
+          // switch(currentIndex){
+          //   case 0:
+          //   return HomeScreen();
+          //   case 1:
+          //   return ExploreScreen();
+          //   case 2:
+          //   return Placeholder();
+          //   default:
+          //   return HomeScreen();
+          // }
+        },
+      )),
     );
   }
 }
-
-
 
 class ExploreScreen extends StatefulWidget {
   @override
@@ -177,6 +172,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  bool _isCheckedTheme = false;
+
   @override
   Widget build(BuildContext context) {
     final themeMode = context.watch<ThemeBloc>().state;
@@ -203,84 +200,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               }
             },
           ),
-
-          // Theme Switcher
-          Card(
-            child: ListTile(
-              leading: Icon(
-                themeMode == ThemeMode.dark
-                    ? Icons.dark_mode
-                    : Icons.light_mode,
-                color: Colors.deepPurple,
-              ),
-              title: const Text('Dark Mode'),
-              trailing: Switch(
-                value: themeMode == ThemeMode.dark,
-                onChanged: (_) {
-                  themeBloc.add(ToggleThemeEvent());
-                },
-              ),
-            ),
-          ),
-
-          // Favorite
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.favorite, color: Colors.redAccent),
-              title: const Text('Watch Later'),
-              onTap: () {
-                Navigator.of(context).pushNamed(RouteList.favorite);
-              },
-            ),
-          ),
-
-          // Language Switcher
-          Card(
-            child: ExpansionTile(
-              leading: const Icon(Icons.language, color: Colors.blueAccent),
-              title: const Text('Change Language'),
-              children: Languages.languages.map((lang) {
-                return ListTile(
-                  title: Text(lang.value),
-                  onTap: () {
-                    languageBloc.add(ToggleLanguageEvent(lang));
-                  },
-                );
-              }).toList(),
-            ),
-          ),
-
-          // About
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.info_outline, color: Colors.green),
-              title: const Text('About'),
-              onTap: () => _showAboutDialog(context),
-            ),
-          ),
-
-          // Logout
-          BlocListener<LoginBloc, LoginState>(
-            listenWhen: (previous, current) => current is LogoutSuccess,
-            listener: (context, state) {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                RouteList.initial,
-                (route) => false,
-              );
-            },
-            child: Card(
-              child: ListTile(
-                leading: const Icon(Icons.logout, color: Colors.grey),
-                title: const Text('Logout'),
-                onTap: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    RouteList.loginScreen,
-                    (route) => false,
-                  );
-                },
-              ),
-            ),
-          ),
+          const SizedBox(height: 16),
+          _buildFavoriteSection(context),
+          const SizedBox(height: 16),
+          _buildLanguageSwitcher(languageBloc),
+          const SizedBox(height: 16),
+          _buildAboutSection(context),
+          const SizedBox(height: 16),
+          _buildThemeSwitcher(themeMode, themeBloc),
+          const SizedBox(height: 16),
+          _buildLogoutSection(context),
         ],
       ),
     );
@@ -289,12 +218,102 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildProfileSection(AccountEntity account) {
     return Card(
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: AssetImage('${ApiConstants.baseImageUrl}${account.avatarPath}'),
+        minTileHeight: 70,
+        leading: ClipOval(
+          child: CachedNetworkImage(
+            imageUrl: '${ApiConstants.baseImageUrl}${account.avatarPath}',
+            height: 60,
+            width: 60,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            errorWidget: (context, url, error) => const Icon(Iconsax.profile_circle),
+          ),
         ),
         title: Text(account.username),
-        subtitle: Text(account.username),
-        onTap: () {},
+      ),
+    );
+  }
+
+  Widget _buildThemeSwitcher(ThemeMode themeMode, ThemeBloc themeBloc) {
+    return Card(
+      child: ListTile(
+        leading: Icon(
+          themeMode == ThemeMode.dark ? Iconsax.moon : Iconsax.sun_1,
+          color: AppColor.electricBlue,
+        ),
+        title:  Text('App Theme'),
+        trailing: SwitcherButton(
+          onColor: AppColor.mintGreen,
+          offColor: Colors.grey.shade300,
+          value: themeMode == ThemeMode.dark,
+          size: 45,
+          
+          onChange: (value) {
+            setState(() {
+              _isCheckedTheme = value;
+            });
+            themeBloc.add(ToggleThemeEvent());
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFavoriteSection(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Iconsax.gallery_export, color: Colors.redAccent),
+        title: const Text('Watch Later'),
+        onTap: () => Navigator.of(context).pushNamed(RouteList.favorite),
+      ),
+    );
+  }
+
+  Widget _buildLanguageSwitcher(LanguageBloc languageBloc) {
+    return Card(
+      child: ExpansionTile(
+        leading: const Icon(Iconsax.global, color: AppColor.deepPurple),
+        title: const Text('Change Language'),
+        children: Languages.languages.map((lang) {
+          return ListTile(
+            title: Text(lang.value),
+            onTap: () => languageBloc.add(ToggleLanguageEvent(lang)),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget _buildAboutSection(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Iconsax.info_circle, color: Colors.green),
+        title: const Text('About'),
+        onTap: () => _showAboutDialog(context),
+      ),
+    );
+  }
+
+  Widget _buildLogoutSection(BuildContext context) {
+    return BlocListener<LoginBloc, LoginState>(
+      listenWhen: (previous, current) => current is LogoutSuccess,
+      listener: (context, state) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+          RouteList.initial,
+          (route) => false,
+        );
+      },
+      child: Card(
+        child: ListTile(
+          leading: const Icon(Iconsax.logout, color: Colors.grey),
+          title: const Text('Logout'),
+          onTap: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              RouteList.loginScreen,
+              (route) => false,
+            );
+          },
+        ),
       ),
     );
   }
