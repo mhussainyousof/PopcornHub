@@ -8,16 +8,27 @@ class AppNavigationBarTheme {
     height: 60,
     elevation: 0,
     backgroundColor: AppColor.pureWhite,
+    
     indicatorColor: AppColor.electricBlue.withAlpha(26),
-
-    labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
-      (states) => TextStyle(
-        fontSize: 10, 
+    overlayColor: WidgetStateProperty.all(Colors.transparent),
+        labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>(
+      (states) {
+        if(states.contains(WidgetState.selected)){
+        return  TextStyle(
+        fontSize: 12, 
+        
+        
         color: states.contains(WidgetState.selected)
             ? AppColor.electricBlue
-            : AppColor.slateGrey,
-        fontWeight: FontWeight.w500,
-      ),
+            : AppColor.coolGrey,
+        fontWeight: FontWeight.w800,
+      );
+        }
+        return TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.normal
+        );
+      }
     ),
     iconTheme: WidgetStateProperty.resolveWith<IconThemeData>(
       (states) => IconThemeData(
@@ -38,7 +49,7 @@ class AppNavigationBarTheme {
       (states) {
         if(states.contains(WidgetState.selected)){
         return  TextStyle(
-        fontSize: 14, 
+        fontSize: 12, 
         
         
         color: states.contains(WidgetState.selected)

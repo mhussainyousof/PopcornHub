@@ -40,39 +40,50 @@ class NavigationHome extends StatelessWidget {
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: AppColor.richBlack.withOpacity(0.1),
-                  blurRadius: 10,
-                ),
+                    color: AppColor.richBlack.withOpacity(0.1),
+                    blurRadius: 10,
+                    spreadRadius: 1,
+                    offset: Offset(0, -2)),
               ],
             ),
             child: BlocBuilder<NavigationCubit, int>(
               builder: (context, currentIndex) {
-                return NavigationBar(
-                  backgroundColor: Colors.transparent,
-                    indicatorColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                    labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-
-
-                  selectedIndex: currentIndex,
-                  onDestinationSelected: (index) {
-                    context.read<NavigationCubit>().updateIndex(index);
-                  },
-                  destinations: [
-                    NavigationDestination(
-                        selectedIcon: Icon(Iconsax.home, size: 27),
-                        icon: Icon(Iconsax.home), label: 'Home'),
-                    NavigationDestination(
-                         selectedIcon: Icon(Iconsax.video_play, size: 27),
-                        icon: Icon(Iconsax.video_play), label: 'Explore'),
-                    NavigationDestination(
-                        selectedIcon: Icon(Iconsax.menu_board, size: 27),
-                        icon: Icon(Iconsax.menu_board), label: 'Dashboard'),
-                  ],
+                return ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                  child: NavigationBar(
+                    animationDuration: Duration(seconds: 1),
+                    backgroundColor: Colors.transparent,
+                    indicatorColor:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    labelBehavior:
+                        NavigationDestinationLabelBehavior.alwaysShow,
+                    selectedIndex: currentIndex,
+                    onDestinationSelected: (index) {
+                      context.read<NavigationCubit>().updateIndex(index);
+                    },
+                    destinations: [
+                      NavigationDestination(
+                          selectedIcon: Icon(Iconsax.home, size: 27),
+                          icon: Icon(Iconsax.home),
+                          label: 'Home'),
+                      NavigationDestination(
+                          selectedIcon: Icon(Iconsax.video_play, size: 27),
+                          icon: Icon(Iconsax.video_play),
+                          label: 'Explore'),
+                      NavigationDestination(
+                          selectedIcon: Icon(Iconsax.menu_board, size: 27),
+                          icon: Icon(Iconsax.menu_board),
+                          label: 'Dashboard'),
+                    ],
+                  ),
                 );
               },
             ),
