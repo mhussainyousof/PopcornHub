@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:popcornhub/data/domain/entity/account_entity.dart';
-import 'package:popcornhub/data/domain/entity/app_erro.dart';
 import 'package:popcornhub/data/domain/entity/no_params.dart';
 import 'package:popcornhub/data/domain/usecase/get_account.dart';
 

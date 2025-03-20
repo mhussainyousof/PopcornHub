@@ -49,7 +49,7 @@ class ActorPicture extends StatelessWidget {
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .labelLarge,
+                .labelSmall,
           ),
         ),
       ],

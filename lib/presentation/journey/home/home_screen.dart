@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
 
-                        SizedBox(height: 16),
+                        SizedBox(height: 25),
                         //! vibes
                         TextTitle(text: 'Or your vibe?'),
                         const SizedBox(height: 5),

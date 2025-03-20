@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
-import 'package:popcornhub/navigation_home.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/journey/login/lable_field_widget.dart';
 import 'package:popcornhub/presentation/theme/theme_text.dart';
