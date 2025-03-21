@@ -28,5 +28,13 @@
     "enterPassword": "Entrez le mot de passe ici...",
     "guestSignIn": "Connexion invité",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "dashboard": "Tableau de bord",
+    "moviePicks" : "Sélections de films",
+    "apptheme": "Thème de l'application",
+    "trending": "Tendances",
+    "vibe": "Ou ton ambiance ?",
+    "home": "Accueil",
+    "explore": "Explorer",
+    "star": "Des étoiles ?"
 }

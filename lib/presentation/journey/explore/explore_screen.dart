@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:popcornhub/common/constants/translation_constants.dart';
+import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/blocs/playing_now/playing_now_bloc.dart';
 import 'package:popcornhub/presentation/blocs/popular/popular_movies_bloc.dart';
@@ -29,7 +31,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
     soonBloc = getItInstance<SoonBloc>();
     soonBloc.add(SoonLoadMovieEvent());
   }
-
   @override
   void dispose() {
     popularMoviesBloc.close();
@@ -58,7 +59,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       return Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: ExploreListview(
-                            height: 190, mainText: 'POPULAR', movies: movies),
+                            height: 190, mainText: TranslationConstants.popular.t(context), movies: movies),
                       );
                     }
                     return SizedBox.shrink();
@@ -74,7 +75,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           height: 180,
                           textDirection: TextDirection.rtl,
                           movies: movies,
-                          mainText: 'Now');
+                          mainText: TranslationConstants.now.t(context));
                     }
                     return SizedBox.shrink();
                   },
@@ -84,7 +85,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     if (state is SoonLoadedMovieState) {
                       final movies = state.movies;
                       return ExploreListview(
-                          height: 180, movies: movies, mainText: 'SOON');
+                          height: 180, movies: movies, mainText: TranslationConstants.soon.t(context));
                     }
                     return SizedBox.shrink();
                   },

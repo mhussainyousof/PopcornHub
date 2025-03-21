@@ -28,6 +28,16 @@
     "enterPassword": "Enter password here...",
     "guestSignIn": "Guest Sign In",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "dashboard" : "Dashboard",
+    "moviePicks" : "Movie Picks",
+    "apptheme" : "App Theme",
+    "trending" : "Trendings?",
+    "vibe" : "Or your vibe?",
+    "home" : "Home",
+    "explore" : "Explore",
+    "star" : "Stars?"
+
+    
 
 }

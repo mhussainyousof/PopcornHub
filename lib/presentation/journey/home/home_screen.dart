@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:popcornhub/common/constants/translation_constants.dart';
+import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/blocs/actor/actor_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_backdrop/movie_backdrop_bloc.dart';
@@ -99,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 30,
                     ),
                     TextTitle(
-                      text: 'Trendings?',
+                      text: TranslationConstants.trending.t(context),
                     ),
                     SizedBox(
                       height: 5,
@@ -117,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         //! Actors
-                        TextTitle(text: 'Stars?'),
+                        TextTitle(text: TranslationConstants.star.t(context)),
                         const SizedBox(height: 5),
                         BlocBuilder<ActorBloc, ActorState>(
                           builder: (context, state) {
@@ -143,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         SizedBox(height: 25),
                         //! vibes
-                        TextTitle(text: 'Or your vibe?'),
+                        TextTitle(text: TranslationConstants.vibe.t(context)),
                         const SizedBox(height: 5),
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,

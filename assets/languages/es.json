@@ -28,5 +28,14 @@
     "enterPassword": "Ingrese la contraseña aquí...",
     "guestSignIn": "Invitado Registrarse",
     "yes": "Sí",
-    "no": "No"
+    "no": "No",
+    "dashboard": "Tablero",
+    "moviePicks": "Selecciones de películas",
+    "apptheme": "Tema de la aplicación",
+    "trending": "Tendencias",
+    "vibe": "¿O tu vibra?",
+    "home": "Inicio",
+     "explore": "Explorar",
+     "star": "¿Estrellas?"
+    
 }

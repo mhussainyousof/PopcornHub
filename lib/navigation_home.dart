@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:popcornhub/common/constants/translation_constants.dart';
+import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/presentation/blocs/account/account_bloc.dart';
 import 'package:popcornhub/presentation/journey/dashboard/dashboard_screen.dart';
@@ -63,15 +65,15 @@ class NavigationHome extends StatelessWidget {
                       NavigationDestination(
                           selectedIcon: Icon(Iconsax.home, size: 27),
                           icon: Icon(Iconsax.home),
-                          label: 'Home'),
+                          label: TranslationConstants.home.t(context)),
                       NavigationDestination(
                           selectedIcon: Icon(Iconsax.video_play, size: 27),
                           icon: Icon(Iconsax.video_play),
-                          label: 'Explore'),
+                          label: TranslationConstants.explore.t(context)),
                       NavigationDestination(
                           selectedIcon: Icon(Iconsax.menu_board, size: 27),
                           icon: Icon(Iconsax.menu_board),
-                          label: 'Dashboard'),
+                          label: TranslationConstants.dashboard.t(context)),
                     ],
                   ),
                 );

@@ -30,5 +30,13 @@ class TranslationConstants {
   static const String enterPassword = 'enterPassword';
   static const String guestSignIn = 'guestSignIn';
   static const String yes = 'yes';
-  static const String no = 'no';
+  static const String no = 'no';  
+  static const String dashboard = 'dashboard';
+  static const String moviePicks = 'moviePicks';
+  static const String appTheme = 'apptheme';
+  static const String trending = 'trending';
+  static const String vibe = 'vibe';
+  static const String home = 'home';
+  static const String explore = 'explore';
+  static const String star = 'star';
 }

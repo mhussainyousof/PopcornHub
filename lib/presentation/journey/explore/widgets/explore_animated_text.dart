@@ -34,19 +34,21 @@ class _AnimatedTextState extends State<AnimatedText> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return SlideTransition(
       position: _animation,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: widget.text.split("").map((char) {
-          return Text(
-            char,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1,
-            ),
-          );
-        }).toList(),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: widget.text.split("").map((char) {
+            return Text(
+              char,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 14,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

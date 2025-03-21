@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:popcornhub/common/constants/languages.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
+import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/data/domain/entity/account_entity.dart';
 import 'package:popcornhub/presentation/blocs/account/account_bloc.dart';
@@ -35,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title:  Text(TranslationConstants.dashboard.t(context)),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -96,12 +97,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           themeMode == ThemeMode.dark ? Iconsax.moon : Iconsax.sun_1,
           color: AppColor.electricBlue,
         ),
-        title: Text('App Theme'),
+        title: Text(TranslationConstants.appTheme.t(context)),
         trailing: SwitcherButton(
           onColor: AppColor.mintGreen,
           offColor: Colors.grey.shade300,
           value: themeMode == ThemeMode.dark,
-          size: 45,
+          size: 50,
           onChange: (value) {
             setState(() {
             });
@@ -116,7 +117,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Card(
       child: ListTile(
         leading: const Icon(Iconsax.gallery_export, color: Colors.redAccent),
-        title: const Text('Watch Later'),
+        title:  Text(TranslationConstants.moviePicks.t(context)),
         onTap: () => Navigator.of(context).pushNamed(RouteList.favorite),
       ),
     );
@@ -126,7 +127,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Card(
       child: ExpansionTile(
         leading: const Icon(Iconsax.global, color: AppColor.deepPurple),
-        title: const Text('Change Language'),
+        title:  Text(TranslationConstants.language.t(context)),
         children: Languages.languages.map((lang) {
           return ListTile(
             title: Text(lang.value),
@@ -141,7 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Card(
       child: ListTile(
         leading: const Icon(Iconsax.info_circle, color: Colors.green),
-        title: const Text('About'),
+        title:  Text(TranslationConstants.about.t(context)),
         onTap: () => _showAboutDialog(context),
       ),
     );
@@ -159,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Card(
         child: ListTile(
           leading: const Icon(Iconsax.logout, color: Colors.grey),
-          title: const Text('Logout'),
+          title:  Text(TranslationConstants.logout.t(context)),
           onTap: () {
             Navigator.of(context).pushNamedAndRemoveUntil(
               RouteList.loginScreen,
