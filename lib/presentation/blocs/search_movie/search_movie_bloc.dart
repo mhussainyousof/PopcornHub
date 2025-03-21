@@ -18,7 +18,7 @@ class SearchMovieBloc extends Bloc<SearchMovieEvent, SearchMovieState> {
   }) : super(SearchMovieInitial()) {
     on<SearchMovieEvent>((event, emit) async {
       if (event is SearchTermChangesEvent) {
-        loadingBloc.add(StartLoading());
+        // loadingBloc.add(StartLoading());
         if (event.searhcTerm.length > 2) {
           emit(SearchMovieLoading());
           final Either<AppError, List<MovieEntity>> response =

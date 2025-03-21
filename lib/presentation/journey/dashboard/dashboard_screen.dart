@@ -11,9 +11,11 @@ import 'package:popcornhub/data/domain/entity/account_entity.dart';
 import 'package:popcornhub/presentation/blocs/account/account_bloc.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
+import 'package:popcornhub/presentation/blocs/search_movie/search_movie_bloc.dart';
 import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
+import 'package:popcornhub/presentation/journey/search_movie/custom_search_movie_delegate.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
-import 'package:popcornhub/presentation/widget/app_dialog.dart';
+import 'package:popcornhub/presentation/journey/dashboard/widget/app_dialog.dart';
 import 'package:switcher_button/switcher_button.dart';
 
 
@@ -57,6 +59,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           const SizedBox(height: 16),
           _buildFavoriteSection(context),
+          const SizedBox(height: 16),
+          _searchMovies(),
           const SizedBox(height: 16),
           _buildLanguageSwitcher(languageBloc),
           const SizedBox(height: 16),
@@ -178,11 +182,31 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (_) {
         return AppDialog(
           buttonText: TranslationConstants.okay,
-          image: Image.asset('assets/pngs/tmdb_logo.png', scale: 1.5),
-          title: TranslationConstants.about,
+          image: Image.asset('assets/gif/about.gif', scale: 1.5),
+          title: '',
           description: TranslationConstants.aboutDescription,
         );
       },
     );
+  }
+
+
+  Widget _searchMovies() {
+    return Card(
+      child: ListTile(
+        onTap: (){
+          showSearch(
+          context: context,
+          delegate: CustomSearchDelegate(
+            BlocProvider.of<SearchMovieBloc>(context),
+          ),
+        );
+        },
+        title: Text(TranslationConstants.searchMovie.t(context)),
+        leading: 
+               Icon(
+                Iconsax.search_status,
+              )),
+      );
   }
 }

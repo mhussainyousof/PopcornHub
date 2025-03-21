@@ -5,25 +5,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/common/constants/languages.dart';
 import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/data/di/get_it.dart';
-import 'package:popcornhub/presentation/app_localizations.dart';
+import 'package:popcornhub/general/app_localizations.dart';
+import 'package:popcornhub/general/routes.dart';
+import 'package:popcornhub/general/wiredash_app.dart';
 import 'package:popcornhub/presentation/blocs/laoding/loading_bloc.dart';
 import 'package:popcornhub/presentation/blocs/login/loging_bloc.dart';
 import 'package:popcornhub/presentation/blocs/movie_language/language_bloc.dart';
 import 'package:popcornhub/presentation/blocs/theme_bloc/theme_bloc.dart';
-import 'package:popcornhub/presentation/fade_page_route_builder.dart';
+import 'package:popcornhub/presentation/widget/fade_page_route_builder.dart';
 import 'package:popcornhub/presentation/journey/home/home_screen.dart';
 import 'package:popcornhub/presentation/journey/loading/loading_screen.dart';
-import 'package:popcornhub/presentation/routes.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
-import 'package:popcornhub/presentation/wiredash_app.dart';
 
-class MovieApp extends StatefulWidget {
-  const MovieApp({super.key});
+class PopCornHub extends StatefulWidget {
+  const PopCornHub({super.key});
   @override
-  State<MovieApp> createState() => _MovieAppState();
+  State<PopCornHub> createState() => _PopCornHubState();
 }
 
-class _MovieAppState extends State<MovieApp> {
+class _PopCornHubState extends State<PopCornHub> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   late final LanguageBloc _languageBloc;
   late final LoginBloc _loginBloc;

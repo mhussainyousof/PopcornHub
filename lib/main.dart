@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:popcornhub/data/di/get_it.dart';
 import 'package:popcornhub/data/table/movie_table.dart';
-import 'package:popcornhub/presentation/movie_app.dart';
+import 'package:popcornhub/general/main_app.dart';
 
 
 void main()async{
@@ -19,5 +19,5 @@ unawaited(
   await Hive.openBox<MovieTable>('movieBox');
   await Hive.openBox('settings');
   await init();
-  runApp(MovieApp());
+  runApp(PopCornHub());
 }

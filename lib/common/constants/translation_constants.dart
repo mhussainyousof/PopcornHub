@@ -39,4 +39,5 @@ class TranslationConstants {
   static const String home = 'home';
   static const String explore = 'explore';
   static const String star = 'star';
+  static const String searchMovie = 'searchMovie';
 }

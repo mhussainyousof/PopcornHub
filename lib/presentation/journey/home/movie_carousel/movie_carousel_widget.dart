@@ -20,13 +20,10 @@ class MovieCarouselWidget extends StatelessWidget{
           child: Column(
             children: [
              SizedBox(height: 20,),
-              // MovieAppBar(),
               MoviePageView(
                 movies: movies,
                 initialPage : defaultIndex,
               ),
-              // MovieDataWidget(),
-              // Separator(),
             ],
           ),
         ),

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:popcornhub/data/core/api_constants.dart';
 import 'package:popcornhub/presentation/blocs/cast/cast_bloc.dart';
-import 'package:popcornhub/presentation/theme/theme_text.dart';
 
 class CastWidget extends StatelessWidget {
   const CastWidget({super.key});

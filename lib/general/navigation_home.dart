@@ -13,8 +13,6 @@ import 'package:popcornhub/presentation/journey/home/home_screen.dart';
 import 'package:popcornhub/presentation/theme/app_color.dart';
 
 
-
-
 class NavigationHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,8 +27,8 @@ class NavigationHome extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SearchMovieBloc(loadingBloc: getItInstance(), searchMovies:getItInstance())
+        ),
 
-        )
       ],
       child: Scaffold(
           bottomNavigationBar: Container(
