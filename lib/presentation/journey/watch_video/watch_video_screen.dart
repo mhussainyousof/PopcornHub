@@ -40,7 +40,7 @@ class WatchVideoScreenState extends State<WatchVideoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(TranslationConstants.watchTrailers.t(context))),
+      appBar: AppBar(title: Text(TranslationConstants.trailers.t(context))),
       body: Column(
         children: [
           YoutubePlayerBuilder(

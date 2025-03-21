@@ -36,6 +36,7 @@ class ExploreListview extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           AnimatedContainer(
+            alignment: Alignment.center,
             duration: Duration(milliseconds: 500),
             curve: Curves.easeInOut,
             height: height,

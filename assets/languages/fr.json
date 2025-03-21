@@ -13,7 +13,7 @@
     "aboutDescription": "Ce produit utilise l'API de TMDb mais n'est ni approuvé ni certifié par TMDb. Cette application est développée à des fins éducatives.",
     "noMovies": "Désolé, il n'y a pas de films dans cette section.",
     "cast": "Distribution",
-    "watchTrailers": "Regarder les bandes-annonces",
+    "trailers": "Regarder les bandes-annonces",
     "noMoviesSearched": "Aucun film trouvé, essayez un autre mot",
     "noFavoriteMovie": "Aucun film préféré",
     "loginToMovieApp": "Connectez-vous à l'application de films via TMDb",

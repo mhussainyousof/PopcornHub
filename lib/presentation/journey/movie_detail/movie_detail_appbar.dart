@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:popcornhub/data/domain/entity/movie_detail_entity.dart';
 import 'package:popcornhub/data/domain/entity/movie_entity.dart';
 import 'package:popcornhub/presentation/blocs/favorite/favorite_bloc.dart';
+import 'package:popcornhub/presentation/theme/app_color.dart';
 
 class MovieDetailAppbar extends StatelessWidget {
   final MovieDetailEntity movieDetailEntity;
@@ -32,17 +34,18 @@ class MovieDetailAppbar extends StatelessWidget {
               return InkWell(
                 onTap: () => BlocProvider.of<FavoriteBloc>(context).add(
                     ToggleFavoriteMovieEvent(
-                        movieEntity: MovieEntity.fromMovieDetailEntity(movieDetailEntity), isFavorite: state.isMovieFavorite)),
+                        movieEntity: MovieEntity.fromMovieDetailEntity(
+                            movieDetailEntity),
+                        isFavorite: state.isMovieFavorite)),
                 child: Icon(
-                  state.isMovieFavorite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: Colors.white,
-                  size: 25,
+                  state.isMovieFavorite ? Iconsax.tick_square : Iconsax.save_2,
+                  color:
+                      state.isMovieFavorite ? AppColor.mintGreen : Colors.white,
+                  size: 30,
                 ),
               );
             } else {
-              return Icon(Icons.favorite_border);
+              return Icon(Iconsax.save_2);
             }
           },
         )

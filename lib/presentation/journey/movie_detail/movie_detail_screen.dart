@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:popcornhub/common/constants/route_constants.dart';
 import 'package:popcornhub/common/constants/translation_constants.dart';
 import 'package:popcornhub/common/extensions/string_extensions.dart';
 import 'package:popcornhub/data/di/get_it.dart';
@@ -12,6 +14,8 @@ import 'package:popcornhub/presentation/journey/movie_detail/big_poster.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/cast_widget.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/movie_detail_arguments.dart';
 import 'package:popcornhub/presentation/journey/movie_detail/videos_widget.dart';
+import 'package:popcornhub/presentation/journey/watch_video/watch_video_arguments.dart';
+import 'package:popcornhub/presentation/theme/app_color.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final MovieDetailArguments movieDetailArguments;
@@ -67,6 +71,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       BigPoster(movie: movieDetail),
+                      
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 12.w, vertical: 10.h),
@@ -83,7 +88,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                       ),
                       CastWidget(),
-                      VideosWidget(videoBloc: _videoBloc),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 120),
+                        child: VideosWidget(videoBloc: _videoBloc),
+                      ),
                     ],
                   ),
                 );

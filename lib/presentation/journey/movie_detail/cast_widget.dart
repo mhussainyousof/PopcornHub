@@ -11,75 +11,87 @@ class CastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<CastBloc, CastState>(
       builder: (context, state) {
         if (state is CastLoad) {
           return SizedBox(
             height: 230.h,
             child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: state.casts.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final castEntity = state.casts[index];
-                  return SizedBox(
-                    width: 130.w,
-                    height: 140.h,
-                    child: Card(
-                      elevation: 1,
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(20.r),
-                              bottom: Radius.circular(13.r))),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                              child: ClipRRect(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(15)),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  '${ApiConstants.baseImageUrl}${castEntity.posterPath}',
-                              height: 100.h,
-                              width: 120.w,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          )
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: Text(
-                              castEntity.name,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style:
-                                  Theme.of(context).textTheme.vulcanBodyText2!.apply(
-                                    fontSizeFactor: 0.9
-                                  ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8.w, bottom: 3.h),
-                            child: Text(
-                              castEntity.character,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          )
-                        ],
+              shrinkWrap: true,
+              itemCount: state.casts.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                final castEntity = state.casts[index];
+
+                return Container(
+                  width: 130.w,
+                  margin: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                  child: Card(
+                    elevation: 1,
+                    color: theme.cardColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20.r),
+                        bottom: Radius.circular(13.r),
                       ),
                     ),
-                  );
-                }),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(15.r),
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: '${ApiConstants.baseImageUrl}${castEntity.posterPath}',
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => const Icon(Icons.error),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                castEntity.name,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  fontSize: 12.sp,
+                                  color: theme.textTheme.bodyMedium?.color,
+                                ),
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                castEntity.character,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: theme.textTheme.labelSmall?.copyWith(
+                                  fontSize: 10.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           );
         }
-        return SizedBox.shrink();
+
+        return const SizedBox.shrink();
       },
     );
   }
 }
+
