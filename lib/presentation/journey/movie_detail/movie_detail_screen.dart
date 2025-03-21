@@ -70,8 +70,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      BigPoster(movie: movieDetail),
-                      
+                      BigPoster(movie: movieDetail, videoBloc: _videoBloc,),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 12.w, vertical: 10.h),
@@ -88,10 +87,6 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         ),
                       ),
                       CastWidget(),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 120),
-                        child: VideosWidget(videoBloc: _videoBloc),
-                      ),
                     ],
                   ),
                 );
