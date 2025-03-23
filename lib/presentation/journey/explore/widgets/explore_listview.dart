@@ -30,7 +30,7 @@ class ExploreListview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 13.0),
+      padding: const EdgeInsets.only(top: 13.0,right: 10, left: 10),
       child: Row(
         textDirection: textDirection,
         crossAxisAlignment: CrossAxisAlignment.center,
